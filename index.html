@@ -7,6 +7,7 @@
   
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <!-- Librerías para QR y Cámara -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 
@@ -42,6 +43,7 @@
       display:flex; align-items:center; justify-content:center; color:white; font-size:1.2rem;
     }
 
+    /* OVERLAY ANIMACIÓN BIENVENIDA */
     .welcome-overlay {
       position:fixed; inset:0; background:rgba(0, 51, 160, 0.95); backdrop-filter:blur(8px);
       display:flex; flex-direction:column; align-items:center; justify-content:center;
@@ -76,10 +78,44 @@
       font-weight:700; cursor:pointer; transition:all 0.2s ease; box-shadow:0 4px 12px rgba(14,159,148,0.25);
     }
     .primary:hover { background:#087f77; transform:translateY(-2px); box-shadow:0 6px 16px rgba(14,159,148,0.35); }
+    .primary:active { transform:translateY(0); }
+
     .secondary { background:#edf2f5; color:var(--ink); border:none; border-radius:8px; padding:0.4rem 0.8rem; font-weight:700; cursor:pointer; transition:0.2s; }
     .secondary:hover { background:#e1e9ed; }
     .danger { background:#fff0ef; color:#ae3e39; border:none; border-radius:8px; padding:0.4rem 0.8rem; font-weight:700; cursor:pointer; transition:0.2s; }
     .danger:hover { background:#ffe2df; }
+    
+    .btn-whatsapp {
+      background:#25D366; color:white; border:none; border-radius:12px; padding:0.5rem 1rem;
+      font-weight:700; cursor:pointer; transition:all 0.2s ease; display:inline-flex; align-items:center; gap:0.4rem;
+      box-shadow:0 4px 12px rgba(37,211,102,0.25); font-size:0.85rem;
+    }
+    .btn-whatsapp:hover { background:#1eb956; transform:translateY(-2px); }
+
+    .btn-qr {
+      background:#6366f1; color:white; border:none; border-radius:12px; padding:0.5rem 1rem;
+      font-weight:700; cursor:pointer; transition:all 0.2s ease; display:inline-flex; align-items:center; gap:0.4rem;
+      box-shadow:0 4px 12px rgba(99,102,241,0.25); font-size:0.85rem;
+    }
+    .btn-qr:hover { background:#4f46e5; transform:translateY(-2px); }
+
+    .btn-reset {
+      background:#fff1f2; color:#be123c; border:1px solid #fecdd3; border-radius:12px; padding:0.5rem 0.9rem;
+      font-weight:700; cursor:pointer; transition:all 0.2s ease; display:inline-flex; align-items:center; gap:0.4rem; font-size:0.85rem;
+    }
+    .btn-reset:hover { background:#ffe4e6; color:#9f1239; }
+
+    .action-btn { 
+      background:#eef6ff; color:#1e40af; border:1px solid #bfdbfe; border-radius:8px; padding:0.25rem 0.6rem; 
+      font-size:0.8rem; font-weight:700; cursor:pointer; transition:all 0.2s ease; 
+    }
+    .action-btn:hover { background:#dbeafe; transform:scale(1.03); }
+
+    .action-pdm-btn {
+      background:#f3e8ff; color:#6b21a8; border:1px solid #d8b4fe; border-radius:8px; padding:0.25rem 0.6rem;
+      font-size:0.8rem; font-weight:700; cursor:pointer; transition:all 0.2s ease;
+    }
+    .action-pdm-btn:hover { background:#e9d5ff; transform:scale(1.03); }
 
     .surface { 
       background:white; border:1px solid var(--line); border-radius:16px; 
@@ -105,46 +141,158 @@
     .pill-mantenimiento { background:#fce6e4; color:#a33d36; }
     .pill-storage { background:#f3e8ff; color:#6b21a8; border:1px solid #d8b4fe; }
 
+    .text-storage { color:#6b21a8 !important; font-weight:800; }
+
+    tr.row-original { background-color: #f0fdf4 !important; }
+    tr.row-copia { background-color: #fef2f2 !important; }
+
     .table-wrap { overflow-x:auto; background:white; border:1px solid var(--line); border-radius:16px; margin-top:1rem; }
     table { width:100%; border-collapse:collapse; text-align:left; font-size:0.9rem; }
     th, td { padding:12px 16px; border-bottom:1px solid var(--line); transition:background 0.2s; }
     tr:hover td { background:rgba(0,0,0,0.02); }
     th { background:#f5f8fa; color:#627488; font-size:0.72rem; text-transform:uppercase; font-weight:800; cursor:pointer; user-select:none; }
+    th:hover { background:#e2e8f0; color:#1e293b; }
 
-    .field { width:100%; border:1px solid #ccd9e2; border-radius:8px; padding:10px 12px; margin-top:4px; }
+    .field { width:100%; border:1px solid #ccd9e2; border-radius:8px; padding:10px 12px; margin-top:4px; transition:border 0.2s, box-shadow 0.2s; }
     .field:focus { outline:none; border-color:#005ac7; box-shadow:0 0 0 3px rgba(0,90,199,0.15); }
 
     .modal-backdrop { 
       position:fixed; inset:0; background:rgba(9,25,42,0.65); backdrop-filter:blur(3px);
       display:flex; align-items:center; justify-content:center; padding:1rem; z-index:999; 
+      animation: fadeIn 0.3s ease;
     }
+    @keyframes fadeIn { from{ opacity:0; } to{ opacity:1; } }
+
     .modal-content { animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
     @keyframes slideUp { from{ transform:translateY(30px); opacity:0; } to{ transform:translateY(0); opacity:1; } }
+    
+    .status-online { display:inline-flex; align-items:center; gap:0.4rem; font-size:0.75rem; font-weight:700; color:#08765e; background:#ddf6ef; padding:0.2rem 0.6rem; border-radius:99px; }
+    .dot { width:8px; height:8px; background:#08765e; border-radius:50%; display:inline-block; animation:pulse 1.8s infinite; }
+    @keyframes pulse { 0%,100%{ opacity:1; transform:scale(1); } 50%{ opacity:0.3; transform:scale(1.2); } }
+
+    .vacias-card { background:#ddf6ef; border:1px solid #b2ebd9; border-radius:12px; padding:1rem 1.25rem; }
+    .vacias-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:0.75rem; padding-bottom:0.5rem; border-bottom:1px solid #b2ebd9; }
+    .vacias-pills { display:flex; flex-wrap:wrap; gap:0.5rem; }
+    .vacia-loc-pill { background:white; border:1px solid #93dcc6; border-radius:8px; padding:0.3rem 0.6rem; font-size:0.8rem; font-weight:700; color:#08765e; }
+    
+    .check-label { display:inline-flex; align-items:center; gap:0.4rem; font-size:0.82rem; font-weight:700; cursor:pointer; color:#172b40; user-select:none; }
+    .check-label input { width:16px; height:16px; accent-color:var(--teal); cursor:pointer; }
+
+    .maint-summary-card {
+      background:#fff5f5; border:1px solid #fecaca; border-left:6px solid #e19a68;
+      border-radius:16px; padding:1.25rem 1.5rem; margin-bottom:1.5rem;
+      display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1.25rem;
+    }
+
+    .movs-summary-card {
+      background:#eff6ff; border:1px solid #bfdbfe; border-left:6px solid #3b82f6;
+      border-radius:16px; padding:1.25rem 1.5rem; margin-bottom:1.5rem;
+      display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1.25rem;
+    }
+
+    .pdm-summary-card {
+      background:#faf5ff; border:1px solid #e9d5ff; border-left:6px solid #8b5cf6;
+      border-radius:16px; padding:1.25rem 1.5rem; margin-bottom:1.5rem;
+      display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1.25rem;
+    }
+
+    .inactivity-alert-card {
+      background:#fff7ed; border:1px solid #ffedd5; border-left:6px solid #ea580c;
+      border-radius:16px; padding:1.25rem 1.5rem; margin-bottom:1.5rem;
+      display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1.25rem;
+    }
+
+    .maint-stat-pill {
+      background:white; border:1px solid #fee2e2; border-radius:10px; padding:0.5rem 0.8rem;
+      font-size:0.8rem; font-weight:700; color:#991b1b; display:inline-flex; align-items:center; gap:0.4rem;
+    }
+
+    .counter-badge {
+      background:#eef6ff; border:1px solid #c7d2fe; border-radius:12px; padding:0.75rem 1.25rem;
+      display:inline-flex; align-items:center; gap:0.75rem; font-weight:700; color:#1e40af; margin-bottom:1rem;
+    }
 
     .toast-container { position:fixed; top:20px; right:20px; z-index:2000; display:flex; flex-direction:column; gap:0.5rem; }
     .toast {
       background:white; border-left:5px solid var(--teal); border-radius:10px; padding:0.85rem 1.2rem;
       box-shadow:0 10px 25px rgba(0,0,0,0.15); font-size:0.85rem; font-weight:700; color:var(--ink);
-      animation: toastIn 0.4s ease, toastOut 0.4s ease 2.6s forwards;
+      display:flex; align-items:center; gap:0.75rem; animation: toastIn 0.4s ease, toastOut 0.4s ease 2.6s forwards;
     }
     @keyframes toastIn { from{ transform:translateX(100%); opacity:0; } to{ transform:translateX(0); opacity:1; } }
     @keyframes toastOut { from{ transform:translateX(0); opacity:1; } to{ transform:translateX(100%); opacity:0; } }
 
-    /* ESTILOS GRÁFICOS DEL MÓDULO RAMPAS */
+    .row-finished { animation: flashSuccess 0.8s ease; }
+    @keyframes flashSuccess { 0%{ background:#dcfce7; } 100%{ background:transparent; } }
+    
+    .user-tag-subtle {
+      font-size: 0.72rem; color: #94a3b8; font-weight: 600; background: #f1f5f9;
+      padding: 0.15rem 0.4rem; border-radius: 6px; display: inline-flex; align-items: center; gap: 0.2rem;
+    }
+    
+    .storage-alert-box {
+      background:#faf5ff; border:1px dashed #c084fc; border-radius:10px; padding:0.75rem; margin-top:0.5rem;
+      display:none; color:#6b21a8; font-size:0.82rem; font-weight:700;
+    }
+
+    /* RECORRIDO DIARIO MÓVIL */
+    .recorrido-card-row { display:flex; flex-direction:column; gap:0.6rem; padding:0.85rem 1rem; border-bottom:1px solid var(--line); }
+    .recorrido-card-top { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.75rem; }
+    .recorrido-info-box { display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap; }
+    
+    .touch-btn-group { display:flex; flex-wrap:wrap; gap:0.4rem; width:100%; margin-top:0.2rem; }
+    .touch-btn {
+      flex:1; min-width:85px; padding:0.65rem 0.5rem; border-radius:10px; border:1.5px solid #cbd5e1;
+      background:#ffffff; color:#475569; font-weight:700; font-size:0.82rem;
+      cursor:pointer; transition:all 0.2s cubic-bezier(0.16, 1, 0.3, 1); display:inline-flex; align-items:center; justify-content:center; gap:0.25rem;
+      user-select:none; -webkit-tap-highlight-color: transparent; box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .touch-btn:active { transform:scale(0.94); }
+
+    .touch-btn.sel-vacia { background:#10b981 !important; color:white !important; border-color:#059669 !important; box-shadow:0 3px 12px rgba(16,185,129,0.35); font-weight:800; }
+    .touch-btn.sel-cargada { background:#f59e0b !important; color:white !important; border-color:#d97706 !important; box-shadow:0 3px 12px rgba(245,158,11,0.35); font-weight:800; }
+    .touch-btn.sel-mantenimiento { background:#ef4444 !important; color:white !important; border-color:#dc2626 !important; box-shadow:0 3px 12px rgba(239,68,68,0.35); font-weight:800; }
+    .touch-btn.sel-noesta { background:#64748b !important; color:white !important; border-color:#475569 !important; box-shadow:0 3px 12px rgba(100,116,139,0.35); font-weight:800; }
+    .touch-btn.btn-comments-active { background:#005ac7 !important; color:white !important; border-color:#0033a0 !important; box-shadow:0 3px 12px rgba(0,90,199,0.35); font-weight:800; }
+
+    .comment-preview-tag {
+      display:inline-flex; align-items:center; gap:0.3rem; background:#eff6ff; border:1px solid #bfdbfe; color:#1e40af;
+      font-size:0.78rem; font-weight:700; padding:0.25rem 0.6rem; border-radius:8px; max-width:280px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+    }
+
+    /* CONTADOR BOTÓN INTERACTIVO */
+    .timer-badge {
+      display:inline-flex; align-items:center; gap:0.3rem; background:#f0fdf4; border:1px solid #86efac; color:#166534;
+      font-size:0.8rem; font-weight:800; padding:0.3rem 0.65rem; border-radius:8px; cursor:pointer;
+      transition:all 0.2s ease; user-select:none;
+    }
+    .timer-badge:hover { background:#dcfce7; transform:scale(1.04); box-shadow:0 2px 6px rgba(22,101,52,0.15); }
+    .timer-badge-warning { background:#fff7ed; border-color:#fdba74; color:#c2410c; }
+    .timer-badge-warning:hover { background:#ffedd5; }
+
+    /* TARJETAS QR */
+    .qr-grid-container { display:grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap:1rem; padding:1rem; }
+    .qr-card {
+      background:white; border:2px solid #005ac7; border-radius:12px; padding:1rem;
+      text-align:center; display:flex; flex-direction:column; align-items:center; box-shadow:0 4px 10px rgba(0,0,0,0.05);
+      page-break-inside: avoid;
+    }
+    .qr-card h4 { font-size:1.3rem; font-weight:800; color:#005ac7; margin-bottom:0.2rem; }
+    .qr-card p { font-size:0.75rem; font-weight:700; color:#475569; margin-bottom:0.5rem; }
+    .qr-card .qr-img-box { margin:0.5rem 0; padding:0.5rem; background:#fff; border:1px solid #e2e8f0; border-radius:8px; }
+
+    /* NUEVO MÓDULO DE RAMPAS (ESQUEMA 26 AL 39) */
     .rampas-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 1rem; margin-top: 1rem;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(135px, 1fr)); gap: 1rem; margin-top: 1rem;
     }
     .rampa-box {
       background: white; border: 2px solid #cbd5e1; border-radius: 14px; padding: 1rem 0.5rem;
       text-align: center; cursor: pointer; transition: all 0.25s ease; position: relative;
-      display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 120px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 125px;
     }
     .rampa-box:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0,0,0,0.08); }
     .rampa-number { font-size: 0.85rem; font-weight: 800; color: #64748b; margin-bottom: 0.4rem; text-transform: uppercase; }
     
-    .rampa-status-dot {
-      width: 14px; height: 14px; border-radius: 50%; position: absolute; top: 10px; right: 10px;
-    }
+    .rampa-status-dot { width: 14px; height: 14px; border-radius: 50%; position: absolute; top: 10px; right: 10px; }
     .rampa-status-dot.verde { background: #10b981; box-shadow: 0 0 8px rgba(16,185,129,0.6); }
     .rampa-status-dot.rojo { background: #ef4444; box-shadow: 0 0 8px rgba(239,68,68,0.6); }
     .rampa-status-dot.amarillo { background: #f59e0b; box-shadow: 0 0 10px rgba(245,158,11,0.8); animation: pulseWarning 1.5s infinite; }
@@ -158,16 +306,18 @@
     .rampa-box.amarillo { border-color: #fde68a; background: #fffbeb; }
     .rampa-box.verde { border-color: #a7f3d0; background: #f0fdf4; }
 
-    .timer-badge {
-      display:inline-flex; align-items:center; gap:0.3rem; background:#f0fdf4; border:1px solid #86efac; color:#166534;
-      font-size:0.8rem; font-weight:800; padding:0.3rem 0.65rem; border-radius:8px; cursor:pointer;
+    @media print {
+      body * { visibility: hidden; }
+      #qr-modal, #qr-modal * { visibility: visible; }
+      #qr-modal { position: absolute; left: 0; top: 0; width: 100%; background: white; padding:0; }
+      .no-print { display: none !important; }
+      .qr-grid-container { grid-template-columns: repeat(3, 1fr); gap:0.5rem; }
     }
-    .timer-badge-warning { background:#fff7ed; border-color:#fdba74; color:#c2410c; }
   </style>
 </head>
 <body>
 
-  <!-- LOGIN -->
+  <!-- PANTALLA DE ACCESO RESTRINGIDO -->
   <div id="login-screen" class="login-screen">
     <div class="login-card">
       <div class="brand-icon-box">📦</div>
@@ -201,11 +351,12 @@
     </div>
   </div>
 
+  <!-- OVERLAY DE BIENVENIDA -->
   <div id="welcome-overlay" class="welcome-overlay">
     <div class="welcome-card">
       <div style="font-size:4rem; margin-bottom:1rem;">📦</div>
       <h1 style="font-size:2.2rem; font-weight:800; margin-bottom:0.5rem;" id="welcome-title">¡Bienvenido!</h1>
-      <p style="font-size:1.1rem; opacity:0.9; font-weight:600;">Iniciando centro de operaciones...</p>
+      <p style="font-size:1.1rem; opacity:0.9; font-weight:600;" id="welcome-subtitle">Iniciando centro de operaciones...</p>
     </div>
   </div>
 
@@ -220,6 +371,9 @@
             <div style="color:white; font-weight:800; font-size:0.9rem;">CONTROL DE CAJAS</div>
             <div style="color:#acc0d1; font-size:0.75rem;">MEDLINE LOGISTICS</div>
           </div>
+        </div>
+        <div style="margin-bottom:1.5rem;">
+          <span class="status-online"><span class="dot"></span> Tiempo Real Activo</span>
         </div>
         <nav id="navigation">
           <button type="button" class="nav-button active" data-view="dashboard"><span>📊</span> Dashboard Resumen</button>
@@ -239,7 +393,7 @@
           <div style="background:#005ac7; color:white; border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem;" id="user-avatar">U</div>
           <div>
             <div style="color:white; font-weight:700; font-size:0.8rem;" id="user-display-name">Usuario</div>
-            <div style="color:#94a3b8; font-size:0.7rem;">Sesión Activa</div>
+            <div style="color:#94a3b8; font-size:0.7rem;">Usuario de Sesión</div>
           </div>
         </div>
         <button type="button" id="logout-btn" title="Cerrar sesión" style="background:transparent; border:none; color:#94a3b8; cursor:pointer; font-size:1rem;">🚪</button>
@@ -256,12 +410,16 @@
       </header>
 
       <main>
-        <!-- DASHBOARD VIEW -->
+        <!-- Dashboard View -->
         <section id="dashboard-view">
-          <div id="inactivity-alert-card" style="margin-bottom:1.5rem;"></div>
+          <div id="inactivity-alert-card" class="inactivity-alert-card"></div>
+          <div id="mantenimiento-summary-card" class="maint-summary-card"></div>
+          <div id="pdm-summary-card" class="pdm-summary-card"></div>
+          <div id="movimientos-summary-card" class="movs-summary-card"></div>
+
           <div class="grid">
             <div class="surface module-card msm">
-              <div style="font-weight:800; font-size:1.1rem; margin-bottom:1rem;">Módulo MSM</div>
+              <div style="font-weight:800; font-size:1.1rem; margin-bottom:1rem; color:var(--ink);">Módulo MSM</div>
               <div style="display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap; margin-bottom:1.5rem;">
                 <div class="donut-wrap">
                   <svg viewBox="0 0 120 120">
@@ -275,10 +433,12 @@
                 </div>
                 <div id="msm-legend" style="flex:1; display:flex; flex-direction:column; gap:0.5rem;"></div>
               </div>
+              <div style="font-weight:800; font-size:0.85rem; color:#65778b; margin-bottom:0.5rem;">Desglose de Cajas Vacías por Ubicación</div>
+              <div id="msm-vacias-container"></div>
             </div>
 
             <div class="surface module-card nldc">
-              <div style="font-weight:800; font-size:1.1rem; margin-bottom:1rem;">Módulo NLDC</div>
+              <div style="font-weight:800; font-size:1.1rem; margin-bottom:1rem; color:var(--ink);">Módulo NLDC</div>
               <div style="display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap; margin-bottom:1.5rem;">
                 <div class="donut-wrap">
                   <svg viewBox="0 0 120 120">
@@ -292,22 +452,24 @@
                 </div>
                 <div id="nldc-legend" style="flex:1; display:flex; flex-direction:column; gap:0.5rem;"></div>
               </div>
+              <div style="font-weight:800; font-size:0.85rem; color:#65778b; margin-bottom:0.5rem;">Desglose de Cajas Vacías por Ubicación</div>
+              <div id="nldc-vacias-container"></div>
             </div>
           </div>
         </section>
 
-        <!-- MÓDULO RAMPAS & ANDENES (NUEVO) -->
+        <!-- Rampas & Andenes View -->
         <section id="rampas-view" style="display:none;">
           <div class="surface" style="margin-bottom:1.5rem;">
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
               <div>
-                <h2 style="font-size:1.2rem; font-weight:800; color:#00205b;">Esquema de Andenes de Carga / Descarga</h2>
-                <p style="font-size:0.85rem; color:#64748b;">Haz clic en cualquier andén para consultar o modificar la caja asignada</p>
+                <h2 style="font-size:1.2rem; font-weight:800; color:#00205b;">Esquema de Andenes de Carga / Descarga (26 al 39)</h2>
+                <p style="font-size:0.85rem; color:#64748b;">Selecciona un andén para gestionar, editar o liberar la caja ocupante</p>
               </div>
               <div style="display:flex; gap:1rem; align-items:center; font-size:0.8rem; font-weight:700;">
-                <span>🟢 <small>Libre (Sin datos)</small></span>
-                <span>🔴 <small>Ocupado (&lt; 24h)</small></span>
-                <span>🟡 <small>Alerta (&gt; 24h)</small></span>
+                <span>🟢 Libre (Sin datos)</span>
+                <span>🔴 Ocupado (&lt; 24h)</span>
+                <span>🟡 Alerta (&gt; 24h)</span>
               </div>
             </div>
             
@@ -315,14 +477,37 @@
           </div>
         </section>
 
-        <!-- VISTA DE TABLAS -->
+        <!-- Table View -->
         <section id="table-view" style="display:none;">
+          <div id="module-counter" class="counter-badge" style="display:none;">
+            <span style="font-size:1.2rem;">📦</span>
+            <div>
+              <span style="font-size:0.8rem; text-transform:uppercase; color:#3b82f6; display:block;" id="module-counter-label">Registros en Módulo</span>
+              <strong id="module-count-num" style="font-size:1.4rem; color:#1e3a8a;">0</strong>
+            </div>
+          </div>
+
+          <div id="movimientos-counter" class="counter-badge" style="display:none;">
+            <span style="font-size:1.2rem;">🔄</span>
+            <div>
+              <span style="font-size:0.8rem; text-transform:uppercase; color:#3b82f6; display:block;">Movimientos Realizados</span>
+              <strong id="movimientos-count-num" style="font-size:1.4rem; color:#1e3a8a;">0</strong>
+            </div>
+          </div>
+
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:1rem;">
             <input id="search" class="field" style="max-width:300px;" placeholder="Buscar caja, placas, estado...">
-            <button id="export-button" class="primary" style="padding:0.5rem 1rem; font-size:0.85rem;">📥 Exportar Excel</button>
+            <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+              <button id="scan-qr-button" class="btn-qr" style="display:none;">📷 Escanear QR</button>
+              <button id="print-qr-button" class="btn-qr" style="display:none; background:#4f46e5;">🖨️ Generar Tarjetas QR</button>
+              <button id="reset-recorrido-button" class="btn-reset" style="display:none;">🔄 Reiniciar Estatus</button>
+              <button id="whatsapp-button" class="btn-whatsapp" style="display:none;">📲 Compartir por WhatsApp</button>
+              <button id="export-button" class="primary" style="padding:0.5rem 1rem; font-size:0.85rem;">📥 Exportar Excel</button>
+              <button id="clear-button" class="danger" style="display:none;">Vaciar Tabla</button>
+            </div>
           </div>
           <div class="table-wrap">
-            <table>
+            <table id="main-table">
               <thead id="table-head"></thead>
               <tbody id="table-body"></tbody>
             </table>
@@ -332,7 +517,7 @@
     </div>
   </div>
 
-  <!-- MODAL PRINCIPAL FORMULARIO CAJAS -->
+  <!-- MODAL CAJAS GENERAL -->
   <div id="form-modal" class="modal-backdrop" style="display:none;">
     <div class="surface modal-content" style="width:100%; max-width:500px;">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
@@ -351,6 +536,7 @@
             <option value="NLDC">NLDC</option>
             <option value="PDM">PDM</option>
           </select>
+          <small id="module-auto-hint" style="display:none; color:#0e9f94; font-weight:700; font-size:0.75rem; margin-top:2px;">✨ Módulo detectado automáticamente según inventario</small>
         </div>
         <div style="margin-bottom:0.75rem;" id="location-field-group">
           <label style="font-weight:700; font-size:0.85rem;">Ubicación</label>
@@ -365,7 +551,7 @@
         </div>
         <div style="margin-bottom:0.75rem;">
           <label style="font-weight:700; font-size:0.85rem;">Comentarios</label>
-          <input id="comments" class="field" placeholder="Observaciones...">
+          <input id="comments" class="field" maxlength="160" placeholder="Ej. Cambio de rampa, observaciones...">
         </div>
         <div style="margin-bottom:0.75rem;">
           <label style="font-weight:700; font-size:0.85rem;">Estatus</label>
@@ -375,7 +561,40 @@
             <option value="mantenimiento">mantenimiento</option>
             <option value="storage">storage</option>
           </select>
+          <div id="storage-alert-box" class="storage-alert-box">
+            <span>🟣 <strong>Atención:</strong> La caja se encuentra o cambiará al estatus de <u>Storage</u>.</span>
+          </div>
         </div>
+        <div id="movement-only" style="display:none;">
+          <div style="margin-bottom:0.75rem;">
+            <label style="font-weight:700; font-size:0.85rem;">Tipo de Movimiento</label>
+            <select id="movement-type" class="field">
+              <option value="PATIO-RAMPA">PATIO-RAMPA</option>
+              <option value="RAMPA-PATIO">RAMPA-PATIO</option>
+              <option value="PDM-VENUS">PDM-VENUS</option>
+              <option value="VENUS-PDM">VENUS-PDM</option>
+            </select>
+          </div>
+          <div style="margin-bottom:0.75rem;">
+            <label style="font-weight:700; font-size:0.85rem;">Operador (Maniobra)</label>
+            <input id="movement-operator" class="field" placeholder="Nombre del chofer / operador de la caja">
+          </div>
+          <div style="margin-bottom:0.75rem;">
+            <label style="font-weight:700; font-size:0.85rem;">Solicitud de</label>
+            <input id="movement-requested-by" class="field" placeholder="Persona o área que realiza la solicitud">
+          </div>
+          <div style="margin-bottom:0.75rem;">
+            <label style="font-weight:700; font-size:0.85rem;">Fecha y Hora del Movimiento</label>
+            <input id="movement-datetime" class="field" placeholder="DD/MM/AAAA, HH:mm">
+          </div>
+        </div>
+
+        <div id="delete-box-section" style="display:none; margin-top:1.25rem; padding-top:1rem; border-top:1px solid var(--line);">
+          <button id="delete-single-box-btn" type="button" class="danger" style="width:100%; padding:0.65rem; font-size:0.85rem; display:flex; align-items:center; justify-content:center; gap:0.4rem;">
+            🗑️ Eliminar esta caja del módulo
+          </button>
+        </div>
+
         <div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:1.5rem;">
           <button id="cancel-form" type="button" class="secondary">Cancelar</button>
           <button type="submit" class="primary">Guardar</button>
@@ -384,7 +603,7 @@
     </div>
   </div>
 
-  <!-- MODAL EDITAR RAMPA / ANDÉN -->
+  <!-- MODAL DE EDITAR RAMPA / ANDÉN -->
   <div id="rampa-modal" class="modal-backdrop" style="display:none;">
     <div class="surface modal-content" style="width:100%; max-width:440px;">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
@@ -395,7 +614,7 @@
         <input type="hidden" id="rampa-num-input">
         <div style="margin-bottom:0.75rem;">
           <label style="font-weight:700; font-size:0.85rem;">Número de Caja en Rampa</label>
-          <input id="rampa-caja-input" class="field" placeholder="Dejar en blanco si está libre">
+          <input id="rampa-caja-input" class="field" placeholder="Dejar en blanco para liberar rampa">
         </div>
         <div style="margin-bottom:0.75rem;">
           <label style="font-weight:700; font-size:0.85rem;">Módulo</label>
@@ -425,10 +644,118 @@
     </div>
   </div>
 
+  <!-- MODAL DIRECTO PARA ACTUALIZAR FECHA/HORA DEL CONTADOR -->
+  <div id="timer-edit-modal" class="modal-backdrop" style="display:none;">
+    <div class="surface modal-content" style="width:100%; max-width:440px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; padding-bottom:0.5rem; border-bottom:1px solid var(--line);">
+        <div>
+          <h3 style="font-size:1.15rem; font-weight:800; color:#005ac7;">⏱️ Actualizar Contador</h3>
+          <p style="font-size:0.8rem; color:#64748b;">Caja <strong id="timer-box-num" style="color:#005ac7;">—</strong></p>
+        </div>
+        <button id="close-timer-modal" class="secondary" type="button">✕</button>
+      </div>
+
+      <div style="background:#f0f9ff; border:1px solid #bae6fd; border-radius:12px; padding:1rem; margin-bottom:1.25rem;">
+        <p style="font-size:0.82rem; color:#0c4a6e; margin-bottom:0.75rem; font-weight:600;">
+          Selecciona libremente la fecha y hora de inicio de este contador, o bien reinícialo a 0 días a partir de este momento:
+        </p>
+        <div style="margin-bottom:0.75rem;">
+          <label style="font-weight:700; font-size:0.8rem; color:#0369a1;">Fecha y Hora Libre</label>
+          <input type="datetime-local" id="custom-timer-input" class="field" style="margin-top:4px;">
+        </div>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:0.5rem; flex-wrap:wrap;">
+        <button id="reset-timer-zero-btn" type="button" class="secondary" style="font-size:0.85rem; padding:0.55rem 0.9rem;">🔄 Reiniciar a 0 días</button>
+        <div style="display:flex; gap:0.5rem;">
+          <button id="cancel-timer-btn" type="button" class="secondary">Cancelar</button>
+          <button id="save-timer-btn" type="button" class="primary" style="background:#0284c7;">Guardar Fecha</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE LECTOR DE CÁMARA QR -->
+  <div id="camera-modal" class="modal-backdrop" style="display:none;">
+    <div class="surface modal-content" style="width:100%; max-width:450px; text-align:center;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+        <h3 style="font-size:1.1rem; font-weight:800; color:#4f46e5;">📷 Escanear Código QR de Caja</h3>
+        <button id="close-camera-modal" class="secondary" type="button">✕</button>
+      </div>
+      <p style="font-size:0.82rem; color:#64748b; margin-bottom:1rem;">Apunta la cámara del celular al código QR de la caja</p>
+      
+      <div id="qr-reader-box" style="width:100%; border-radius:12px; overflow:hidden; background:#000;"></div>
+
+      <div style="margin-top:1rem;">
+        <button id="stop-camera-btn" type="button" class="secondary" style="width:100%;">Cerrar Cámara</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE VISTA / IMPRESIÓN DE PLANILLA DE TARJETAS QR -->
+  <div id="qr-modal" class="modal-backdrop" style="display:none; align-items:flex-start; overflow-y:auto; padding:2rem 1rem;">
+    <div class="surface modal-content" style="width:100%; max-width:1100px; background:#f8fafc;">
+      <div class="no-print" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; padding-bottom:1rem; border-bottom:2px solid #cbd5e1;">
+        <div>
+          <h2 style="font-size:1.4rem; font-weight:800; color:#005ac7;">🖨️ Planilla de Tarjetas QR - Medline</h2>
+          <p style="font-size:0.85rem; color:#64748b;">Lista de 80 fichas para pegar en rampa, carpetas o cajas fisicas</p>
+        </div>
+        <div style="display:flex; gap:0.5rem;">
+          <button type="button" class="primary" onclick="window.print()" style="background:#4f46e5;">🖨️ Imprimir / Guardar PDF</button>
+          <button id="close-qr-modal" class="secondary" type="button">✕ Cerrar</button>
+        </div>
+      </div>
+
+      <div id="qr-grid" class="qr-grid-container"></div>
+    </div>
+  </div>
+
+  <!-- MODAL DE REINICIO RECORRIDO CON CONTRASEÑA -->
+  <div id="password-reset-modal" class="modal-backdrop" style="display:none;">
+    <div class="surface modal-content" style="width:100%; max-width:400px; text-align:center;">
+      <div style="font-size:2.5rem; margin-bottom:0.5rem;">🔒</div>
+      <h3 style="font-size:1.2rem; font-weight:800; color:#be123c; margin-bottom:0.25rem;">Confirmar Reinicio de Estatus</h3>
+      <p style="font-size:0.82rem; color:#64748b; margin-bottom:1.25rem;">
+        Ingresa tu contraseña de usuario (<strong id="reset-user-display" style="color:#005ac7;">—</strong>) para desmarcar todas las cajas en el recorrido diario.
+      </p>
+      
+      <div style="text-align:left; margin-bottom:1.25rem;">
+        <label style="font-weight:700; font-size:0.8rem; color:#475569;">Contraseña de Usuario</label>
+        <input type="password" id="reset-password-input" class="field" placeholder="••••••••">
+        <div id="reset-password-error" style="display:none; color:#dc2626; font-size:0.78rem; font-weight:700; margin-top:0.4rem;">Contraseña incorrecta</div>
+      </div>
+
+      <div style="display:flex; justify-content:flex-end; gap:0.5rem;">
+        <button id="cancel-reset-btn" type="button" class="secondary">Cancelar</button>
+        <button id="confirm-reset-btn" type="button" class="primary" style="background:#be123c;">Confirmar y Reiniciar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL COMENTARIOS EN RECORRIDO -->
+  <div id="damage-modal" class="modal-backdrop" style="display:none;">
+    <div class="surface modal-content" style="width:100%; max-width:420px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+        <h3 id="comment-modal-title" style="font-size:1.1rem; font-weight:800; color:#005ac7;">💬 Agregar Comentario</h3>
+        <button id="close-damage-modal" class="secondary" type="button">✕</button>
+      </div>
+      <p style="font-size:0.85rem; color:#475569; margin-bottom:0.75rem;">
+        Observaciones para la caja <strong id="damage-box-label" style="color:#005ac7;">—</strong>:
+      </p>
+      <textarea id="damage-text-input" class="field" rows="3" placeholder="Escribe aquí los comentarios o notas..." style="resize:vertical;"></textarea>
+      
+      <div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:1.25rem;">
+        <button id="cancel-damage-btn" type="button" class="secondary">Cancelar</button>
+        <button id="save-damage-btn" type="button" class="primary">Guardar Nota</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CÓDIGO JAVASCRIPT PRINCIPAL INTEGRADO -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { 
-      getFirestore, collection, onSnapshot, doc, setDoc, deleteDoc, writeBatch 
+      getFirestore, collection, onSnapshot, doc, setDoc, deleteDoc, writeBatch, getDocs 
     } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
@@ -443,6 +770,7 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
+    // USUARIOS Y CONTRASEÑAS AUTORIZADAS (CORRECCIÓN 2)
     const AUTHORIZED_USERS = {
       "Erick M": "reportevenus",
       "Alejandro G": "medline2026",
@@ -451,16 +779,170 @@
       "Felipe H (sistemas)": "Sistemas2026",
       "Veronica P": "NLDCMSM26",
       "Jgrimaldo": "Aitana13",
-      "usuarioPDM": "MedlinePDM1" // NUEVO USUARIO Y CONTRASEÑA
+      "usuarioPDM": "MedlinePDM1"
     };
 
-    let boxes = [];
+    const catalogNLDC = [
+      '529953','536393','538338','538351','538612','538638','539124','539199','539705','547006',
+      '523003','523962','524194','529581','529940','538206','539568','546991','547002','561003',
+      '536536','537981','537983','538144','538180','538614','538823','539581','539867','563904',
+      '563913','563949','564066','564081','564085','564249','564263','564272','564630','564640'
+    ];
+
+    const catalogMSM = [
+      '530020','536507','536544','546962','546985','520795','536640','537959','538189','538386',
+      '546973','547033','560954','564036','536521','536633','537969','530010','530018','539051',
+      '551168','536649','537986','564092','564240','546995','564173','564123','539222','564105',
+      '563872','564070','564028','564237','538618','538641','564650','564033','564273','563915'
+    ];
+
+    const rawPlacasData = [
+      { caja: '520795', placas: '6380KI', estado: 'OK', mfgYear: '2015', make: 'Vanguard' },
+      { caja: '523003', placas: '25523AB', estado: 'WA', mfgYear: '2012', make: 'Wabash' },
+      { caja: '523962', placas: '25605AB', estado: 'WA', mfgYear: '2013', make: 'Wabash' },
+      { caja: '524194', placas: '47509AB', estado: 'WA', mfgYear: '2014', make: 'Wabash' },
+      { caja: '529581', placas: '28132AD', estado: 'WA', mfgYear: '2013', make: 'Wabash' },
+      { caja: '529940', placas: '29599AD', estado: 'WA', mfgYear: '2013', make: 'Wabash' },
+      { caja: '529953', placas: '29607AD', estado: 'WA', mfgYear: '2013', make: 'Wabash' },
+      { caja: '530010', placas: '4NL1001', estado: 'CA', mfgYear: '2015', make: 'Hyundai' },
+      { caja: '530018', placas: '4NL1016', estado: 'CA', mfgYear: '2015', make: 'Hyundai' },
+      { caja: '530020', placas: '4NL1017', estado: 'CA', mfgYear: '2015', make: 'Hyundai' },
+      { caja: '536393', placas: '4MB9100', estado: 'CA', mfgYear: '2013', make: 'Hyundai' },
+      { caja: '536507', placas: '4MZ8702', estado: 'CA', mfgYear: '2015', make: 'Hyundai' },
+      { caja: '536521', placas: '4MZ8727', estado: 'CA', mfgYear: '2015', make: 'Hyundai' },
+      { caja: '536536', placas: '4MZ8724', estado: 'CA', mfgYear: '2015', make: 'Hyundai' },
+      { caja: '536544', placas: '4MZ8739', estado: 'CA', mfgYear: '2015', make: 'Hyundai' },
+      { caja: '536633', placas: '18085AH', estado: 'WA', mfgYear: '2015', make: 'Utility' },
+      { caja: '536640', placas: '18092AH', estado: 'WA', mfgYear: '2015', make: 'Utility' },
+      { caja: '536649', placas: '19001AH', estado: 'WA', mfgYear: '2015', make: 'Utility' },
+      { caja: '537959', placas: '18026AH', estado: 'WA', mfgYear: '2015', make: 'Utility' },
+      { caja: '537969', placas: '18036AH', estado: 'WA', mfgYear: '2015', make: 'Utility' },
+      { caja: '537981', placas: '18048AH', estado: 'WA', mfgYear: '2015', make: 'Utility' },
+      { caja: '537983', placas: '18050AH', estado: 'WA', mfgYear: '2015', make: 'Utility' },
+      { caja: '537986', placas: '18053AH', estado: 'WA', mfgYear: '2015', make: 'Utility' },
+      { caja: '538144', placas: '4XK7881', estado: 'CA', mfgYear: '2015', make: 'Hyundai' },
+      { caja: '538180', placas: '4ND3466', estado: 'CA', mfgYear: '2015', make: 'Hyundai' },
+      { caja: '538189', placas: '4ND3460', estado: 'CA', mfgYear: '2015', make: 'Hyundai' },
+      { caja: '538206', placas: '4ND3430', estado: 'CA', mfgYear: '2015', make: 'Hyundai' },
+      { caja: '538338', placas: '4MH2678', estado: 'CA', mfgYear: '2013', make: 'Hyundai' },
+      { caja: '538351', placas: '4MH2680', estado: 'CA', mfgYear: '2013', make: 'Hyundai' },
+      { caja: '538386', placas: '4MH2812', estado: 'CA', mfgYear: '2013', make: 'Hyundai' },
+      { caja: '538612', placas: '4MK5533', estado: 'CA', mfgYear: '2013', make: 'Hyundai' },
+      { caja: '538614', placas: '4MK5535', estado: 'CA', mfgYear: '2013', make: 'Hyundai' },
+      { caja: '538618', placas: '4MK5540', estado: 'CA', mfgYear: '2013', make: 'Hyundai' },
+      { caja: '538638', placas: '4MK5507', estado: 'CA', mfgYear: '2013', make: 'Hyundai' },
+      { caja: '538641', placas: '4MK5510', estado: 'CA', mfgYear: '2013', make: 'Hyundai' },
+      { caja: '538823', placas: '4MM5007', estado: 'CA', mfgYear: '2014', make: 'Hyundai' },
+      { caja: '539051', placas: '4MM5125', estado: 'CA', mfgYear: '2014', make: 'Hyundai' },
+      { caja: '539124', placas: '4MP5213', estado: 'CA', mfgYear: '2014', make: 'Hyundai' },
+      { caja: '539199', placas: '4WD8659', estado: 'CA', mfgYear: '2014', make: 'Hyundai' },
+      { caja: '539222', placas: '4WP3642', estado: 'CA', mfgYear: '2014', make: 'Hyundai' },
+      { caja: '539568', placas: '4MV3553', estado: 'CA', mfgYear: '2014', make: 'Hyundai' },
+      { caja: '539581', placas: '4MV3399', estado: 'CA', mfgYear: '2014', make: 'Hyundai' },
+      { caja: '539705', placas: '3580LI', estado: 'OK', mfgYear: '2015', make: 'Utility' },
+      { caja: '539867', placas: '4MW4065', estado: 'CA', mfgYear: '2014', make: 'Hyundai' },
+      { caja: '546962', placas: '9026JK', estado: 'OK', mfgYear: '2012', make: 'Hyundai' },
+      { caja: '546973', placas: 'BU8212', estado: 'OK', mfgYear: '2012', make: 'Hyundai' },
+      { caja: '546985', placas: '9049JK', estado: 'OK', mfgYear: '2012', make: 'Hyundai' },
+      { caja: '546991', placas: '3968JS', estado: 'OK', mfgYear: '2012', make: 'Hyundai' },
+      { caja: '546995', placas: '3972JS', estado: 'OK', mfgYear: '2012', make: 'Hyundai' },
+      { caja: '547002', placas: '3979JS', estado: 'OK', mfgYear: '2012', make: 'Hyundai' },
+      { caja: '547006', placas: '3983JS', estado: 'OK', mfgYear: '2012', make: 'Hyundai' },
+      { caja: '547033', placas: 'CS4479', estado: 'OK', mfgYear: '2012', make: 'Hyundai' },
+      { caja: '551168', placas: '63895AD', estado: 'WA', mfgYear: '2012', make: 'Great Dane' },
+      { caja: '560954', placas: '4XD5946', estado: 'CA', mfgYear: '2013', make: 'Road Systems' },
+      { caja: '561003', placas: '4XA7331', estado: 'CA', mfgYear: '2013', make: 'Road Systems' },
+      { caja: '563872', placas: '4XU1412', estado: 'CA', mfgYear: '2015', make: 'Road Systems' },
+      { caja: '563904', placas: '4XN1615', estado: 'CA', mfgYear: '2015', make: 'Road Systems' },
+      { caja: '563913', placas: '4XN1616', estado: 'CA', mfgYear: '2015', make: 'Road Systems' },
+      { caja: '563915', placas: '4XU1626', estado: 'CA', mfgYear: '2015', make: 'Road Systems' },
+      { caja: '563949', placas: '4XN1641', estado: 'CA', mfgYear: '2015', make: 'Road Systems' },
+      { caja: '564028', placas: '4XU1415', estado: 'CA', mfgYear: '2015', make: 'Road Systems' },
+      { caja: '564033', placas: '4XU1629', estado: 'CA', mfgYear: '2015', make: 'Road Systems' },
+      { caja: '564036', placas: '4XN1618', estado: 'CA', mfgYear: '2015', make: 'Road Systems' },
+      { caja: '564066', placas: '4xn1619', estado: 'CA', mfgYear: '2015', make: 'Road Systems' },
+      { caja: '564070', placas: '4XN1620', estado: 'CA', mfgYear: '2015', make: 'Road Systems' },
+      { caja: '564081', placas: '4XN1621', estado: 'CA', mfgYear: '2015', make: 'Road Systems' },
+      { caja: '564085', placas: '4XN1642', estado: 'CA', mfgYear: '2015', make: 'Road Systems' },
+      { caja: '564092', placas: '4XN1643', estado: 'CA', mfgYear: '2015', make: 'Road Systems' },
+      { caja: '564105', placas: '4XN1644', estado: 'CA', mfgYear: '2015', make: 'Road Systems' },
+      { caja: '564123', placas: '4XN1645', estado: 'CA', mfgYear: '2015', make: 'Road Systems' },
+      { caja: '564173', placas: '4XN1648', estado: 'CA', mfgYear: '2015', make: 'Road Systems' },
+      { caja: '564237', placas: '4XU1421', estado: 'CA', mfgYear: '2015', make: 'Road Systems' },
+      { caja: '564240', placas: '4XN1650', estado: 'CA', mfgYear: '2015', make: 'Road Systems' },
+      { caja: '564249', placas: '4XN1651', estado: 'CA', mfgYear: '2015', make: 'Road Systems' },
+      { caja: '564263', placas: '4XN1653', estado: 'CA', mfgYear: '2015', make: 'Road Systems' },
+      { caja: '564272', placas: '4XN1654', estado: 'CA', mfgYear: '2015', make: 'Road Systems' },
+      { caja: '564273', placas: '4XU1634', estado: 'CA', mfgYear: '2015', make: 'Road Systems' },
+      { caja: '564630', placas: '4XN1622', estado: 'CA', mfgYear: '2015', make: 'Conway' },
+      { caja: '564640', placas: '4XN1623', estado: 'CA', mfgYear: '2015', make: 'Road Systems' },
+      { caja: '564650', placas: '4XU1423', estado: 'CA', mfgYear: '2015', make: 'Road Systems' }
+    ];
+
+    const placasMap = {};
+    rawPlacasData.forEach(item => { placasMap[item.caja] = `${item.placas} ${item.estado}`; });
+
+    const placasReportData = rawPlacasData.map(item => {
+      const mod = catalogMSM.includes(item.caja) ? 'MSM' : catalogNLDC.includes(item.caja) ? 'NLDC' : '—';
+      return { ...item, modulo: mod };
+    });
+
+    let recorridoDataMap = {};
     let pdmBoxesList = [];
     let rampasMap = {};
-    let view = 'dashboard';
-    let currentUser = localStorage.getItem('medline_user') || null;
+    let html5QrCodeScanner = null;
 
-    if (currentUser) {
+    let boxes = [];
+    let movements = [];
+    let view = 'dashboard';
+    let editingDocId = null;
+    let editingPdmDocId = null;
+    let currentUser = null;
+    let activeDamageCaja = null;
+    let activeModalMode = 'comments';
+    let activeTimerBox = null; 
+
+    let sortColumn = null;
+    let sortAsc = true;
+
+    const locationColors = {
+      'Venus': '#078779',
+      'Milton': '#42658d',
+      'ISC': '#e19a68',
+      'McKinney': '#8f7ac8',
+      'PDM': '#3b82f6',
+      'Otro': '#81a9d1'
+    };
+
+    function detectModuleByBoxNumber(boxNum) {
+      if (!boxNum) return null;
+      const cleanNum = boxNum.trim().toUpperCase();
+      const foundInBoxes = boxes.find(b => b.number === cleanNum);
+      if (foundInBoxes && foundInBoxes.module) return foundInBoxes.module;
+      if (catalogMSM.includes(cleanNum)) return 'MSM';
+      if (catalogNLDC.includes(cleanNum)) return 'NLDC';
+      return null;
+    }
+
+    // CORRECCIÓN 1: CÁLCULO DE DÍAS TRANSCURRIDOS DE FORMA EXACTA
+    function formatElapsedTime(timestampMillis) {
+      if (!timestampMillis) return '0 días';
+      const now = Date.now();
+      let diffMs = now - timestampMillis;
+      if (diffMs < 0) diffMs = 0;
+
+      const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+      if (days === 1) {
+        return `⏱️ 1 día`;
+      } else {
+        return `⏱️ ${days} días`;
+      }
+    }
+
+    const savedUser = localStorage.getItem('medline_user');
+    if (savedUser) {
+      currentUser = savedUser;
       updateUserUI();
       document.getElementById('login-screen').classList.add('hidden');
     }
@@ -471,21 +953,35 @@
       const pwd = document.getElementById('password-input').value.trim();
       const errEl = document.getElementById('login-error');
 
-      if (selectedUser && AUTHORIZED_USERS[selectedUser] && pwd === AUTHORIZED_USERS[selectedUser]) {
-        errEl.style.display = 'none';
-        currentUser = selectedUser;
-        localStorage.setItem('medline_user', currentUser);
-        updateUserUI();
-        document.getElementById('login-screen').classList.add('hidden');
-        showToast(`Bienvenido, ${currentUser}`);
-      } else {
-        errEl.style.display = 'block';
+      if (selectedUser && AUTHORIZED_USERS[selectedUser]) {
+        if (pwd === AUTHORIZED_USERS[selectedUser]) {
+          errEl.style.display = 'none';
+          currentUser = selectedUser;
+          localStorage.setItem('medline_user', currentUser);
+          updateUserUI();
+
+          document.getElementById('login-screen').classList.add('hidden');
+
+          const welcomeOverlay = document.getElementById('welcome-overlay');
+          document.getElementById('welcome-title').textContent = `¡Bienvenido, ${currentUser}!`;
+          welcomeOverlay.classList.add('active');
+
+          setTimeout(() => {
+            welcomeOverlay.classList.remove('active');
+            showToast(`Sesión iniciada como ${currentUser}`);
+          }, 2200);
+
+        } else {
+          errEl.textContent = 'Contraseña incorrecta';
+          errEl.style.display = 'block';
+        }
       }
     };
 
-    document.getElementById('logout-btn').onclick = () => {
+    document.getElementById('logout-btn').onclick = function() {
       localStorage.removeItem('medline_user');
       currentUser = null;
+      document.getElementById('password-input').value = '';
       document.getElementById('login-screen').classList.remove('hidden');
     };
 
@@ -500,36 +996,163 @@
       const container = document.getElementById('toast-container');
       const toast = document.createElement('div');
       toast.className = 'toast';
-      toast.innerHTML = `<span>✨</span> <span>${msg}</span>`;
+      toast.innerHTML = `<span>✨</span><span>${msg}</span>`;
       container.appendChild(toast);
       setTimeout(() => toast.remove(), 3000);
     }
 
-    // CÁLCULO PRECISO DE DÍAS TRANSCURRIDOS (CORRECCIÓN 1)
-    function formatElapsedTime(timestampMillis) {
-      if (!timestampMillis) return '0 días';
-      const now = Date.now();
-      const diffMs = Math.max(0, now - timestampMillis);
-      const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-      return `⏱️ ${days} ${days === 1 ? 'día' : 'días'}`;
-    }
-
-    // LISTENERS DE FIREBASE EN TIEMPO REAL
+    // LISTENERS EN TIEMPO REAL CON FIREBASE
     onSnapshot(collection(db, "boxes"), (snapshot) => {
       boxes = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       render();
     });
 
+    onSnapshot(collection(db, "movements"), (snapshot) => {
+      movements = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      render();
+    });
+
     onSnapshot(collection(db, "pdm_boxes"), (snapshot) => {
       pdmBoxesList = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      render();
+      if (view === 'PDM' || view === 'dashboard') {
+        render();
+      }
+    });
+
+    onSnapshot(collection(db, "daily_tours"), (snapshot) => {
+      recorridoDataMap = {};
+      snapshot.docs.forEach(doc => {
+        recorridoDataMap[doc.id] = doc.data();
+      });
+      if (view === 'recorrido') {
+        renderTable();
+      }
     });
 
     onSnapshot(collection(db, "rampas"), (snapshot) => {
       rampasMap = {};
-      snapshot.docs.forEach(d => { rampasMap[d.id] = d.data(); });
-      if (view === 'rampas') renderRampas();
+      snapshot.docs.forEach(doc => {
+        rampasMap[doc.id] = doc.data();
+      });
+      if (view === 'rampas') {
+        renderRampas();
+      }
     });
+
+    async function updateGlobalStatusInFirebase(num, mod, newSt, commentsVal, locationVal) {
+      const batch = writeBatch(db);
+      const nowStr = new Date().toLocaleString('es-MX');
+      const nowTs = Date.now();
+
+      const matchingBoxes = boxes.filter(b => b.number === num);
+
+      if (matchingBoxes.length > 0) {
+        matchingBoxes.forEach(b => {
+          const updateObj = { status: newSt, lastUpdatedTimestamp: nowTs };
+          if (locationVal) updateObj.location = locationVal;
+          if (newSt === 'mantenimiento') {
+            updateObj.mantenimientoDate = b.mantenimientoDate || nowStr;
+            updateObj.reportadoReparaciones = b.reportadoReparaciones || false;
+            if (commentsVal) updateObj.comments = commentsVal;
+          } else {
+            updateObj.mantenimientoDate = null;
+            updateObj.reportadoReparaciones = false;
+          }
+          batch.update(doc(db, "boxes", b.id), updateObj);
+        });
+      } else {
+        const targetModule = mod || detectModuleByBoxNumber(num) || 'MSM';
+        const newDocId = `${targetModule}_${num}`;
+        
+        const newBoxPayload = {
+          number: num,
+          module: targetModule,
+          location: locationVal || 'Venus',
+          comments: commentsVal || 'Reportado desde sistema',
+          status: newSt,
+          lastUpdatedTimestamp: nowTs,
+          recordedBy: currentUser || 'Sistema'
+        };
+
+        if (newSt === 'mantenimiento') {
+          newBoxPayload.mantenimientoDate = nowStr;
+          newBoxPayload.reportadoReparaciones = false;
+        }
+
+        batch.set(doc(db, "boxes", newDocId), newBoxPayload, { merge: true });
+      }
+
+      await batch.commit();
+    }
+
+    async function updateRecorridoInFirebase(cajaNum, estatusVal, comentariosVal) {
+      const docId = `REC_${cajaNum}`;
+      const payload = {
+        caja: cajaNum,
+        updatedBy: currentUser || 'Sistema',
+        updatedAt: new Date().toLocaleString('es-MX')
+      };
+
+      if (estatusVal !== null) {
+        payload.estatusRecorrido = estatusVal;
+      }
+      if (comentariosVal !== undefined) {
+        payload.comentarios = comentariosVal;
+      }
+
+      await setDoc(doc(db, "daily_tours", docId), payload, { merge: true });
+
+      if (estatusVal === 'mantenimiento' || estatusVal === 'vacia' || estatusVal === 'cargada') {
+        const targetMod = detectModuleByBoxNumber(cajaNum);
+        await updateGlobalStatusInFirebase(cajaNum, targetMod, estatusVal, comentariosVal);
+      }
+    }
+
+    async function createPdmBoxCopyFromMovement(movId) {
+      const mov = movements.find(m => m.id === movId);
+      if (!mov) return;
+
+      const nowTs = Date.now();
+      const nowStr = new Date().toLocaleString('es-MX');
+      const newPdmDocId = `PDM_${mov.number}_${nowTs}`;
+
+      await setDoc(doc(db, "pdm_boxes", newPdmDocId), {
+        number: mov.number,
+        comments: mov.comments || 'Copiado desde Movimientos Diarios',
+        datetime: nowStr,
+        timestamp: nowTs,
+        status: 'vacia',
+        recordedBy: currentUser || 'Sistema'
+      });
+
+      showToast(`Caja PDM ${mov.number} copiada al Módulo Cajas PDM`);
+    }
+
+    function getInverseMovementType(currentType) {
+      switch (currentType) {
+        case 'PATIO-RAMPA': return 'RAMPA-PATIO';
+        case 'RAMPA-PATIO': return 'PATIO-RAMPA';
+        case 'PDM-VENUS': return 'VENUS-PDM';
+        case 'VENUS-PDM': return 'PDM-VENUS';
+        default: return 'RAMPA-PATIO';
+      }
+    }
+
+    function getMergedRecorridoList() {
+      return rawPlacasData.map(item => {
+        const mod = catalogMSM.includes(item.caja) ? 'MSM' : catalogNLDC.includes(item.caja) ? 'NLDC' : '—';
+        const firebaseDoc = recorridoDataMap[`REC_${item.caja}`];
+        return {
+          id: `REC_${item.caja}`,
+          caja: item.caja,
+          placas: item.placas,
+          estadoPlaca: item.estado,
+          modulo: mod,
+          estatusRecorrido: firebaseDoc ? firebaseDoc.estatusRecorrido : 'none',
+          comentarios: firebaseDoc ? firebaseDoc.comentarios : ''
+        };
+      });
+    }
 
     function render() {
       document.querySelectorAll('#navigation button').forEach(b => {
@@ -538,7 +1161,12 @@
 
       document.getElementById('view-title').textContent = 
         view === 'dashboard' ? 'Dashboard Resumen' : 
-        view === 'rampas' ? 'Módulo de Rampas & Andenes' : 'Módulo ' + view;
+        view === 'rampas' ? 'Módulo de Rampas & Andenes' :
+        view === 'recorrido' ? 'Recorrido Diario (Móvil)' :
+        view === 'movimientos' ? 'Movimientos Diarios' : 
+        view === 'mantenimiento' ? 'Módulo de Mantenimiento' : 
+        view === 'PDM' ? 'Módulo Cajas PDM' :
+        view === 'placas' ? 'Reporte de Placas General' : 'Módulo ' + view;
 
       document.getElementById('dashboard-view').style.display = view === 'dashboard' ? 'block' : 'none';
       document.getElementById('rampas-view').style.display = view === 'rampas' ? 'block' : 'none';
@@ -546,6 +1174,11 @@
 
       if (view === 'dashboard') {
         renderInactivityAlert();
+        renderMantenimientoSummary();
+        renderPdmSummary();
+        renderMovimientosSummary();
+        renderModule('MSM');
+        renderModule('NLDC');
       } else if (view === 'rampas') {
         renderRampas();
       } else {
@@ -553,27 +1186,44 @@
       }
     }
 
-    // ALERTA DE INACTIVIDAD CON DÍAS REALES (>3 DÍAS)
     function renderInactivityAlert() {
       const now = Date.now();
       const THREE_DAYS_MS = 3 * 24 * 60 * 60 * 1000;
-      const inactive = boxes.filter(b => (b.status || '').toLowerCase() === 'cargada' && b.lastUpdatedTimestamp && (now - b.lastUpdatedTimestamp) > THREE_DAYS_MS);
 
+      const inactiveBoxes = boxes.filter(b => {
+        const isCargada = (b.status || '').toLowerCase() === 'cargada';
+        if (!isCargada || !b.lastUpdatedTimestamp) return false;
+        return (now - b.lastUpdatedTimestamp) > THREE_DAYS_MS;
+      });
+
+      const totalInactive = inactiveBoxes.length;
       const card = document.getElementById('inactivity-alert-card');
-      if (inactive.length === 0) { card.style.display = 'none'; return; }
 
-      card.style.display = 'block';
-      const pills = inactive.map(b => `<span style="background:white; border:1px solid #fdba74; border-radius:6px; padding:0.2rem 0.5rem; font-size:0.8rem; font-weight:800; color:#c2410c;">📦 ${b.number} (${formatElapsedTime(b.lastUpdatedTimestamp)})</span>`).join(' ');
+      if (totalInactive === 0) {
+        card.style.display = 'none';
+        return;
+      }
+
+      card.style.display = 'flex';
+      const boxPills = inactiveBoxes.map(b => `<span style="background:white; border:1px solid #fed7aa; border-radius:6px; padding:0.15rem 0.5rem; font-size:0.78rem; font-weight:800; color:#c2410c;">📦 ${b.number} (${formatElapsedTime(b.lastUpdatedTimestamp)})</span>`).join(' ');
 
       card.innerHTML = `
-        <div style="background:#fff7ed; border-left:6px solid #ea580c; border-radius:12px; padding:1.25rem;">
-          <h4 style="color:#ea580c; font-size:0.9rem; font-weight:800;">⚠️ ALERTA: CAJAS CARGADAS SIN MOVIMIENTO (> 3 DÍAS)</h4>
-          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.5rem;">${pills}</div>
+        <div style="display:flex; align-items:center; gap:1rem;">
+          <div style="background:#ffedd5; border-radius:12px; padding:0.75rem; font-size:1.5rem;">⚠️</div>
+          <div>
+            <div style="font-size:0.8rem; font-weight:800; color:#ea580c; text-transform:uppercase;">Alerta: Cajas Cargadas Inactivas (> 3 Días)</div>
+            <div style="font-size:1.1rem; font-weight:800; color:#172b40; margin-top:0.1rem;">
+              ${totalInactive} ${totalInactive === 1 ? 'caja en estatus CARGADA lleva' : 'cajas en estatus CARGADA llevan'} más de 3 días sin movimiento
+            </div>
+            <div style="display:flex; gap:0.4rem; flex-wrap:wrap; margin-top:0.5rem;">
+              ${boxPills}
+            </div>
+          </div>
         </div>
       `;
     }
 
-    // MÓDULO RAMPAS & ANDENES (ANDENES 26 AL 39)
+    // CORRECCIÓN 3: ESQUEMA DE ANDENES DE RAMPAS (26 AL 39)
     function renderRampas() {
       const container = document.getElementById('rampas-container');
       container.innerHTML = '';
@@ -651,68 +1301,1012 @@
       showToast(`Andén ${num} liberado`);
     };
 
-    // RENDERIZADO DE TABLAS GENERALES
+    function renderMantenimientoSummary() {
+      const maintBoxes = boxes.filter(b => b.status === 'mantenimiento');
+      const totalMaint = maintBoxes.length;
+      const msmMaint = maintBoxes.filter(b => b.module === 'MSM').length;
+      const nldcMaint = maintBoxes.filter(b => b.module === 'NLDC').length;
+      const reportadas = maintBoxes.filter(b => b.reportadoReparaciones).length;
+      const pendientes = totalMaint - reportadas;
+
+      const card = document.getElementById('mantenimiento-summary-card');
+      card.innerHTML = `
+        <div style="display:flex; align-items:center; gap:1rem;">
+          <div style="background:#fee2e2; border-radius:12px; padding:0.75rem; font-size:1.5rem;">🛠️</div>
+          <div>
+            <div style="font-size:0.8rem; font-weight:800; color:#991b1b; text-transform:uppercase;">Estatus Mantenimiento Global</div>
+            <div style="font-size:1.1rem; font-weight:800; color:#172b40; margin-top:0.1rem;">
+              ${totalMaint} ${totalMaint === 1 ? 'caja requiere' : 'cajas requieren'} reparación
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex; align-items:center; gap:0.6rem; flex-wrap:wrap;">
+          <div class="maint-stat-pill">🏢 MSM: <strong>${msmMaint}</strong></div>
+          <div class="maint-stat-pill">🏭 NLDC: <strong>${nldcMaint}</strong></div>
+          <div class="maint-stat-pill" style="background:#f0fdf4; border-color:#bbf7d0; color:#166534;">✅ Reportadas: <strong>${reportadas}</strong></div>
+          <div class="maint-stat-pill" style="background:#fef2f2; border-color:#fecaca; color:#991b1b;">⏳ Pendientes: <strong>${pendientes}</strong></div>
+        </div>
+      `;
+    }
+
+    function renderPdmSummary() {
+      const totalPdm = pdmBoxesList.length;
+      const vaciasPdm = pdmBoxesList.filter(b => (b.status || 'vacia') === 'vacia').length;
+      const cargadasPdm = pdmBoxesList.filter(b => b.status === 'cargada').length;
+
+      const card = document.getElementById('pdm-summary-card');
+      card.innerHTML = `
+        <div style="display:flex; align-items:center; gap:1rem;">
+          <div style="background:#f3e8ff; border-radius:12px; padding:0.75rem; font-size:1.5rem;">📦</div>
+          <div>
+            <div style="font-size:0.8rem; font-weight:800; color:#6b21a8; text-transform:uppercase;">Módulo Cajas PDM</div>
+            <div style="font-size:1.1rem; font-weight:800; color:#172b40; margin-top:0.1rem;">
+              ${totalPdm} ${totalPdm === 1 ? 'caja registrada' : 'cajas registradas'} en PDM
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex; align-items:center; gap:0.6rem; flex-wrap:wrap;">
+          <div class="maint-stat-pill" style="background:#f0fdf4; border-color:#bbf7d0; color:#166534;">🟢 Vacías: <strong>${vaciasPdm}</strong></div>
+          <div class="maint-stat-pill" style="background:#fffbeb; border-color:#fde68a; color:#b45309;">🟡 Cargadas: <strong>${cargadasPdm}</strong></div>
+        </div>
+      `;
+    }
+
+    function renderMovimientosSummary() {
+      const totalMovs = movements.length;
+      const msmMovs = movements.filter(m => m.module === 'MSM').length;
+      const nldcMovs = movements.filter(m => m.module === 'NLDC').length;
+      const pdmMovs = movements.filter(m => m.module === 'PDM').length;
+
+      const card = document.getElementById('movimientos-summary-card');
+      card.innerHTML = `
+        <div style="display:flex; align-items:center; gap:1rem;">
+          <div style="background:#dbeafe; border-radius:12px; padding:0.75rem; font-size:1.5rem;">🔄</div>
+          <div>
+            <div style="font-size:0.8rem; font-weight:800; color:#1e40af; text-transform:uppercase;">Movimientos Diarios Registrados</div>
+            <div style="font-size:1.1rem; font-weight:800; color:#172b40; margin-top:0.1rem;">
+              ${totalMovs} ${totalMovs === 1 ? 'movimiento realizado' : 'movimientos realizados'}
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex; align-items:center; gap:0.6rem; flex-wrap:wrap;">
+          <div class="maint-stat-pill" style="background:#eff6ff; border-color:#bfdbfe; color:#1e40af;">🏢 MSM: <strong>${msmMovs}</strong></div>
+          <div class="maint-stat-pill" style="background:#f0fdf4; border-color:#bbf7d0; color:#166534;">🏭 NLDC: <strong>${nldcMovs}</strong></div>
+          <div class="maint-stat-pill" style="background:#fef3c7; border-color:#fde68a; color:#92400e;">📦 PDM: <strong>${pdmMovs}</strong></div>
+        </div>
+      `;
+    }
+
+    function renderModule(mod) {
+      const prefix = mod.toLowerCase();
+      const list = boxes.filter(b => b.module === mod);
+      const total = list.length;
+      document.getElementById(prefix + '-total-center').textContent = total;
+
+      const locCounts = {};
+      list.forEach(b => {
+        const loc = b.location || 'Venus';
+        locCounts[loc] = (locCounts[loc] || 0) + 1;
+      });
+
+      const group = document.getElementById(prefix + '-segments');
+      group.innerHTML = '';
+      const circumference = 2 * Math.PI * 46;
+      let offset = 0;
+
+      const locationsList = Object.keys(locCounts);
+
+      locationsList.forEach(loc => {
+        const count = locCounts[loc];
+        const color = locationColors[loc] || '#81a9d1';
+        if (count > 0 && total > 0) {
+          const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+          circle.setAttribute('cx', '60'); circle.setAttribute('cy', '60'); circle.setAttribute('r', '46');
+          circle.setAttribute('fill', 'none'); circle.setAttribute('stroke', color);
+          circle.setAttribute('stroke-width', '13');
+          circle.setAttribute('stroke-dasharray', ((count / total) * circumference) + ' ' + circumference);
+          circle.setAttribute('stroke-dashoffset', -offset);
+          group.appendChild(circle);
+          offset += (count / total) * circumference;
+        }
+      });
+
+      const legend = document.getElementById(prefix + '-legend');
+      legend.innerHTML = '';
+      locationsList.forEach(loc => {
+        const count = locCounts[loc];
+        const pct = total ? Math.round((count / total) * 100) : 0;
+        const color = locationColors[loc] || '#81a9d1';
+        const row = document.createElement('div');
+        row.style.cssText = 'display:flex; align-items:center; gap:0.5rem; font-size:0.85rem; background:#f5f8fa; padding:0.4rem 0.6rem; border-radius:8px;';
+        row.innerHTML = `<span style="width:10px; height:10px; border-radius:50%; background:${color}"></span><span style="flex:1; font-weight:600;">${loc}</span><b>${count} (${pct}%)</b>`;
+        legend.appendChild(row);
+      });
+
+      const vaciasList = list.filter(b => (b.status || '').toLowerCase() === 'vacia');
+      const vaciasTotal = vaciasList.length;
+
+      const vaciasLocCounts = {};
+      vaciasList.forEach(b => {
+        const loc = b.location || 'Venus';
+        vaciasLocCounts[loc] = (vaciasLocCounts[loc] || 0) + 1;
+      });
+
+      let vaciasPillsHTML = '';
+      const vaciasLocKeys = Object.keys(vaciasLocCounts);
+
+      if (vaciasLocKeys.length === 0) {
+        vaciasPillsHTML = `<span style="font-size:0.8rem; font-weight:600; color:#08765e;">No hay cajas vacías registradas.</span>`;
+      } else {
+        vaciasLocKeys.forEach(loc => {
+          vaciasPillsHTML += `<div class="vacia-loc-pill"><span>${loc}:</span> <strong>${vaciasLocCounts[loc]}</strong></div>`;
+        });
+      }
+
+      const vaciasContainer = document.getElementById(prefix + '-vacias-container');
+      vaciasContainer.innerHTML = `
+        <div class="vacias-card">
+          <div class="vacias-header">
+            <div>
+              <div style="font-size:0.8rem; font-weight:800; color:#08765e; text-transform:uppercase;">Estatus Vacía</div>
+              <div style="font-size:0.8rem; font-weight:600; color:#172b40;">Cajas disponibles para uso</div>
+            </div>
+            <div style="text-align:right;">
+              <strong style="font-size:1.5rem; font-weight:800; color:#08765e;">${vaciasTotal}</strong>
+              <span style="font-size:0.8rem; font-weight:700; color:#65778b;">/ ${total} totales</span>
+            </div>
+          </div>
+          <div class="vacias-pills">
+            ${vaciasPillsHTML}
+          </div>
+        </div>
+      `;
+    }
+
     function renderTable() {
+      const isRecorrido = view === 'recorrido';
+      const isMov = view === 'movimientos';
+      const isMaint = view === 'mantenimiento';
+      const isPdm = view === 'PDM';
+      const isPlacas = view === 'placas';
+      const isModuleView = view === 'MSM' || view === 'NLDC';
+
       const thead = document.getElementById('table-head');
       const tbody = document.getElementById('table-body');
       const search = document.getElementById('search').value.toLowerCase();
-      const isPdm = view === 'PDM';
+      const counterBadge = document.getElementById('movimientos-counter');
+      const moduleCounterBadge = document.getElementById('module-counter');
+      const clearBtn = document.getElementById('clear-button');
+      const whatsappBtn = document.getElementById('whatsapp-button');
+      const resetRecorridoBtn = document.getElementById('reset-recorrido-button');
+      const scanQrBtn = document.getElementById('scan-qr-button');
+      const printQrBtn = document.getElementById('print-qr-button');
 
-      if (isPdm) {
-        thead.innerHTML = `<tr><th>Caja</th><th>Comentarios</th><th>Estatus</th><th>Antigüedad en Días</th><th>Acciones</th></tr>`;
+      const getArrow = (colKey) => sortColumn === colKey ? (sortAsc ? ' ▲' : ' ▼') : ' ⇅';
+
+      let columns = [];
+      if (isRecorrido) {
+        columns = [
+          { key: 'caja', label: 'Caja / Placas / Módulo / Comentarios' }
+        ];
+      } else if (isPdm) {
+        columns = [
+          { key: 'number', label: 'Número de Caja' },
+          { key: 'comments', label: 'Comentarios' },
+          { key: 'status', label: 'Estatus' },
+          { key: 'datetime', label: 'Fecha y Hora de Registro' },
+          { key: 'timestamp', label: 'Antigüedad en Días (Clic p/ editar)' },
+          { key: null, label: 'Acciones' }
+        ];
+      } else if (isMov) {
+        columns = [
+          { key: 'number', label: 'Caja' },
+          { key: 'module', label: 'Módulo' },
+          { key: 'type', label: 'Tipo' },
+          { key: 'location', label: 'Ubicación' },
+          { key: 'operator', label: 'Operador' },
+          { key: 'comments', label: 'Comentarios' },
+          { key: 'requestedBy', label: 'Solicitud de' },
+          { key: 'datetime', label: 'Fecha y Hora' },
+          { key: 'status', label: 'Estatus' },
+          { key: null, label: 'Acciones' }
+        ];
+      } else if (isMaint) {
+        columns = [
+          { key: 'number', label: 'Caja' },
+          { key: 'module', label: 'Módulo' },
+          { key: 'location', label: 'Ubicación' },
+          { key: 'comments', label: 'Comentarios' },
+          { key: 'mantenimientoDate', label: 'Fecha de Registro' },
+          { key: 'reportadoReparaciones', label: 'Reportado a Reparaciones' },
+          { key: null, label: 'Acciones' }
+        ];
+      } else if (isPlacas) {
+        columns = [
+          { key: 'caja', label: 'Caja' },
+          { key: 'placas', label: 'Placas' },
+          { key: 'estado', label: 'Estado' },
+          { key: 'mfgYear', label: 'MfgYear' },
+          { key: 'make', label: 'Make' },
+          { key: 'modulo', label: 'Módulo' }
+        ];
       } else {
-        thead.innerHTML = `<tr><th>Caja</th><th>Módulo</th><th>Estatus</th><th>Ubicación</th><th>Antigüedad</th></tr>`;
+        columns = [
+          { key: 'number', label: 'Caja' },
+          { key: 'status', label: 'Estatus' },
+          { key: 'location', label: 'Ubicación' },
+          { key: 'comments', label: 'Comentarios' },
+          { key: 'placasInfo', label: 'Placas' },
+          { key: 'lastUpdatedTimestamp', label: 'Antigüedad en Días (Clic p/ editar)' },
+          { key: null, label: 'Acciones' }
+        ];
+      }
+
+      let thHTML = '<tr>';
+      columns.forEach(col => {
+        if (col.key) {
+          thHTML += `<th data-col="${col.key}">${col.label}<span>${getArrow(col.key)}</span></th>`;
+        } else {
+          thHTML += `<th>${col.label}</th>`;
+        }
+      });
+      thHTML += '</tr>';
+      thead.innerHTML = thHTML;
+
+      clearBtn.style.display = isMov ? 'inline-block' : 'none';
+      whatsappBtn.style.display = isRecorrido ? 'inline-flex' : 'none';
+      resetRecorridoBtn.style.display = isRecorrido ? 'inline-flex' : 'none';
+      scanQrBtn.style.display = isRecorrido ? 'inline-flex' : 'none';
+      printQrBtn.style.display = (isRecorrido || isPlacas) ? 'inline-flex' : 'none';
+
+      if (isMov) {
+        counterBadge.style.display = 'inline-flex';
+        moduleCounterBadge.style.display = 'none';
+        document.getElementById('movimientos-count-num').textContent = movements.length;
+      } else if (isModuleView || isPdm) {
+        counterBadge.style.display = 'none';
+        moduleCounterBadge.style.display = 'inline-flex';
+        document.getElementById('module-counter-label').textContent = `Total Registros Módulo ${view}`;
+      } else if (isPlacas || isRecorrido) {
+        counterBadge.style.display = 'none';
+        moduleCounterBadge.style.display = 'inline-flex';
+        document.getElementById('module-counter-label').textContent = isRecorrido ? 'Cajas en Recorrido' : 'Total Registros Placas';
+      } else {
+        counterBadge.style.display = 'none';
+        moduleCounterBadge.style.display = 'none';
       }
 
       tbody.innerHTML = '';
-      const dataset = isPdm ? pdmBoxesList : boxes.filter(b => b.module === view);
 
-      const filtered = dataset.filter(x => 
-        (x.number && x.number.toLowerCase().includes(search)) ||
-        (x.comments && x.comments.toLowerCase().includes(search))
-      );
+      let dataset = [];
+      if (isRecorrido) {
+        dataset = getMergedRecorridoList();
+      } else if (isPdm) {
+        dataset = pdmBoxesList;
+      } else if (isMov) {
+        dataset = movements;
+      } else if (isMaint) {
+        dataset = boxes.filter(b => b.status === 'mantenimiento');
+      } else if (isPlacas) {
+        dataset = placasReportData;
+      } else {
+        dataset = boxes.filter(b => b.module === view).map(b => ({
+          ...b,
+          placasInfo: placasMap[b.number] || '—'
+        }));
+      }
 
-      filtered.forEach(item => {
-        const tr = document.createElement('tr');
-        if (isPdm) {
-          tr.innerHTML = `
-            <td><b>📦 ${item.number}</b></td>
-            <td>${item.comments || '—'}</td>
-            <td><span class="pill pill-${item.status || 'vacia'}">${item.status || 'vacia'}</span></td>
-            <td><span class="timer-badge">${formatElapsedTime(item.timestamp)}</span></td>
-            <td><button class="danger delete-pdm-btn" data-id="${item.id}">🗑️ Borrar</button></td>
-          `;
-        } else {
-          tr.innerHTML = `
-            <td><b>${item.number}</b></td>
-            <td>${item.module}</td>
-            <td><span class="pill pill-${item.status}">${item.status}</span></td>
-            <td>${item.location || 'Venus'}</td>
-            <td><span class="timer-badge">${formatElapsedTime(item.lastUpdatedTimestamp)}</span></td>
-          `;
+      let filtered = dataset.filter(x => {
+        if (isRecorrido) {
+          return (x.caja && x.caja.toLowerCase().includes(search)) ||
+                 (x.placas && x.placas.toLowerCase().includes(search)) ||
+                 (x.modulo && x.modulo.toLowerCase().includes(search)) ||
+                 (x.comentarios && x.comentarios.toLowerCase().includes(search));
         }
-        tbody.appendChild(tr);
+        if (isPlacas) {
+          return (x.caja && x.caja.toLowerCase().includes(search)) ||
+                 (x.placas && x.placas.toLowerCase().includes(search)) ||
+                 (x.estado && x.estado.toLowerCase().includes(search)) ||
+                 (x.mfgYear && x.mfgYear.toLowerCase().includes(search)) ||
+                 (x.make && x.make.toLowerCase().includes(search)) ||
+                 (x.modulo && x.modulo.toLowerCase().includes(search));
+        }
+        return (x.number && x.number.toLowerCase().includes(search)) || 
+               (x.location && x.location.toLowerCase().includes(search)) ||
+               (x.comments && x.comments.toLowerCase().includes(search)) ||
+               (x.module && x.module.toLowerCase().includes(search)) ||
+               (x.operator && x.operator.toLowerCase().includes(search)) ||
+               (x.requestedBy && x.requestedBy.toLowerCase().includes(search)) ||
+               (x.recordedBy && x.recordedBy.toLowerCase().includes(search)) ||
+               (x.datetime && x.datetime.toLowerCase().includes(search)) ||
+               (x.placasInfo && x.placasInfo.toLowerCase().includes(search));
       });
 
-      if (isPdm) {
-        document.querySelectorAll('.delete-pdm-btn').forEach(btn => {
-          btn.onclick = async function() {
-            const id = this.getAttribute('data-id');
-            await deleteDoc(doc(db, "pdm_boxes", id));
-            showToast('Caja PDM eliminada');
+      if (isModuleView || isPdm || isPlacas || isRecorrido) {
+        document.getElementById('module-count-num').textContent = filtered.length;
+      }
+
+      if (sortColumn) {
+        filtered.sort((a, b) => {
+          let valA = a[sortColumn] || 0;
+          let valB = b[sortColumn] || 0;
+          
+          if (typeof valA === 'boolean') valA = valA ? 1 : 0;
+          if (typeof valB === 'boolean') valB = valB ? 1 : 0;
+
+          if (valA < valB) return sortAsc ? -1 : 1;
+          if (valA > valB) return sortAsc ? 1 : -1;
+          return 0;
+        });
+      }
+
+      if (isRecorrido) {
+        filtered.forEach(item => {
+          const tr = document.createElement('tr');
+          const isVacia = item.estatusRecorrido === 'vacia';
+          const isCargada = item.estatusRecorrido === 'cargada';
+          const isMantenimiento = item.estatusRecorrido === 'mantenimiento' || item.estatusRecorrido === 'danos';
+          const isNoEsta = item.estatusRecorrido === 'noesta';
+          const hasComment = Boolean(item.comentarios);
+
+          tr.innerHTML = `
+            <td style="padding: 0;">
+              <div class="recorrido-card-row">
+                <div class="recorrido-card-top">
+                  <div class="recorrido-info-box">
+                    <strong style="font-size:1.15rem; color:var(--navy);">📦 ${item.caja}</strong>
+                    <span style="font-weight:700; color:#0e9f94; font-size:0.85rem; background:#f0fdf4; padding:0.2rem 0.5rem; border-radius:6px; border:1px solid #bbf7d0;">${item.placas} ${item.estadoPlaca}</span>
+                    <span class="pill ${item.modulo==='MSM'?'pill-cargada':'pill-vacia'}">${item.modulo}</span>
+                  </div>
+                  <div>
+                    ${hasComment ? `<div class="comment-preview-tag" title="${item.comentarios}">💬 ${item.comentarios}</div>` : '<span style="color:#cbd5e1; font-size:0.78rem;">Sin observaciones</span>'}
+                  </div>
+                </div>
+
+                <div class="touch-btn-group">
+                  <button type="button" class="touch-btn touch-vacia ${isVacia ? 'sel-vacia' : ''}" data-caja="${item.caja}">🟢 Vacía</button>
+                  <button type="button" class="touch-btn touch-cargada ${isCargada ? 'sel-cargada' : ''}" data-caja="${item.caja}">🟡 Cargada</button>
+                  <button type="button" class="touch-btn touch-danos ${isMantenimiento ? 'sel-mantenimiento' : ''}" data-caja="${item.caja}">🛠️ Mantenimiento</button>
+                  <button type="button" class="touch-btn touch-noesta ${isNoEsta ? 'sel-noesta' : ''}" data-caja="${item.caja}">⚪ No está</button>
+                  <button type="button" class="touch-btn touch-comentarios ${hasComment ? 'btn-comments-active' : ''}" data-caja="${item.caja}">💬 Comentarios</button>
+                </div>
+              </div>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+
+      } else if (isPdm) {
+        filtered.forEach(item => {
+          const tr = document.createElement('tr');
+          const elapsedTimeStr = formatElapsedTime(item.timestamp);
+          const userTag = item.recordedBy ? `<span class="user-tag-subtle" title="Registrado por">👤 ${item.recordedBy}</span>` : '';
+
+          tr.innerHTML = `
+            <td><strong style="font-size:1.05rem; color:#005ac7;">📦 ${item.number}</strong></td>
+            <td>${item.comments || '—'}</td>
+            <td><span class="pill pill-${item.status || 'vacia'}">${item.status || 'vacia'}</span></td>
+            <td><span style="font-size:0.8rem; font-weight:700; color:#475569;">${item.datetime || '—'}</span></td>
+            <td><span class="timer-badge open-timer-btn" data-id="${item.id}" data-type="pdm" data-num="${item.number}">${elapsedTimeStr}</span></td>
+            <td>
+              <div style="display:flex; align-items:center; gap:0.4rem; flex-wrap:wrap;">
+                <button type="button" class="secondary edit-pdm-btn" data-id="${item.id}" style="padding:0.25rem 0.6rem; font-size:0.8rem;">✏️ Editar</button>
+                <button type="button" class="danger delete-pdm-btn" data-id="${item.id}" data-num="${item.number}" style="padding:0.25rem 0.6rem; font-size:0.8rem;">🗑️ Eliminar</button>
+                ${userTag}
+              </div>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+
+      } else if (isPlacas) {
+        filtered.forEach(item => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td><b>${item.caja}</b></td>
+            <td><span style="font-weight:700; color:#0e9f94;">${item.placas}</span></td>
+            <td>${item.estado}</td>
+            <td>${item.mfgYear}</td>
+            <td>${item.make}</td>
+            <td><span class="pill ${item.modulo==='MSM'?'pill-cargada':'pill-vacia'}">${item.modulo}</span></td>
+          `;
+          tbody.appendChild(tr);
+        });
+      } else {
+        const numberCounts = {};
+        filtered.forEach(x => {
+          if (x.number) {
+            numberCounts[x.number] = (numberCounts[x.number] || 0) + 1;
+          }
+        });
+        const seenNumbers = new Set();
+        const THREE_DAYS_MS = 3 * 24 * 60 * 60 * 1000;
+        const nowMs = Date.now();
+
+        filtered.forEach(item => {
+          const tr = document.createElement('tr');
+          tr.setAttribute('id', `row-${item.id}`);
+          
+          const isStorage = (item.status || '').toLowerCase() === 'storage';
+          const boxNumberClass = isStorage ? 'text-storage' : '';
+
+          if (item.number && numberCounts[item.number] > 1) {
+            if (seenNumbers.has(item.number)) {
+              tr.classList.add('row-copia');
+            } else {
+              seenNumbers.add(item.number);
+              tr.classList.add('row-original');
+            }
+          }
+
+          let html = `<td class="${boxNumberClass}"><b>${item.number}</b></td>`;
+
+          if (isMov) {
+            html += `<td><b>${item.module}</b></td>`;
+            html += `<td><b>${item.type || '—'}</b></td>`;
+            html += `<td>${item.location || 'Venus'}</td>`;
+            html += `<td><span style="color:#0e9f94; font-weight:700;">${item.operator || '—'}</span></td>`;
+            html += `<td>${item.comments || '—'}</td>`;
+            html += `<td><span style="color:#005ac7; font-weight:700;">${item.requestedBy || '—'}</span></td>`;
+            html += `<td><span style="font-size:0.8rem; font-weight:700; color:#475569;">${item.datetime || '—'}</span></td>`;
+            html += `<td><span class="pill pill-${item.status}">${item.status}</span></td>`;
+          } else if (isMaint) {
+            html += `<td><b>${item.module}</b></td>`;
+            html += `<td>${item.location || 'Venus'}</td>`;
+            html += `<td>${item.comments || '—'}</td>`;
+            html += `<td><span style="font-size:0.8rem; font-weight:700; color:#627488;">${item.mantenimientoDate || 'No registrada'}</span></td>`;
+            html += `<td>
+                      <label class="check-label">
+                        <input type="checkbox" class="maint-checkbox" data-id="${item.id}" ${item.reportadoReparaciones ? 'checked' : ''}>
+                        <span>${item.reportadoReparaciones ? ' Reportado' : 'Pendiente'}</span>
+                      </label>
+                    </td>`;
+          } else {
+            const isCargada = (item.status || '').toLowerCase() === 'cargada';
+            const isWarning = isCargada && item.lastUpdatedTimestamp && (nowMs - item.lastUpdatedTimestamp) > THREE_DAYS_MS;
+            const timerBadgeClass = isWarning ? 'timer-badge timer-badge-warning open-timer-btn' : 'timer-badge open-timer-btn';
+
+            html += `<td><span class="pill pill-${item.status}">${item.status}</span></td>`;
+            html += `<td>${item.location || 'Venus'}</td>`;
+            html += `<td>${item.comments || '—'}</td>`;
+            html += `<td><span style="font-weight:700; color:#0e9f94;">${item.placasInfo}</span></td>`;
+            html += `<td><span class="${timerBadgeClass}" data-id="${item.id}" data-type="box" data-num="${item.number}">${formatElapsedTime(item.lastUpdatedTimestamp)}</span></td>`;
+          }
+          
+          const userTag = item.recordedBy ? `<span class="user-tag-subtle" title="Modificado por">👤 ${item.recordedBy}</span>` : '';
+          const showPdmBtn = isMov && (item.module === 'PDM');
+
+          html += `<td>
+                    <div style="display:flex; align-items:center; gap:0.4rem; flex-wrap:wrap;">
+                      ${isMov ? `<button type="button" class="action-btn finish-btn" data-id="${item.id}">🔚 Fin de tarea</button>` : ''}
+                      ${showPdmBtn ? `<button type="button" class="action-pdm-btn create-pdm-btn" data-id="${item.id}">📦 PDM Vacía</button>` : ''}
+                      <button type="button" class="secondary edit-btn" data-id="${item.id}" style="padding:0.25rem 0.6rem; font-size:0.8rem;">✏️ Editar</button>
+                      ${isMov ? `<button type="button" class="danger delete-btn" data-id="${item.id}" style="padding:0.25rem 0.6rem; font-size:0.8rem;">🗑️ Eliminar</button>` : ''}
+                      <select class="field st-select" data-id="${item.id}" style="padding:0.2rem; width:auto; font-size:0.8rem; margin-top:0;">
+                        <option value="vacia" ${item.status==='vacia'?'selected':''}>vacia</option>
+                        <option value="cargada" ${item.status==='cargada'?'selected':''}>cargada</option>
+                        <option value="mantenimiento" ${item.status==='mantenimiento'?'selected':''}>mantenimiento</option>
+                        <option value="storage" ${item.status==='storage'?'selected':''}>storage</option>
+                      </select>
+                      ${userTag}
+                    </div>
+                  </td>`;
+          tr.innerHTML = html;
+          tbody.appendChild(tr);
+        });
+      }
+
+      if (isRecorrido) {
+        document.querySelectorAll('.touch-vacia').forEach(b => {
+          b.onclick = async function() {
+            const cajaNum = this.getAttribute('data-caja');
+            await updateRecorridoInFirebase(cajaNum, 'vacia');
+            showToast(`Caja ${cajaNum} marcada como VACÍA`);
+          };
+        });
+
+        document.querySelectorAll('.touch-cargada').forEach(b => {
+          b.onclick = async function() {
+            const cajaNum = this.getAttribute('data-caja');
+            await updateRecorridoInFirebase(cajaNum, 'cargada');
+            showToast(`Caja ${cajaNum} marcada como CARGADA`);
+          };
+        });
+
+        document.querySelectorAll('.touch-danos').forEach(b => {
+          b.onclick = function() {
+            const cajaNum = this.getAttribute('data-caja');
+            activeDamageCaja = cajaNum;
+            activeModalMode = 'mantenimiento';
+            const firebaseDoc = recorridoDataMap[`REC_${cajaNum}`];
+
+            document.getElementById('comment-modal-title').textContent = '🛠️ Enviar a Mantenimiento';
+            document.getElementById('comment-modal-title').style.color = '#dc2626';
+            document.getElementById('damage-box-label').textContent = cajaNum;
+            document.getElementById('damage-text-input').value = firebaseDoc ? firebaseDoc.comentarios : '';
+            document.getElementById('save-damage-btn').style.background = '#dc2626';
+            document.getElementById('save-damage-btn').textContent = 'Enviar a Mantenimiento';
+            document.getElementById('damage-modal').style.display = 'flex';
+          };
+        });
+
+        document.querySelectorAll('.touch-comentarios').forEach(b => {
+          b.onclick = function() {
+            const cajaNum = this.getAttribute('data-caja');
+            activeDamageCaja = cajaNum;
+            activeModalMode = 'comments';
+            const firebaseDoc = recorridoDataMap[`REC_${cajaNum}`];
+
+            document.getElementById('comment-modal-title').textContent = '💬 Agregar / Editar Comentario';
+            document.getElementById('comment-modal-title').style.color = '#005ac7';
+            document.getElementById('damage-box-label').textContent = cajaNum;
+            document.getElementById('damage-text-input').value = firebaseDoc ? firebaseDoc.comentarios : '';
+            document.getElementById('save-damage-btn').style.background = '#005ac7';
+            document.getElementById('save-damage-btn').textContent = 'Guardar Nota';
+            document.getElementById('damage-modal').style.display = 'flex';
+          };
+        });
+
+        document.querySelectorAll('.touch-noesta').forEach(b => {
+          b.onclick = async function() {
+            const cajaNum = this.getAttribute('data-caja');
+            await updateRecorridoInFirebase(cajaNum, 'noesta');
+            showToast(`Caja ${cajaNum} marcada como NO ESTÁ`);
           };
         });
       }
+
+      document.querySelectorAll('.open-timer-btn').forEach(btn => {
+        btn.onclick = function(e) {
+          const targetId = e.currentTarget.getAttribute('data-id');
+          const targetType = e.currentTarget.getAttribute('data-type');
+          const num = e.currentTarget.getAttribute('data-num');
+
+          activeTimerBox = { id: targetId, type: targetType, number: num };
+          document.getElementById('timer-box-num').textContent = num;
+          document.getElementById('custom-timer-input').value = '';
+          document.getElementById('timer-edit-modal').style.display = 'flex';
+        };
+      });
+
+      document.querySelectorAll('.create-pdm-btn').forEach(btn => {
+        btn.onclick = async function(e) {
+          const movId = e.target.getAttribute('data-id');
+          await createPdmBoxCopyFromMovement(movId);
+        };
+      });
+
+      if (isPdm) {
+        document.querySelectorAll('.edit-pdm-btn').forEach(btn => {
+          btn.onclick = function(e) {
+            const pdmId = e.target.getAttribute('data-id');
+            const item = pdmBoxesList.find(x => x.id === pdmId);
+            if (item) {
+              editingPdmDocId = pdmId;
+              editingDocId = null;
+              document.getElementById('modal-heading').textContent = 'Editar Caja PDM';
+              document.getElementById('box-number').value = item.number;
+              document.getElementById('box-number').disabled = true;
+              document.getElementById('module').value = 'PDM';
+              document.getElementById('module').disabled = true;
+              document.getElementById('location-field-group').style.display = 'none';
+              document.getElementById('comments').value = item.comments || '';
+              document.getElementById('status').value = item.status || 'vacia';
+              document.getElementById('movement-only').style.display = 'none';
+              document.getElementById('delete-box-section').style.display = 'none';
+              document.getElementById('form-modal').style.display = 'flex';
+            }
+          };
+        });
+
+        document.querySelectorAll('.delete-pdm-btn').forEach(b => {
+          b.onclick = async function() {
+            const docId = this.getAttribute('data-id');
+            const num = this.getAttribute('data-num');
+            if (confirm(`¿Deseas eliminar este registro de PDM para la caja ${num}?`)) {
+              await deleteDoc(doc(db, "pdm_boxes", docId));
+              showToast(`Registro PDM de caja ${num} eliminado`);
+            }
+          };
+        });
+      }
+
+      document.querySelectorAll('#table-head th[data-col]').forEach(th => {
+        th.onclick = function() {
+          const colKey = this.getAttribute('data-col');
+          if (sortColumn === colKey) {
+            sortAsc = !sortAsc;
+          } else {
+            sortColumn = colKey;
+            sortAsc = true;
+          }
+          renderTable();
+        };
+      });
+
+      document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.onclick = async function(e) {
+          const docId = e.target.getAttribute('data-id');
+          const item = movements.find(m => m.id === docId);
+          if (item && confirm(`¿Deseas borrar permanentemente este registro de la caja ${item.number}?`)) {
+            await deleteDoc(doc(db, "movements", docId));
+            showToast(`Registro de caja ${item.number} eliminado`);
+          }
+        };
+      });
+
+      document.querySelectorAll('.finish-btn').forEach(btn => {
+        btn.onclick = async function(e) {
+          const docId = e.target.getAttribute('data-id');
+          const original = movements.find(m => m.id === docId);
+
+          if (original) {
+            const num = original.number;
+            const currentType = original.type || 'PATIO-RAMPA';
+            const newType = getInverseMovementType(currentType);
+
+            if (confirm(`¿Deseas terminar la tarea seleccionada para la caja ${num}?\n\nSe creará el registro inverso: ${newType}`)) {
+              const rowEl = document.getElementById(`row-${docId}`);
+              if (rowEl) rowEl.classList.add('row-finished');
+
+              const newDocId = `MOV_${original.module}_${num}_${Date.now()}`;
+              const nowStr = new Date().toLocaleString('es-MX');
+
+              await setDoc(doc(db, "movements", newDocId), {
+                number: num,
+                module: original.module,
+                location: original.location || 'Venus',
+                comments: original.comments ? `[Fin de tarea] ${original.comments}` : '[Fin de tarea]',
+                status: original.status || 'vacia',
+                type: newType,
+                operator: original.operator || '—',
+                requestedBy: original.requestedBy || '—',
+                recordedBy: currentUser || 'Sistema',
+                datetime: nowStr,
+                timestamp: Date.now()
+              });
+
+              updateGlobalStatusInFirebase(num, original.module, original.status || 'vacia');
+              showToast(`Tarea de caja ${num} completada`);
+            }
+          }
+        };
+      });
+
+      document.querySelectorAll('.maint-checkbox').forEach(chk => {
+        chk.onchange = async function(e) {
+          const docId = e.target.getAttribute('data-id');
+          const isChecked = e.target.checked;
+          await setDoc(doc(db, "boxes", docId), { reportadoReparaciones: isChecked }, { merge: true });
+          showToast(isChecked ? 'Marcado como reportado' : 'Marcado como pendiente');
+        };
+      });
+
+      document.querySelectorAll('.edit-btn').forEach(btn => {
+        btn.onclick = function(e) {
+          const docId = e.target.getAttribute('data-id');
+          const isMovView = view === 'movimientos';
+          const item = (isMovView ? movements : boxes).find(x => x.id === docId);
+          
+          if (item) {
+            editingDocId = docId;
+            editingPdmDocId = null;
+            document.getElementById('modal-heading').textContent = 'Editar Registro';
+            document.getElementById('box-number').value = item.number || '';
+            document.getElementById('box-number').disabled = false;
+            document.getElementById('location-field-group').style.display = 'block';
+            document.getElementById('module').value = item.module || 'MSM';
+            document.getElementById('location').value = item.location || 'Venus';
+            document.getElementById('comments').value = item.comments || '';
+            document.getElementById('status').value = item.status || 'vacia';
+            
+            checkAndAutoAssignModule(item.number || '');
+            toggleStorageAlert(item.status);
+
+            const deleteSection = document.getElementById('delete-box-section');
+            if (view === 'MSM' || view === 'NLDC' || view === 'mantenimiento') {
+              deleteSection.style.display = 'block';
+            } else {
+              deleteSection.style.display = 'none';
+            }
+
+            const movFields = document.getElementById('movement-only');
+            if (isMovView) {
+              movFields.style.display = 'block';
+              document.getElementById('movement-type').value = item.type || 'PATIO-RAMPA';
+              document.getElementById('movement-operator').value = item.operator || '';
+              document.getElementById('movement-requested-by').value = item.requestedBy || '';
+              document.getElementById('movement-datetime').value = item.datetime || new Date().toLocaleString('es-MX');
+            } else {
+              movFields.style.display = 'none';
+            }
+            
+            document.getElementById('form-modal').style.display = 'flex';
+          }
+        };
+      });
+
+      document.querySelectorAll('.st-select').forEach(s => {
+        s.onchange = async function(e) {
+          const docId = e.target.getAttribute('data-id');
+          const newSt = e.target.value;
+          const isMovView = view === 'movimientos';
+          
+          if (isMovView && newSt === 'storage') {
+            alert('⚠️ ATENCIÓN: Esta caja se ha marcado en estatus de STORAGE.');
+          }
+
+          if (isMovView) {
+            await setDoc(doc(db, "movements", docId), { status: newSt, recordedBy: currentUser || 'Sistema' }, { merge: true });
+            const targetDoc = movements.find(x => x.id === docId);
+            if (targetDoc) {
+              updateGlobalStatusInFirebase(targetDoc.number, targetDoc.module, newSt);
+            }
+          } else {
+            const targetDoc = boxes.find(x => x.id === docId);
+            if (targetDoc) {
+              await setDoc(doc(db, "boxes", docId), { status: newSt, recordedBy: currentUser || 'Sistema' }, { merge: true });
+              updateGlobalStatusInFirebase(targetDoc.number, targetDoc.module, newSt, targetDoc.comments, targetDoc.location);
+            }
+          }
+          showToast('Estatus actualizado');
+        };
+      });
     }
 
-    // REGISTRO INDEPENDIENTE DE CAJAS PDM (CORRECCIÓN 4)
-    document.getElementById('open-form').onclick = () => {
-      document.getElementById('entry-form').reset();
-      if (view === 'PDM') {
-        document.getElementById('module').value = 'PDM';
-        document.getElementById('module').disabled = true;
+    document.getElementById('save-timer-btn').onclick = async function() {
+      const val = document.getElementById('custom-timer-input').value;
+      if (!val) {
+        alert('Por favor selecciona una fecha y hora válidas.');
+        return;
+      }
+      if (activeTimerBox) {
+        const customTs = new Date(val).getTime();
+        if (activeTimerBox.type === 'pdm') {
+          await setDoc(doc(db, "pdm_boxes", activeTimerBox.id), { timestamp: customTs }, { merge: true });
+        } else {
+          await setDoc(doc(db, "boxes", activeTimerBox.id), { lastUpdatedTimestamp: customTs }, { merge: true });
+        }
+        document.getElementById('timer-edit-modal').style.display = 'none';
+        showToast(`Contador actualizado para caja ${activeTimerBox.number}`);
+      }
+    };
+
+    document.getElementById('reset-timer-zero-btn').onclick = async function() {
+      if (activeTimerBox) {
+        const nowTs = Date.now();
+        if (activeTimerBox.type === 'pdm') {
+          await setDoc(doc(db, "pdm_boxes", activeTimerBox.id), { timestamp: nowTs }, { merge: true });
+        } else {
+          await setDoc(doc(db, "boxes", activeTimerBox.id), { lastUpdatedTimestamp: nowTs }, { merge: true });
+        }
+        document.getElementById('timer-edit-modal').style.display = 'none';
+        showToast(`Contador de caja ${activeTimerBox.number} reiniciado a 0 días`);
+      }
+    };
+
+    document.getElementById('close-timer-modal').onclick = () => document.getElementById('timer-edit-modal').style.display = 'none';
+    document.getElementById('cancel-timer-btn').onclick = () => document.getElementById('timer-edit-modal').style.display = 'none';
+
+    document.getElementById('delete-single-box-btn').onclick = async function() {
+      if (editingDocId) {
+        const boxNum = document.getElementById('box-number').value;
+        if (confirm(`¿Estás seguro de que deseas ELIMINAR la caja ${boxNum} de la base de datos?`)) {
+          await deleteDoc(doc(db, "boxes", editingDocId));
+          document.getElementById('form-modal').style.display = 'none';
+          editingDocId = null;
+          showToast(`Caja ${boxNum} eliminada`);
+        }
+      }
+    };
+
+    document.getElementById('print-qr-button').onclick = function() {
+      const gridContainer = document.getElementById('qr-grid');
+      gridContainer.innerHTML = '';
+
+      rawPlacasData.forEach(item => {
+        const mod = catalogMSM.includes(item.caja) ? 'MSM' : catalogNLDC.includes(item.caja) ? 'NLDC' : '—';
+        const fullPayload = `CAJA: ${item.caja}\nMODULO: ${mod}\nPLACAS: ${item.placas} ${item.estado}\nMFG: ${item.mfgYear} (${item.make})`;
+
+        const card = document.createElement('div');
+        card.className = 'qr-card';
+        card.innerHTML = `
+          <h4>CAJA ${item.caja}</h4>
+          <p>MÓDULO ${mod} | PLACAS ${item.placas}</p>
+          <div class="qr-img-box" id="qr-target-${item.caja}"></div>
+          <p style="font-size:0.65rem; color:#94a3b8; margin-top:2px;">MEDLINE LOGISTICS</p>
+        `;
+        gridContainer.appendChild(card);
+
+        new QRCode(document.getElementById(`qr-target-${item.caja}`), {
+          text: fullPayload,
+          width: 120,
+          height: 120,
+          colorDark : "#00205b",
+          colorLight : "#ffffff",
+          correctLevel : QRCode.CorrectLevel.H
+        });
+      });
+
+      document.getElementById('qr-modal').style.display = 'flex';
+    };
+
+    document.getElementById('close-qr-modal').onclick = () => {
+      document.getElementById('qr-modal').style.display = 'none';
+    };
+
+    document.getElementById('scan-qr-button').onclick = function() {
+      document.getElementById('camera-modal').style.display = 'flex';
+
+      if (!html5QrCodeScanner) {
+        html5QrCodeScanner = new Html5Qrcode("qr-reader-box");
+      }
+
+      const config = { fps: 10, qrbox: { width: 220, height: 220 } };
+
+      html5QrCodeScanner.start(
+        { facingMode: "environment" }, 
+        config,
+        (decodedText) => {
+          stopCamera();
+          document.getElementById('camera-modal').style.display = 'none';
+
+          let detectedCaja = null;
+          const match = decodedText.match(/\d{6}/);
+          if (match) {
+            detectedCaja = match[0];
+          } else {
+            detectedCaja = decodedText.trim();
+          }
+
+          document.getElementById('search').value = detectedCaja;
+          renderTable();
+          showToast(`Caja ${detectedCaja} encontrada por QR`);
+        },
+        () => {}
+      ).catch(err => {
+        alert("No se pudo acceder a la cámara. Revisa que navegues por HTTPS.");
+        document.getElementById('camera-modal').style.display = 'none';
+      });
+    };
+
+    function stopCamera() {
+      if (html5QrCodeScanner && html5QrCodeScanner.isScanning) {
+        html5QrCodeScanner.stop().catch(err => console.error(err));
+      }
+    }
+
+    document.getElementById('close-camera-modal').onclick = () => { stopCamera(); document.getElementById('camera-modal').style.display = 'none'; };
+    document.getElementById('stop-camera-btn').onclick = () => { stopCamera(); document.getElementById('camera-modal').style.display = 'none'; };
+
+    document.getElementById('reset-recorrido-button').onclick = function() {
+      document.getElementById('reset-user-display').textContent = currentUser || 'Usuario';
+      document.getElementById('reset-password-input').value = '';
+      document.getElementById('reset-password-error').style.display = 'none';
+      document.getElementById('password-reset-modal').style.display = 'flex';
+    };
+
+    document.getElementById('cancel-reset-btn').onclick = () => { document.getElementById('password-reset-modal').style.display = 'none'; };
+
+    document.getElementById('confirm-reset-btn').onclick = async function() {
+      const pwdInput = document.getElementById('reset-password-input').value.trim();
+      const errorEl = document.getElementById('reset-password-error');
+
+      if (currentUser && AUTHORIZED_USERS[currentUser] && pwdInput === AUTHORIZED_USERS[currentUser]) {
+        errorEl.style.display = 'none';
+        document.getElementById('password-reset-modal').style.display = 'none';
+
+        const batch = writeBatch(db);
+
+        rawPlacasData.forEach(item => {
+          const docRef = doc(db, "daily_tours", `REC_${item.caja}`);
+          batch.set(docRef, {
+            caja: item.caja,
+            estatusRecorrido: 'none',
+            comentarios: '',
+            updatedBy: currentUser || 'Sistema',
+            updatedAt: new Date().toLocaleString('es-MX')
+          });
+        });
+
+        await batch.commit();
+        showToast('Estatus del recorrido reiniciados');
       } else {
-        document.getElementById('module').disabled = false;
+        errorEl.style.display = 'block';
+      }
+    };
+
+    document.getElementById('close-damage-modal').onclick = () => document.getElementById('damage-modal').style.display = 'none';
+    document.getElementById('cancel-damage-btn').onclick = () => document.getElementById('damage-modal').style.display = 'none';
+
+    document.getElementById('save-damage-btn').onclick = async function() {
+      if (activeDamageCaja) {
+        const txt = document.getElementById('damage-text-input').value.trim();
+
+        if (activeModalMode === 'mantenimiento') {
+          await updateRecorridoInFirebase(activeDamageCaja, 'mantenimiento', txt);
+          showToast(`Caja ${activeDamageCaja} enviada a Mantenimiento`);
+        } else {
+          await updateRecorridoInFirebase(activeDamageCaja, null, txt);
+          showToast(`Comentario guardado para caja ${activeDamageCaja}`);
+        }
+      }
+      document.getElementById('damage-modal').style.display = 'none';
+    };
+
+    function checkAndAutoAssignModule(val) {
+      const cleanNum = val.trim().toUpperCase();
+      const detectedMod = detectModuleByBoxNumber(cleanNum);
+      const moduleSelect = document.getElementById('module');
+      const hint = document.getElementById('module-auto-hint');
+
+      if (detectedMod) {
+        moduleSelect.value = detectedMod;
+        moduleSelect.disabled = true;
+        hint.style.display = 'block';
+
+        const existingBox = boxes.find(b => b.number === cleanNum);
+        if (existingBox && existingBox.status) {
+          document.getElementById('status').value = existingBox.status;
+          toggleStorageAlert(existingBox.status);
+        }
+      } else {
+        if (view !== 'PDM') moduleSelect.disabled = false;
+        hint.style.display = 'none';
+      }
+    }
+
+    function toggleStorageAlert(statusVal) {
+      const alertBox = document.getElementById('storage-alert-box');
+      if (statusVal === 'storage') {
+        alertBox.style.display = 'block';
+      } else {
+        alertBox.style.display = 'none';
+      }
+    }
+
+    document.getElementById('status').addEventListener('change', function(e) { toggleStorageAlert(e.target.value); });
+    document.getElementById('box-number').addEventListener('input', function(e) { checkAndAutoAssignModule(e.target.value); });
+
+    document.getElementById('navigation').onclick = function(e) {
+      const btn = e.target.closest('button');
+      if (btn) {
+        view = btn.getAttribute('data-view');
+        sortColumn = null;
+        render();
+      }
+    };
+
+    // CORRECCIÓN 4: REGISTRO DIRECTO DESDE VISTA PDM
+    document.getElementById('open-form').onclick = function() {
+      editingDocId = null;
+      editingPdmDocId = null;
+      document.getElementById('modal-heading').textContent = 'Registrar caja';
+      document.getElementById('entry-form').reset();
+      
+      const moduleSelect = document.getElementById('module');
+      if (view === 'PDM') {
+        moduleSelect.value = 'PDM';
+        moduleSelect.disabled = true;
+      } else {
+        moduleSelect.disabled = false;
+      }
+
+      document.getElementById('box-number').disabled = false;
+      document.getElementById('location-field-group').style.display = 'block';
+      document.getElementById('module-auto-hint').style.display = 'none';
+      document.getElementById('storage-alert-box').style.display = 'none';
+      document.getElementById('delete-box-section').style.display = 'none';
+
+      const isMovView = view === 'movimientos';
+      document.getElementById('movement-only').style.display = isMovView ? 'block' : 'none';
+      if (isMovView) {
+        document.getElementById('movement-operator').value = '';
+        document.getElementById('movement-requested-by').value = '';
+        document.getElementById('movement-datetime').value = new Date().toLocaleString('es-MX');
       }
       document.getElementById('form-modal').style.display = 'flex';
     };
@@ -722,49 +2316,164 @@
 
     document.getElementById('entry-form').onsubmit = async function(e) {
       e.preventDefault();
+
+      if (editingPdmDocId) {
+        const comm = document.getElementById('comments').value.trim();
+        const st = document.getElementById('status').value;
+        await setDoc(doc(db, "pdm_boxes", editingPdmDocId), {
+          comments: comm,
+          status: st,
+          recordedBy: currentUser || 'Sistema'
+        }, { merge: true });
+
+        editingPdmDocId = null;
+        document.getElementById('form-modal').style.display = 'none';
+        showToast('Registro de caja PDM actualizado');
+        return;
+      }
+
       const num = document.getElementById('box-number').value.trim().toUpperCase();
-      const mod = document.getElementById('module').value;
+      const autoMod = detectModuleByBoxNumber(num);
+      const mod = (view === 'PDM') ? 'PDM' : (autoMod || document.getElementById('module').value);
+      const loc = document.getElementById('location').value;
       const comm = document.getElementById('comments').value.trim();
       const st = document.getElementById('status').value;
-      const nowTs = Date.now();
 
       if (mod === 'PDM' || view === 'PDM') {
-        const pdmDocId = `PDM_${num}_${nowTs}`;
+        const pdmDocId = `PDM_${num}_${Date.now()}`;
         await setDoc(doc(db, "pdm_boxes", pdmDocId), {
           number: num,
           comments: comm,
           status: st,
-          timestamp: nowTs,
           datetime: new Date().toLocaleString('es-MX'),
+          timestamp: Date.now(),
           recordedBy: currentUser || 'Sistema'
         });
-        showToast(`Caja PDM ${num} registrada exitosamente`);
+        showToast(`Caja ${num} agregada al inventario PDM`);
       } else {
-        const docId = `${mod}_${num}`;
-        await setDoc(doc(db, "boxes", docId), {
-          number: num,
-          module: mod,
-          location: document.getElementById('location').value,
-          comments: comm,
+        const isMovView = view === 'movimientos';
+        const collectionName = isMovView ? 'movements' : 'boxes';
+        const docId = editingDocId || (isMovView ? `MOV_${mod}_${num}_${Date.now()}` : `${mod}_${num}`);
+
+        const payload = { 
+          number: num, 
+          module: mod, 
+          location: loc, 
+          comments: comm, 
           status: st,
-          lastUpdatedTimestamp: nowTs,
           recordedBy: currentUser || 'Sistema'
-        }, { merge: true });
-        showToast(`Caja ${num} registrada en Módulo ${mod}`);
+        };
+
+        if (isMovView) {
+          payload.type = document.getElementById('movement-type').value;
+          payload.operator = document.getElementById('movement-operator').value.trim() || '—';
+          payload.requestedBy = document.getElementById('movement-requested-by').value.trim() || '—';
+          payload.datetime = document.getElementById('movement-datetime').value.trim() || new Date().toLocaleString('es-MX');
+          payload.timestamp = Date.now();
+        }
+
+        if (st === 'mantenimiento') {
+          payload.mantenimientoDate = new Date().toLocaleString('es-MX');
+        }
+
+        await setDoc(doc(db, collectionName, docId), payload, { merge: true });
+        updateGlobalStatusInFirebase(num, mod, st, comm, loc);
+        showToast(`Registro guardado (${num} - Módulo: ${mod})`);
       }
 
+      editingDocId = null;
       document.getElementById('form-modal').style.display = 'none';
     };
 
-    document.getElementById('navigation').onclick = function(e) {
-      const btn = e.target.closest('button');
-      if (btn) {
-        view = btn.getAttribute('data-view');
-        render();
+    document.getElementById('search').oninput = renderTable;
+
+    document.getElementById('whatsapp-button').onclick = function() {
+      const today = new Date().toLocaleDateString('es-MX');
+      let text = `📦 *RECORRIDO DIARIO DE CAJAS - MEDLINE*\n📅 *Fecha:* ${today}\n👤 *Inspector:* ${currentUser || 'Sistema'}\n\n`;
+
+      let countVacias = 0, countCargadas = 0, countMantenimiento = 0, countNoEsta = 0;
+      const currentList = getMergedRecorridoList();
+
+      currentList.forEach(r => {
+        if (r.estatusRecorrido === 'noesta') {
+          countNoEsta++;
+        } else if (r.estatusRecorrido !== 'none') {
+          const isMaint = r.estatusRecorrido === 'mantenimiento' || r.estatusRecorrido === 'danos';
+          const stLabel = r.estatusRecorrido === 'vacia' ? '🟢 Vacía' : r.estatusRecorrido === 'cargada' ? '🟡 Cargada' : '🛠️ Mantenimiento';
+          
+          if (r.estatusRecorrido === 'vacia') countVacias++;
+          if (r.estatusRecorrido === 'cargada') countCargadas++;
+          if (isMaint) countMantenimiento++;
+
+          text += `• *Caja ${r.caja}* (${r.modulo}) | ${stLabel}`;
+          if (r.comentarios) text += ` 💬 _"${r.comentarios}"_`;
+          text += `\n`;
+        }
+      });
+
+      text += `\n📊 *RESUMEN DEL DÍA:*\n• Vacías: ${countVacias}\n• Cargadas: ${countCargadas}\n• En Mantenimiento: ${countMantenimiento}\n• No en venus: ${countNoEsta}\n\n_Medline Control Logístico_`;
+
+      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
+    };
+
+    document.getElementById('export-button').onclick = function() {
+      const todayDate = new Date().toISOString().split('T')[0];
+
+      if (view === 'recorrido') {
+        const currentList = getMergedRecorridoList();
+        const headers = ['Caja', 'Placas', 'Módulo', 'Estatus Recorrido', 'Comentarios', 'Inspector'];
+        const rows = currentList.map(r => [
+          r.caja, `${r.placas} ${r.estadoPlaca}`, r.modulo,
+          r.estatusRecorrido === 'vacia' ? 'Vacía' : r.estatusRecorrido === 'cargada' ? 'Cargada' : (r.estatusRecorrido === 'mantenimiento' || r.estatusRecorrido === 'danos') ? 'Mantenimiento' : r.estatusRecorrido === 'noesta' ? 'No está' : 'Sin registrar',
+          r.comentarios || 'Sin observaciones', currentUser || 'Sistema'
+        ]);
+        const ws = XLSX.utils.aoa_to_sheet([headers, ...rows]);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Recorrido');
+        XLSX.writeFile(wb, `recorrido-diario-${todayDate}.xlsx`);
+
+      } else if (view === 'PDM') {
+        const headers = ['Número de Caja', 'Comentarios', 'Estatus', 'Fecha de Registro', 'Antigüedad en Días', 'Registrado Por'];
+        const rows = pdmBoxesList.map(r => [
+          r.number, r.comments || '', r.status || 'vacia', r.datetime || '', formatElapsedTime(r.timestamp), r.recordedBy || 'Sistema'
+        ]);
+        const ws = XLSX.utils.aoa_to_sheet([headers, ...rows]);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Cajas PDM');
+        XLSX.writeFile(wb, `cajas-pdm-${todayDate}.xlsx`);
+
+      } else if (view === 'movimientos') {
+        const headers = ['Caja', 'Módulo', 'Tipo', 'Ubicación', 'Operador', 'Comentarios', 'Solicitud de', 'Fecha y Hora', 'Estatus', 'Registrado Por'];
+        const rows = movements.map(r => [
+          r.number, r.module, r.type || '—', r.location || 'Venus', r.operator || '—', r.comments || '', r.requestedBy || '—', r.datetime || '—', r.status, r.recordedBy || 'Sistema'
+        ]);
+        const ws = XLSX.utils.aoa_to_sheet([headers, ...rows]);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Movimientos');
+        XLSX.writeFile(wb, 'movimientos-diarios.xlsx');
+
+      } else {
+        const moduleBoxes = boxes.filter(b => b.module === view);
+        const headers = ['Caja', 'Estatus', 'Ubicación', 'Comentarios', 'Placas', 'Antigüedad en Días', 'Registrado Por'];
+        const rows = moduleBoxes.map(r => [
+          r.number, r.status ? (r.status.charAt(0).toUpperCase() + r.status.slice(1)) : 'Vacia', r.location || 'Venus', r.comments || '', placasMap[r.number] || '—', formatElapsedTime(r.lastUpdatedTimestamp), r.recordedBy || 'Sistema'
+        ]);
+        const ws = XLSX.utils.aoa_to_sheet([headers, ...rows]);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, `Inventario ${view}`);
+        XLSX.writeFile(wb, `inventario-${view}.xlsx`);
       }
     };
 
-    document.getElementById('search').oninput = renderTable;
+    document.getElementById('clear-button').onclick = async function() {
+      if (confirm('¿Deseas eliminar TODOS los registros de Movimientos Diarios?')) {
+        const querySnapshot = await getDocs(collection(db, 'movements'));
+        const batch = writeBatch(db);
+        querySnapshot.forEach((docSnap) => { batch.delete(docSnap.ref); });
+        await batch.commit();
+        showToast('Movimientos vaciados');
+      }
+    };
   </script>
 </body>
 </html>
