@@ -7,7 +7,6 @@
   
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-  <!-- Librerías para QR y Cámara -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 
@@ -43,7 +42,6 @@
       display:flex; align-items:center; justify-content:center; color:white; font-size:1.2rem;
     }
 
-    /* OVERLAY ANIMACIÓN BIENVENIDA */
     .welcome-overlay {
       position:fixed; inset:0; background:rgba(0, 51, 160, 0.95); backdrop-filter:blur(8px);
       display:flex; flex-direction:column; align-items:center; justify-content:center;
@@ -51,9 +49,7 @@
       opacity:0; visibility:hidden; transition:all 0.4s ease;
     }
     .welcome-overlay.active { opacity:1; visibility:visible; }
-    .welcome-card {
-      animation: welcomeZoom 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
+    .welcome-card { animation: welcomeZoom 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
     @keyframes welcomeZoom { 0%{ transform:scale(0.5); opacity:0; } 100%{ transform:scale(1); opacity:1; } }
 
     .shell { display:flex; flex-direction:column; min-height:100vh; }
@@ -80,44 +76,10 @@
       font-weight:700; cursor:pointer; transition:all 0.2s ease; box-shadow:0 4px 12px rgba(14,159,148,0.25);
     }
     .primary:hover { background:#087f77; transform:translateY(-2px); box-shadow:0 6px 16px rgba(14,159,148,0.35); }
-    .primary:active { transform:translateY(0); }
-
     .secondary { background:#edf2f5; color:var(--ink); border:none; border-radius:8px; padding:0.4rem 0.8rem; font-weight:700; cursor:pointer; transition:0.2s; }
     .secondary:hover { background:#e1e9ed; }
     .danger { background:#fff0ef; color:#ae3e39; border:none; border-radius:8px; padding:0.4rem 0.8rem; font-weight:700; cursor:pointer; transition:0.2s; }
     .danger:hover { background:#ffe2df; }
-    
-    .btn-whatsapp {
-      background:#25D366; color:white; border:none; border-radius:12px; padding:0.5rem 1rem;
-      font-weight:700; cursor:pointer; transition:all 0.2s ease; display:inline-flex; align-items:center; gap:0.4rem;
-      box-shadow:0 4px 12px rgba(37,211,102,0.25); font-size:0.85rem;
-    }
-    .btn-whatsapp:hover { background:#1eb956; transform:translateY(-2px); }
-
-    .btn-qr {
-      background:#6366f1; color:white; border:none; border-radius:12px; padding:0.5rem 1rem;
-      font-weight:700; cursor:pointer; transition:all 0.2s ease; display:inline-flex; align-items:center; gap:0.4rem;
-      box-shadow:0 4px 12px rgba(99,102,241,0.25); font-size:0.85rem;
-    }
-    .btn-qr:hover { background:#4f46e5; transform:translateY(-2px); }
-
-    .btn-reset {
-      background:#fff1f2; color:#be123c; border:1px solid #fecdd3; border-radius:12px; padding:0.5rem 0.9rem;
-      font-weight:700; cursor:pointer; transition:all 0.2s ease; display:inline-flex; align-items:center; gap:0.4rem; font-size:0.85rem;
-    }
-    .btn-reset:hover { background:#ffe4e6; color:#9f1239; }
-
-    .action-btn { 
-      background:#eef6ff; color:#1e40af; border:1px solid #bfdbfe; border-radius:8px; padding:0.25rem 0.6rem; 
-      font-size:0.8rem; font-weight:700; cursor:pointer; transition:all 0.2s ease; 
-    }
-    .action-btn:hover { background:#dbeafe; transform:scale(1.03); }
-
-    .action-pdm-btn {
-      background:#f3e8ff; color:#6b21a8; border:1px solid #d8b4fe; border-radius:8px; padding:0.25rem 0.6rem;
-      font-size:0.8rem; font-weight:700; cursor:pointer; transition:all 0.2s ease;
-    }
-    .action-pdm-btn:hover { background:#e9d5ff; transform:scale(1.03); }
 
     .surface { 
       background:white; border:1px solid var(--line); border-radius:16px; 
@@ -143,192 +105,69 @@
     .pill-mantenimiento { background:#fce6e4; color:#a33d36; }
     .pill-storage { background:#f3e8ff; color:#6b21a8; border:1px solid #d8b4fe; }
 
-    .text-storage { color:#6b21a8 !important; font-weight:800; }
-
-    tr.row-original { background-color: #f0fdf4 !important; }
-    tr.row-copia { background-color: #fef2f2 !important; }
-
     .table-wrap { overflow-x:auto; background:white; border:1px solid var(--line); border-radius:16px; margin-top:1rem; }
     table { width:100%; border-collapse:collapse; text-align:left; font-size:0.9rem; }
     th, td { padding:12px 16px; border-bottom:1px solid var(--line); transition:background 0.2s; }
     tr:hover td { background:rgba(0,0,0,0.02); }
     th { background:#f5f8fa; color:#627488; font-size:0.72rem; text-transform:uppercase; font-weight:800; cursor:pointer; user-select:none; }
-    th:hover { background:#e2e8f0; color:#1e293b; }
 
-    .field { width:100%; border:1px solid #ccd9e2; border-radius:8px; padding:10px 12px; margin-top:4px; transition:border 0.2s, box-shadow 0.2s; }
+    .field { width:100%; border:1px solid #ccd9e2; border-radius:8px; padding:10px 12px; margin-top:4px; }
     .field:focus { outline:none; border-color:#005ac7; box-shadow:0 0 0 3px rgba(0,90,199,0.15); }
 
     .modal-backdrop { 
       position:fixed; inset:0; background:rgba(9,25,42,0.65); backdrop-filter:blur(3px);
       display:flex; align-items:center; justify-content:center; padding:1rem; z-index:999; 
-      animation: fadeIn 0.3s ease;
     }
-    @keyframes fadeIn { from{ opacity:0; } to{ opacity:1; } }
-
-    .modal-content {
-      animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-    }
+    .modal-content { animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
     @keyframes slideUp { from{ transform:translateY(30px); opacity:0; } to{ transform:translateY(0); opacity:1; } }
-    
-    .status-online { display:inline-flex; align-items:center; gap:0.4rem; font-size:0.75rem; font-weight:700; color:#08765e; background:#ddf6ef; padding:0.2rem 0.6rem; border-radius:99px; }
-    .dot { width:8px; height:8px; background:#08765e; border-radius:50%; display:inline-block; animation:pulse 1.8s infinite; }
-    @keyframes pulse { 0%,100%{ opacity:1; transform:scale(1); } 50%{ opacity:0.3; transform:scale(1.2); } }
 
-    .vacias-card { background:#ddf6ef; border:1px solid #b2ebd9; border-radius:12px; padding:1rem 1.25rem; }
-    .vacias-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:0.75rem; padding-bottom:0.5rem; border-bottom:1px solid #b2ebd9; }
-    .vacias-pills { display:flex; flex-wrap:wrap; gap:0.5rem; }
-    .vacia-loc-pill { background:white; border:1px solid #93dcc6; border-radius:8px; padding:0.3rem 0.6rem; font-size:0.8rem; font-weight:700; color:#08765e; }
-    
-    .check-label { display:inline-flex; align-items:center; gap:0.4rem; font-size:0.82rem; font-weight:700; cursor:pointer; color:#172b40; user-select:none; }
-    .check-label input { width:16px; height:16px; accent-color:var(--teal); cursor:pointer; }
-
-    .maint-summary-card {
-      background:#fff5f5; border:1px solid #fecaca; border-left:6px solid #e19a68;
-      border-radius:16px; padding:1.25rem 1.5rem; margin-bottom:1.5rem;
-      display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1.25rem;
-    }
-
-    .movs-summary-card {
-      background:#eff6ff; border:1px solid #bfdbfe; border-left:6px solid #3b82f6;
-      border-radius:16px; padding:1.25rem 1.5rem; margin-bottom:1.5rem;
-      display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1.25rem;
-    }
-
-    .pdm-summary-card {
-      background:#faf5ff; border:1px solid #e9d5ff; border-left:6px solid #8b5cf6;
-      border-radius:16px; padding:1.25rem 1.5rem; margin-bottom:1.5rem;
-      display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1.25rem;
-    }
-
-    .inactivity-alert-card {
-      background:#fff7ed; border:1px solid #ffedd5; border-left:6px solid #ea580c;
-      border-radius:16px; padding:1.25rem 1.5rem; margin-bottom:1.5rem;
-      display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1.25rem;
-    }
-
-    .maint-stat-pill {
-      background:white; border:1px solid #fee2e2; border-radius:10px; padding:0.5rem 0.8rem;
-      font-size:0.8rem; font-weight:700; color:#991b1b; display:inline-flex; align-items:center; gap:0.4rem;
-    }
-
-    .counter-badge {
-      background:#eef6ff; border:1px solid #c7d2fe; border-radius:12px; padding:0.75rem 1.25rem;
-      display:inline-flex; align-items:center; gap:0.75rem; font-weight:700; color:#1e40af; margin-bottom:1rem;
-    }
-
-    .toast-container {
-      position:fixed; top:20px; right:20px; z-index:2000; display:flex; flex-direction:column; gap:0.5rem;
-    }
+    .toast-container { position:fixed; top:20px; right:20px; z-index:2000; display:flex; flex-direction:column; gap:0.5rem; }
     .toast {
       background:white; border-left:5px solid var(--teal); border-radius:10px; padding:0.85rem 1.2rem;
       box-shadow:0 10px 25px rgba(0,0,0,0.15); font-size:0.85rem; font-weight:700; color:var(--ink);
-      display:flex; align-items:center; gap:0.75rem; animation: toastIn 0.4s ease, toastOut 0.4s ease 2.6s forwards;
+      animation: toastIn 0.4s ease, toastOut 0.4s ease 2.6s forwards;
     }
     @keyframes toastIn { from{ transform:translateX(100%); opacity:0; } to{ transform:translateX(0); opacity:1; } }
     @keyframes toastOut { from{ transform:translateX(0); opacity:1; } to{ transform:translateX(100%); opacity:0; } }
 
-    .row-finished { animation: flashSuccess 0.8s ease; }
-    @keyframes flashSuccess { 0%{ background:#dcfce7; } 100%{ background:transparent; } }
+    /* ESTILOS GRÁFICOS DEL MÓDULO RAMPAS */
+    .rampas-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 1rem; margin-top: 1rem;
+    }
+    .rampa-box {
+      background: white; border: 2px solid #cbd5e1; border-radius: 14px; padding: 1rem 0.5rem;
+      text-align: center; cursor: pointer; transition: all 0.25s ease; position: relative;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 120px;
+    }
+    .rampa-box:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0,0,0,0.08); }
+    .rampa-number { font-size: 0.85rem; font-weight: 800; color: #64748b; margin-bottom: 0.4rem; text-transform: uppercase; }
     
-    .user-tag-subtle {
-      font-size: 0.72rem; color: #94a3b8; font-weight: 600; background: #f1f5f9;
-      padding: 0.15rem 0.4rem; border-radius: 6px; display: inline-flex; align-items: center; gap: 0.2rem;
+    .rampa-status-dot {
+      width: 14px; height: 14px; border-radius: 50%; position: absolute; top: 10px; right: 10px;
     }
-    
-    .storage-alert-box {
-      background:#faf5ff; border:1px dashed #c084fc; border-radius:10px; padding:0.75rem; margin-top:0.5rem;
-      display:none; color:#6b21a8; font-size:0.82rem; font-weight:700;
-    }
+    .rampa-status-dot.verde { background: #10b981; box-shadow: 0 0 8px rgba(16,185,129,0.6); }
+    .rampa-status-dot.rojo { background: #ef4444; box-shadow: 0 0 8px rgba(239,68,68,0.6); }
+    .rampa-status-dot.amarillo { background: #f59e0b; box-shadow: 0 0 10px rgba(245,158,11,0.8); animation: pulseWarning 1.5s infinite; }
+    @keyframes pulseWarning { 0%,100%{ opacity:1; transform:scale(1); } 50%{ opacity:0.4; transform:scale(1.2); } }
 
-    /* RECORRIDO DIARIO MÓVIL */
-    .recorrido-card-row {
-      display:flex; flex-direction:column; gap:0.6rem; padding:0.85rem 1rem; border-bottom:1px solid var(--line);
+    .rampa-caja-badge {
+      font-size: 1.1rem; font-weight: 800; color: #00205b; background: #f1f5f9; padding: 0.3rem 0.6rem;
+      border-radius: 8px; border: 1px solid #cbd5e1; margin-top: 0.2rem; word-break: break-all;
     }
-    .recorrido-card-top {
-      display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.75rem;
-    }
-    .recorrido-info-box {
-      display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;
-    }
-    
-    .touch-btn-group {
-      display:flex; flex-wrap:wrap; gap:0.4rem; width:100%; margin-top:0.2rem;
-    }
-    .touch-btn {
-      flex:1; min-width:85px; padding:0.65rem 0.5rem; border-radius:10px; border:1.5px solid #cbd5e1;
-      background:#ffffff; color:#475569; font-weight:700; font-size:0.82rem;
-      cursor:pointer; transition:all 0.2s cubic-bezier(0.16, 1, 0.3, 1); display:inline-flex; align-items:center; justify-content:center; gap:0.25rem;
-      user-select:none; -webkit-tap-highlight-color: transparent; box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-    }
-    .touch-btn:active { transform:scale(0.94); }
+    .rampa-box.rojo { border-color: #fca5a5; background: #fff5f5; }
+    .rampa-box.amarillo { border-color: #fde68a; background: #fffbeb; }
+    .rampa-box.verde { border-color: #a7f3d0; background: #f0fdf4; }
 
-    .touch-btn.sel-vacia {
-      background:#10b981 !important; color:white !important; border-color:#059669 !important;
-      box-shadow:0 3px 12px rgba(16,185,129,0.35); font-weight:800;
-    }
-    .touch-btn.sel-cargada {
-      background:#f59e0b !important; color:white !important; border-color:#d97706 !important;
-      box-shadow:0 3px 12px rgba(245,158,11,0.35); font-weight:800;
-    }
-    .touch-btn.sel-mantenimiento {
-      background:#ef4444 !important; color:white !important; border-color:#dc2626 !important;
-      box-shadow:0 3px 12px rgba(239,68,68,0.35); font-weight:800;
-    }
-    .touch-btn.sel-noesta {
-      background:#64748b !important; color:white !important; border-color:#475569 !important;
-      box-shadow:0 3px 12px rgba(100,116,139,0.35); font-weight:800;
-    }
-    .touch-btn.btn-comments-active {
-      background:#005ac7 !important; color:white !important; border-color:#0033a0 !important;
-      box-shadow:0 3px 12px rgba(0,90,199,0.35); font-weight:800;
-    }
-
-    .comment-preview-tag {
-      display:inline-flex; align-items:center; gap:0.3rem; background:#eff6ff; border:1px solid #bfdbfe; color:#1e40af;
-      font-size:0.78rem; font-weight:700; padding:0.25rem 0.6rem; border-radius:8px; max-width:280px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
-    }
-
-    /* CONTADOR BOTÓN INTERACTIVO */
     .timer-badge {
       display:inline-flex; align-items:center; gap:0.3rem; background:#f0fdf4; border:1px solid #86efac; color:#166534;
       font-size:0.8rem; font-weight:800; padding:0.3rem 0.65rem; border-radius:8px; cursor:pointer;
-      transition:all 0.2s ease; user-select:none;
     }
-    .timer-badge:hover {
-      background:#dcfce7; transform:scale(1.04); box-shadow:0 2px 6px rgba(22,101,52,0.15);
-    }
-    .timer-badge-warning {
-      background:#fff7ed; border-color:#fdba74; color:#c2410c;
-    }
-    .timer-badge-warning:hover {
-      background:#ffedd5;
-    }
-
-    /* TARJETAS QR */
-    .qr-grid-container {
-      display:grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap:1rem; padding:1rem;
-    }
-    .qr-card {
-      background:white; border:2px solid #005ac7; border-radius:12px; padding:1rem;
-      text-align:center; display:flex; flex-direction:column; align-items:center; box-shadow:0 4px 10px rgba(0,0,0,0.05);
-      page-break-inside: avoid;
-    }
-    .qr-card h4 { font-size:1.3rem; font-weight:800; color:#005ac7; margin-bottom:0.2rem; }
-    .qr-card p { font-size:0.75rem; font-weight:700; color:#475569; margin-bottom:0.5rem; }
-    .qr-card .qr-img-box { margin:0.5rem 0; padding:0.5rem; background:#fff; border:1px solid #e2e8f0; border-radius:8px; }
-
-    @media print {
-      body * { visibility: hidden; }
-      #qr-modal, #qr-modal * { visibility: visible; }
-      #qr-modal { position: absolute; left: 0; top: 0; width: 100%; background: white; padding:0; }
-      .no-print { display: none !important; }
-      .qr-grid-container { grid-template-columns: repeat(3, 1fr); gap:0.5rem; }
-    }
+    .timer-badge-warning { background:#fff7ed; border-color:#fdba74; color:#c2410c; }
   </style>
 </head>
 <body>
 
-  <!-- PANTALLA DE ACCESO RESTRINGIDO -->
+  <!-- LOGIN -->
   <div id="login-screen" class="login-screen">
     <div class="login-card">
       <div class="brand-icon-box">📦</div>
@@ -347,6 +186,7 @@
             <option value="Felipe H (sistemas)">Felipe H (sistemas)</option>
             <option value="Veronica P">Veronica P</option>
             <option value="Jgrimaldo">Jgrimaldo</option>
+            <option value="usuarioPDM">usuarioPDM</option>
           </select>
         </div>
         
@@ -361,16 +201,14 @@
     </div>
   </div>
 
-  <!-- OVERLAY DE BIENVENIDA -->
   <div id="welcome-overlay" class="welcome-overlay">
     <div class="welcome-card">
       <div style="font-size:4rem; margin-bottom:1rem;">📦</div>
       <h1 style="font-size:2.2rem; font-weight:800; margin-bottom:0.5rem;" id="welcome-title">¡Bienvenido!</h1>
-      <p style="font-size:1.1rem; opacity:0.9; font-weight:600;" id="welcome-subtitle">Iniciando centro de operaciones...</p>
+      <p style="font-size:1.1rem; opacity:0.9; font-weight:600;">Iniciando centro de operaciones...</p>
     </div>
   </div>
 
-  <!-- CONTENEDOR DE TOASTS -->
   <div id="toast-container" class="toast-container"></div>
 
   <div class="shell">
@@ -383,11 +221,9 @@
             <div style="color:#acc0d1; font-size:0.75rem;">MEDLINE LOGISTICS</div>
           </div>
         </div>
-        <div style="margin-bottom:1.5rem;">
-          <span class="status-online"><span class="dot"></span> Tiempo Real Activo</span>
-        </div>
         <nav id="navigation">
           <button type="button" class="nav-button active" data-view="dashboard"><span>📊</span> Dashboard Resumen</button>
+          <button type="button" class="nav-button" data-view="rampas"><span>🚛</span> Rampas & Andenes</button>
           <button type="button" class="nav-button" data-view="recorrido"><span>📱</span> Recorrido diario</button>
           <button type="button" class="nav-button" data-view="MSM"><span>🏢</span> Módulo MSM</button>
           <button type="button" class="nav-button" data-view="NLDC"><span>🏭</span> Módulo NLDC</button>
@@ -398,16 +234,15 @@
         </nav>
       </div>
 
-      <!-- PERFIL DE USUARIO EN SIDEBAR -->
       <div style="background:#001740; border-radius:12px; padding:0.85rem; margin-top:1.5rem; display:flex; align-items:center; justify-content:space-between;">
         <div style="display:flex; align-items:center; gap:0.6rem;">
           <div style="background:#005ac7; color:white; border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem;" id="user-avatar">U</div>
           <div>
             <div style="color:white; font-weight:700; font-size:0.8rem;" id="user-display-name">Usuario</div>
-            <div style="color:#94a3b8; font-size:0.7rem;">Usuario de Sesión</div>
+            <div style="color:#94a3b8; font-size:0.7rem;">Sesión Activa</div>
           </div>
         </div>
-        <button type="button" id="logout-btn" title="Cerrar sesión" style="background:transparent; border:none; color:#94a3b8; cursor:pointer; font-size:1rem; padding:0.2rem;">🚪</button>
+        <button type="button" id="logout-btn" title="Cerrar sesión" style="background:transparent; border:none; color:#94a3b8; cursor:pointer; font-size:1rem;">🚪</button>
       </div>
     </aside>
 
@@ -421,19 +256,12 @@
       </header>
 
       <main>
-        <div id="notice" style="display:none; background:#ddf6ef; color:#08765e; padding:1rem; border-radius:12px; font-weight:700; margin-bottom:1rem;"></div>
-
-        <!-- Dashboard View -->
+        <!-- DASHBOARD VIEW -->
         <section id="dashboard-view">
-          <div id="inactivity-alert-card" class="inactivity-alert-card"></div>
-          <div id="mantenimiento-summary-card" class="maint-summary-card"></div>
-          <div id="pdm-summary-card" class="pdm-summary-card"></div>
-          <div id="movimientos-summary-card" class="movs-summary-card"></div>
-
+          <div id="inactivity-alert-card" style="margin-bottom:1.5rem;"></div>
           <div class="grid">
-            <!-- MSM Card -->
             <div class="surface module-card msm">
-              <div style="font-weight:800; font-size:1.1rem; margin-bottom:1rem; color:var(--ink);">Módulo MSM</div>
+              <div style="font-weight:800; font-size:1.1rem; margin-bottom:1rem;">Módulo MSM</div>
               <div style="display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap; margin-bottom:1.5rem;">
                 <div class="donut-wrap">
                   <svg viewBox="0 0 120 120">
@@ -447,13 +275,10 @@
                 </div>
                 <div id="msm-legend" style="flex:1; display:flex; flex-direction:column; gap:0.5rem;"></div>
               </div>
-              <div style="font-weight:800; font-size:0.85rem; color:#65778b; margin-bottom:0.5rem;">Desglose de Cajas Vacías por Ubicación</div>
-              <div id="msm-vacias-container"></div>
             </div>
 
-            <!-- NLDC Card -->
             <div class="surface module-card nldc">
-              <div style="font-weight:800; font-size:1.1rem; margin-bottom:1rem; color:var(--ink);">Módulo NLDC</div>
+              <div style="font-weight:800; font-size:1.1rem; margin-bottom:1rem;">Módulo NLDC</div>
               <div style="display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap; margin-bottom:1.5rem;">
                 <div class="donut-wrap">
                   <svg viewBox="0 0 120 120">
@@ -467,43 +292,37 @@
                 </div>
                 <div id="nldc-legend" style="flex:1; display:flex; flex-direction:column; gap:0.5rem;"></div>
               </div>
-              <div style="font-weight:800; font-size:0.85rem; color:#65778b; margin-bottom:0.5rem;">Desglose de Cajas Vacías por Ubicación</div>
-              <div id="nldc-vacias-container"></div>
             </div>
           </div>
         </section>
 
-        <!-- Table View -->
+        <!-- MÓDULO RAMPAS & ANDENES (NUEVO) -->
+        <section id="rampas-view" style="display:none;">
+          <div class="surface" style="margin-bottom:1.5rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+              <div>
+                <h2 style="font-size:1.2rem; font-weight:800; color:#00205b;">Esquema de Andenes de Carga / Descarga</h2>
+                <p style="font-size:0.85rem; color:#64748b;">Haz clic en cualquier andén para consultar o modificar la caja asignada</p>
+              </div>
+              <div style="display:flex; gap:1rem; align-items:center; font-size:0.8rem; font-weight:700;">
+                <span>🟢 <small>Libre (Sin datos)</small></span>
+                <span>🔴 <small>Ocupado (&lt; 24h)</small></span>
+                <span>🟡 <small>Alerta (&gt; 24h)</small></span>
+              </div>
+            </div>
+            
+            <div class="rampas-grid" id="rampas-container"></div>
+          </div>
+        </section>
+
+        <!-- VISTA DE TABLAS -->
         <section id="table-view" style="display:none;">
-          <div id="module-counter" class="counter-badge" style="display:none;">
-            <span style="font-size:1.2rem;">📦</span>
-            <div>
-              <span style="font-size:0.8rem; text-transform:uppercase; color:#3b82f6; display:block;" id="module-counter-label">Registros en Módulo</span>
-              <strong id="module-count-num" style="font-size:1.4rem; color:#1e3a8a;">0</strong>
-            </div>
-          </div>
-
-          <div id="movimientos-counter" class="counter-badge" style="display:none;">
-            <span style="font-size:1.2rem;">🔄</span>
-            <div>
-              <span style="font-size:0.8rem; text-transform:uppercase; color:#3b82f6; display:block;">Movimientos Realizados</span>
-              <strong id="movimientos-count-num" style="font-size:1.4rem; color:#1e3a8a;">0</strong>
-            </div>
-          </div>
-
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:1rem;">
             <input id="search" class="field" style="max-width:300px;" placeholder="Buscar caja, placas, estado...">
-            <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-              <button id="scan-qr-button" class="btn-qr" style="display:none;">📷 Escanear QR</button>
-              <button id="print-qr-button" class="btn-qr" style="display:none; background:#4f46e5;">🖨️ Generar Tarjetas QR</button>
-              <button id="reset-recorrido-button" class="btn-reset" style="display:none;">🔄 Reiniciar Estatus</button>
-              <button id="whatsapp-button" class="btn-whatsapp" style="display:none;">📲 Compartir por WhatsApp</button>
-              <button id="export-button" class="primary" style="padding:0.5rem 1rem; font-size:0.85rem;">📥 Exportar Excel</button>
-              <button id="clear-button" class="danger" style="display:none;">Vaciar Tabla</button>
-            </div>
+            <button id="export-button" class="primary" style="padding:0.5rem 1rem; font-size:0.85rem;">📥 Exportar Excel</button>
           </div>
           <div class="table-wrap">
-            <table id="main-table">
+            <table>
               <thead id="table-head"></thead>
               <tbody id="table-body"></tbody>
             </table>
@@ -513,7 +332,7 @@
     </div>
   </div>
 
-  <!-- Modal Form Principal -->
+  <!-- MODAL PRINCIPAL FORMULARIO CAJAS -->
   <div id="form-modal" class="modal-backdrop" style="display:none;">
     <div class="surface modal-content" style="width:100%; max-width:500px;">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
@@ -532,7 +351,6 @@
             <option value="NLDC">NLDC</option>
             <option value="PDM">PDM</option>
           </select>
-          <small id="module-auto-hint" style="display:none; color:#0e9f94; font-weight:700; font-size:0.75rem; margin-top:2px;">✨ Módulo detectado automáticamente según inventario</small>
         </div>
         <div style="margin-bottom:0.75rem;" id="location-field-group">
           <label style="font-weight:700; font-size:0.85rem;">Ubicación</label>
@@ -547,40 +365,17 @@
         </div>
         <div style="margin-bottom:0.75rem;">
           <label style="font-weight:700; font-size:0.85rem;">Comentarios</label>
-          <input id="comments" class="field" maxlength="160" placeholder="Ej. Cambio de rampa, observaciones...">
+          <input id="comments" class="field" placeholder="Observaciones...">
         </div>
         <div style="margin-bottom:0.75rem;">
           <label style="font-weight:700; font-size:0.85rem;">Estatus</label>
-          <select id="status" class="field"><option value="vacia">vacia</option><option value="cargada">cargada</option><option value="mantenimiento">mantenimiento</option><option value="storage">storage</option></select>
-          <div id="storage-alert-box" class="storage-alert-box">
-            <span>🟣 <strong>Atención:</strong> La caja se encuentra o cambiará al estatus de <u>Storage</u>.</span>
-          </div>
+          <select id="status" class="field">
+            <option value="vacia">vacia</option>
+            <option value="cargada">cargada</option>
+            <option value="mantenimiento">mantenimiento</option>
+            <option value="storage">storage</option>
+          </select>
         </div>
-        <div id="movement-only" style="display:none;">
-          <div style="margin-bottom:0.75rem;">
-            <label style="font-weight:700; font-size:0.85rem;">Tipo de Movimiento</label>
-            <select id="movement-type" class="field"><option value="PATIO-RAMPA">PATIO-RAMPA</option><option value="RAMPA-PATIO">RAMPA-PATIO</option><option value="PDM-VENUS">PDM-VENUS</option><option value="VENUS-PDM">VENUS-PDM</option></select>
-          </div>
-          <div style="margin-bottom:0.75rem;">
-            <label style="font-weight:700; font-size:0.85rem;">Operador (Maniobra)</label>
-            <input id="movement-operator" class="field" placeholder="Nombre del chofer / operador de la caja">
-          </div>
-          <div style="margin-bottom:0.75rem;">
-            <label style="font-weight:700; font-size:0.85rem;">Solicitud de</label>
-            <input id="movement-requested-by" class="field" placeholder="Persona o área que realiza la solicitud">
-          </div>
-          <div style="margin-bottom:0.75rem;">
-            <label style="font-weight:700; font-size:0.85rem;">Fecha y Hora del Movimiento</label>
-            <input id="movement-datetime" class="field" placeholder="DD/MM/AAAA, HH:mm">
-          </div>
-        </div>
-
-        <div id="delete-box-section" style="display:none; margin-top:1.25rem; padding-top:1rem; border-top:1px solid var(--line);">
-          <button id="delete-single-box-btn" type="button" class="danger" style="width:100%; padding:0.65rem; font-size:0.85rem; display:flex; align-items:center; justify-content:center; gap:0.4rem;">
-            🗑️ Eliminar esta caja del módulo
-          </button>
-        </div>
-
         <div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:1.5rem;">
           <button id="cancel-form" type="button" class="secondary">Cancelar</button>
           <button type="submit" class="primary">Guardar</button>
@@ -589,114 +384,387 @@
     </div>
   </div>
 
-  <!-- MODAL DIRECTO PARA ACTUALIZAR FECHA/HORA DEL CONTADOR -->
-  <div id="timer-edit-modal" class="modal-backdrop" style="display:none;">
+  <!-- MODAL EDITAR RAMPA / ANDÉN -->
+  <div id="rampa-modal" class="modal-backdrop" style="display:none;">
     <div class="surface modal-content" style="width:100%; max-width:440px;">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; padding-bottom:0.5rem; border-bottom:1px solid var(--line);">
-        <div>
-          <h3 style="font-size:1.15rem; font-weight:800; color:#005ac7;">⏱️ Actualizar Contador</h3>
-          <p style="font-size:0.8rem; color:#64748b;">Caja <strong id="timer-box-num" style="color:#005ac7;">—</strong></p>
-        </div>
-        <button id="close-timer-modal" class="secondary" type="button">✕</button>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+        <h3 style="font-size:1.2rem; font-weight:800; color:#005ac7;" id="rampa-modal-title">Andén --</h3>
+        <button id="close-rampa-modal" class="secondary" type="button">✕</button>
       </div>
-
-      <div style="background:#f0f9ff; border:1px solid #bae6fd; border-radius:12px; padding:1rem; margin-bottom:1.25rem;">
-        <p style="font-size:0.82rem; color:#0c4a6e; margin-bottom:0.75rem; font-weight:600;">
-          Selecciona libremente la fecha y hora de inicio de este contador, o bien reinícialo a 0 días a partir de este momento:
-        </p>
+      <form id="rampa-form">
+        <input type="hidden" id="rampa-num-input">
         <div style="margin-bottom:0.75rem;">
-          <label style="font-weight:700; font-size:0.8rem; color:#0369a1;">Fecha y Hora Libre</label>
-          <input type="datetime-local" id="custom-timer-input" class="field" style="margin-top:4px;">
+          <label style="font-weight:700; font-size:0.85rem;">Número de Caja en Rampa</label>
+          <input id="rampa-caja-input" class="field" placeholder="Dejar en blanco si está libre">
         </div>
-      </div>
-
-      <div style="display:flex; justify-content:space-between; align-items:center; gap:0.5rem; flex-wrap:wrap;">
-        <button id="reset-timer-zero-btn" type="button" class="secondary" style="font-size:0.85rem; padding:0.55rem 0.9rem;">🔄 Reiniciar a 0 días</button>
-        <div style="display:flex; gap:0.5rem;">
-          <button id="cancel-timer-btn" type="button" class="secondary">Cancelar</button>
-          <button id="save-timer-btn" type="button" class="primary" style="background:#0284c7;">Guardar Fecha</button>
+        <div style="margin-bottom:0.75rem;">
+          <label style="font-weight:700; font-size:0.85rem;">Módulo</label>
+          <select id="rampa-modulo-input" class="field">
+            <option value="MSM">MSM</option>
+            <option value="NLDC">NLDC</option>
+            <option value="PDM">PDM</option>
+          </select>
         </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL DE LECTOR DE CÁMARA QR -->
-  <div id="camera-modal" class="modal-backdrop" style="display:none;">
-    <div class="surface modal-content" style="width:100%; max-width:450px; text-align:center;">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-        <h3 style="font-size:1.1rem; font-weight:800; color:#4f46e5;">📷 Escanear Código QR de Caja</h3>
-        <button id="close-camera-modal" class="secondary" type="button">✕</button>
-      </div>
-      <p style="font-size:0.82rem; color:#64748b; margin-bottom:1rem;">Apunta la cámara del celular al código QR de la caja</p>
-      
-      <div id="qr-reader-box" style="width:100%; border-radius:12px; overflow:hidden; background:#000;"></div>
-
-      <div style="margin-top:1rem;">
-        <button id="stop-camera-btn" type="button" class="secondary" style="width:100%;">Cerrar Cámara</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL DE VISTA / IMPRESIÓN DE PLANILLA DE TARJETAS QR -->
-  <div id="qr-modal" class="modal-backdrop" style="display:none; align-items:flex-start; overflow-y:auto; padding:2rem 1rem;">
-    <div class="surface modal-content" style="width:100%; max-width:1100px; background:#f8fafc;">
-      <div class="no-print" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; padding-bottom:1rem; border-bottom:2px solid #cbd5e1;">
-        <div>
-          <h2 style="font-size:1.4rem; font-weight:800; color:#005ac7;">🖨️ Planilla de Tarjetas QR - Medline</h2>
-          <p style="font-size:0.85rem; color:#64748b;">Lista de 80 fichas para pegar en rampa, carpetas o cajas fisicas</p>
+        <div style="margin-bottom:0.75rem;">
+          <label style="font-weight:700; font-size:0.85rem;">Operador / Chofer</label>
+          <input id="rampa-operador-input" class="field" placeholder="Nombre de operador...">
         </div>
-        <div style="display:flex; gap:0.5rem;">
-          <button type="button" class="primary" onclick="window.print()" style="background:#4f46e5;">🖨️ Imprimir / Guardar PDF</button>
-          <button id="close-qr-modal" class="secondary" type="button">✕ Cerrar</button>
+        <div style="margin-bottom:0.75rem;">
+          <label style="font-weight:700; font-size:0.85rem;">Notas / Comentarios</label>
+          <input id="rampa-comments-input" class="field" placeholder="Observaciones de la rampa...">
         </div>
-      </div>
 
-      <div id="qr-grid" class="qr-grid-container"></div>
+        <div style="display:flex; justify-content:space-between; gap:0.5rem; margin-top:1.5rem;">
+          <button type="button" id="clear-rampa-btn" class="danger">Liberar Rampa</button>
+          <div style="display:flex; gap:0.5rem;">
+            <button id="cancel-rampa-btn" type="button" class="secondary">Cancelar</button>
+            <button type="submit" class="primary">Guardar Rampa</button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 
-  <!-- MODAL DE CONFIRMACIÓN CON CONTRASEÑA PARA REINICIAR RECORRIDO -->
-  <div id="password-reset-modal" class="modal-backdrop" style="display:none;">
-    <div class="surface modal-content" style="width:100%; max-width:400px; text-align:center;">
-      <div style="font-size:2.5rem; margin-bottom:0.5rem;">🔒</div>
-      <h3 style="font-size:1.2rem; font-weight:800; color:#be123c; margin-bottom:0.25rem;">Confirmar Reinicio de Estatus</h3>
-      <p style="font-size:0.82rem; color:#64748b; margin-bottom:1.25rem;">
-        Ingresa tu contraseña de usuario (<strong id="reset-user-display" style="color:#005ac7;">—</strong>) para desmarcar todas las cajas en el recorrido diario.
-      </p>
-      
-      <div style="text-align:left; margin-bottom:1.25rem;">
-        <label style="font-weight:700; font-size:0.8rem; color:#475569;">Contraseña de Usuario</label>
-        <input type="password" id="reset-password-input" class="field" placeholder="••••••••">
-        <div id="reset-password-error" style="display:none; color:#dc2626; font-size:0.78rem; font-weight:700; margin-top:0.4rem;">Contraseña incorrecta</div>
-      </div>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { 
+      getFirestore, collection, onSnapshot, doc, setDoc, deleteDoc, writeBatch 
+    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-      <div style="display:flex; justify-content:flex-end; gap:0.5rem;">
-        <button id="cancel-reset-btn" type="button" class="secondary">Cancelar</button>
-        <button id="confirm-reset-btn" type="button" class="primary" style="background:#be123c;">Confirmar y Reiniciar</button>
-      </div>
-    </div>
-  </div>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAQykxeMYM9zLkG_zKHMzbB5oZoofxhvfg",
+      authDomain: "logistica-msm.firebaseapp.com",
+      projectId: "logistica-msm",
+      storageBucket: "logistica-msm.firebasestorage.app",
+      messagingSenderId: "55217121587",
+      appId: "1:55217121587:web:ead0f6ece5a47d2be8b646"
+    };
 
-  <!-- MODAL DE COMENTARIOS / MANTENIMIENTO EN RECORRIDO DIARIO -->
-  <div id="damage-modal" class="modal-backdrop" style="display:none;">
-    <div class="surface modal-content" style="width:100%; max-width:420px;">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-        <h3 id="comment-modal-title" style="font-size:1.1rem; font-weight:800; color:#005ac7;">💬 Agregar Comentario</h3>
-        <button id="close-damage-modal" class="secondary" type="button">✕</button>
-      </div>
-      <p style="font-size:0.85rem; color:#475569; margin-bottom:0.75rem;">
-        Escribe las observaciones para la caja <strong id="damage-box-label" style="color:#005ac7;">—</strong>:
-      </p>
-      <textarea id="damage-text-input" class="field" rows="3" placeholder="Escribe aquí los comentarios o notas..." style="resize:vertical;"></textarea>
-      
-      <div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:1.25rem;">
-        <button id="cancel-damage-btn" type="button" class="secondary">Cancelar</button>
-        <button id="save-damage-btn" type="button" class="primary">Guardar Nota</button>
-      </div>
-    </div>
-  </div>
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-  <!-- LLAMADA AL ARCHIVO JAVASCRIPT EXTERNO -->
-  <script type="module" src="app.js"></script>
+    const AUTHORIZED_USERS = {
+      "Erick M": "reportevenus",
+      "Alejandro G": "medline2026",
+      "Ruben V": "papa",
+      "Abril V": "medline2026",
+      "Felipe H (sistemas)": "Sistemas2026",
+      "Veronica P": "NLDCMSM26",
+      "Jgrimaldo": "Aitana13",
+      "usuarioPDM": "MedlinePDM1" // NUEVO USUARIO Y CONTRASEÑA
+    };
+
+    let boxes = [];
+    let pdmBoxesList = [];
+    let rampasMap = {};
+    let view = 'dashboard';
+    let currentUser = localStorage.getItem('medline_user') || null;
+
+    if (currentUser) {
+      updateUserUI();
+      document.getElementById('login-screen').classList.add('hidden');
+    }
+
+    document.getElementById('login-form').onsubmit = function(e) {
+      e.preventDefault();
+      const selectedUser = document.getElementById('user-select').value;
+      const pwd = document.getElementById('password-input').value.trim();
+      const errEl = document.getElementById('login-error');
+
+      if (selectedUser && AUTHORIZED_USERS[selectedUser] && pwd === AUTHORIZED_USERS[selectedUser]) {
+        errEl.style.display = 'none';
+        currentUser = selectedUser;
+        localStorage.setItem('medline_user', currentUser);
+        updateUserUI();
+        document.getElementById('login-screen').classList.add('hidden');
+        showToast(`Bienvenido, ${currentUser}`);
+      } else {
+        errEl.style.display = 'block';
+      }
+    };
+
+    document.getElementById('logout-btn').onclick = () => {
+      localStorage.removeItem('medline_user');
+      currentUser = null;
+      document.getElementById('login-screen').classList.remove('hidden');
+    };
+
+    function updateUserUI() {
+      if (currentUser) {
+        document.getElementById('user-display-name').textContent = currentUser;
+        document.getElementById('user-avatar').textContent = currentUser.charAt(0).toUpperCase();
+      }
+    }
+
+    function showToast(msg) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerHTML = `<span>✨</span> <span>${msg}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    }
+
+    // CÁLCULO PRECISO DE DÍAS TRANSCURRIDOS (CORRECCIÓN 1)
+    function formatElapsedTime(timestampMillis) {
+      if (!timestampMillis) return '0 días';
+      const now = Date.now();
+      const diffMs = Math.max(0, now - timestampMillis);
+      const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+      return `⏱️ ${days} ${days === 1 ? 'día' : 'días'}`;
+    }
+
+    // LISTENERS DE FIREBASE EN TIEMPO REAL
+    onSnapshot(collection(db, "boxes"), (snapshot) => {
+      boxes = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      render();
+    });
+
+    onSnapshot(collection(db, "pdm_boxes"), (snapshot) => {
+      pdmBoxesList = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      render();
+    });
+
+    onSnapshot(collection(db, "rampas"), (snapshot) => {
+      rampasMap = {};
+      snapshot.docs.forEach(d => { rampasMap[d.id] = d.data(); });
+      if (view === 'rampas') renderRampas();
+    });
+
+    function render() {
+      document.querySelectorAll('#navigation button').forEach(b => {
+        b.classList.toggle('active', b.getAttribute('data-view') === view);
+      });
+
+      document.getElementById('view-title').textContent = 
+        view === 'dashboard' ? 'Dashboard Resumen' : 
+        view === 'rampas' ? 'Módulo de Rampas & Andenes' : 'Módulo ' + view;
+
+      document.getElementById('dashboard-view').style.display = view === 'dashboard' ? 'block' : 'none';
+      document.getElementById('rampas-view').style.display = view === 'rampas' ? 'block' : 'none';
+      document.getElementById('table-view').style.display = (view !== 'dashboard' && view !== 'rampas') ? 'block' : 'none';
+
+      if (view === 'dashboard') {
+        renderInactivityAlert();
+      } else if (view === 'rampas') {
+        renderRampas();
+      } else {
+        renderTable();
+      }
+    }
+
+    // ALERTA DE INACTIVIDAD CON DÍAS REALES (>3 DÍAS)
+    function renderInactivityAlert() {
+      const now = Date.now();
+      const THREE_DAYS_MS = 3 * 24 * 60 * 60 * 1000;
+      const inactive = boxes.filter(b => (b.status || '').toLowerCase() === 'cargada' && b.lastUpdatedTimestamp && (now - b.lastUpdatedTimestamp) > THREE_DAYS_MS);
+
+      const card = document.getElementById('inactivity-alert-card');
+      if (inactive.length === 0) { card.style.display = 'none'; return; }
+
+      card.style.display = 'block';
+      const pills = inactive.map(b => `<span style="background:white; border:1px solid #fdba74; border-radius:6px; padding:0.2rem 0.5rem; font-size:0.8rem; font-weight:800; color:#c2410c;">📦 ${b.number} (${formatElapsedTime(b.lastUpdatedTimestamp)})</span>`).join(' ');
+
+      card.innerHTML = `
+        <div style="background:#fff7ed; border-left:6px solid #ea580c; border-radius:12px; padding:1.25rem;">
+          <h4 style="color:#ea580c; font-size:0.9rem; font-weight:800;">⚠️ ALERTA: CAJAS CARGADAS SIN MOVIMIENTO (> 3 DÍAS)</h4>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.5rem;">${pills}</div>
+        </div>
+      `;
+    }
+
+    // MÓDULO RAMPAS & ANDENES (ANDENES 26 AL 39)
+    function renderRampas() {
+      const container = document.getElementById('rampas-container');
+      container.innerHTML = '';
+      const now = Date.now();
+      const TWENTY_FOUR_HOURS_MS = 24 * 60 * 60 * 1000;
+
+      for (let i = 26; i <= 39; i++) {
+        const rampaId = `RAMPA_${i}`;
+        const data = rampasMap[rampaId] || {};
+        const tieneCaja = Boolean(data.caja && data.caja.trim() !== '');
+        
+        let colorEstado = 'verde';
+        if (tieneCaja) {
+          const timestamp = data.timestamp || now;
+          if ((now - timestamp) > TWENTY_FOUR_HOURS_MS) {
+            colorEstado = 'amarillo'; // Pasó 24h
+          } else {
+            colorEstado = 'rojo'; // Ocupado normal
+          }
+        }
+
+        const box = document.createElement('div');
+        box.className = `rampa-box ${colorEstado}`;
+        box.onclick = () => openRampaModal(i, data);
+
+        box.innerHTML = `
+          <div class="rampa-status-dot ${colorEstado}"></div>
+          <div class="rampa-number">Andén ${i}</div>
+          ${tieneCaja ? `<div class="rampa-caja-badge">📦 ${data.caja}</div>` : '<span style="font-size:0.75rem; color:#94a3b8;">Libre</span>'}
+        `;
+        container.appendChild(box);
+      }
+    }
+
+    function openRampaModal(num, data) {
+      document.getElementById('rampa-modal-title').textContent = `Andén ${num}`;
+      document.getElementById('rampa-num-input').value = num;
+      document.getElementById('rampa-caja-input').value = data.caja || '';
+      document.getElementById('rampa-modulo-input').value = data.modulo || 'MSM';
+      document.getElementById('rampa-operador-input').value = data.operador || '';
+      document.getElementById('rampa-comments-input').value = data.comments || '';
+      document.getElementById('rampa-modal').style.display = 'flex';
+    }
+
+    document.getElementById('close-rampa-modal').onclick = () => document.getElementById('rampa-modal').style.display = 'none';
+    document.getElementById('cancel-rampa-btn').onclick = () => document.getElementById('rampa-modal').style.display = 'none';
+
+    document.getElementById('rampa-form').onsubmit = async function(e) {
+      e.preventDefault();
+      const num = document.getElementById('rampa-num-input').value;
+      const caja = document.getElementById('rampa-caja-input').value.trim();
+      const rampaId = `RAMPA_${num}`;
+
+      if (caja) {
+        await setDoc(doc(db, "rampas", rampaId), {
+          caja: caja,
+          modulo: document.getElementById('rampa-modulo-input').value,
+          operador: document.getElementById('rampa-operador-input').value.trim(),
+          comments: document.getElementById('rampa-comments-input').value.trim(),
+          timestamp: Date.now(),
+          updatedBy: currentUser || 'Sistema'
+        }, { merge: true });
+        showToast(`Andén ${num} actualizado con caja ${caja}`);
+      } else {
+        await deleteDoc(doc(db, "rampas", rampaId));
+        showToast(`Andén ${num} liberado`);
+      }
+      document.getElementById('rampa-modal').style.display = 'none';
+    };
+
+    document.getElementById('clear-rampa-btn').onclick = async function() {
+      const num = document.getElementById('rampa-num-input').value;
+      await deleteDoc(doc(db, "rampas", `RAMPA_${num}`));
+      document.getElementById('rampa-modal').style.display = 'none';
+      showToast(`Andén ${num} liberado`);
+    };
+
+    // RENDERIZADO DE TABLAS GENERALES
+    function renderTable() {
+      const thead = document.getElementById('table-head');
+      const tbody = document.getElementById('table-body');
+      const search = document.getElementById('search').value.toLowerCase();
+      const isPdm = view === 'PDM';
+
+      if (isPdm) {
+        thead.innerHTML = `<tr><th>Caja</th><th>Comentarios</th><th>Estatus</th><th>Antigüedad en Días</th><th>Acciones</th></tr>`;
+      } else {
+        thead.innerHTML = `<tr><th>Caja</th><th>Módulo</th><th>Estatus</th><th>Ubicación</th><th>Antigüedad</th></tr>`;
+      }
+
+      tbody.innerHTML = '';
+      const dataset = isPdm ? pdmBoxesList : boxes.filter(b => b.module === view);
+
+      const filtered = dataset.filter(x => 
+        (x.number && x.number.toLowerCase().includes(search)) ||
+        (x.comments && x.comments.toLowerCase().includes(search))
+      );
+
+      filtered.forEach(item => {
+        const tr = document.createElement('tr');
+        if (isPdm) {
+          tr.innerHTML = `
+            <td><b>📦 ${item.number}</b></td>
+            <td>${item.comments || '—'}</td>
+            <td><span class="pill pill-${item.status || 'vacia'}">${item.status || 'vacia'}</span></td>
+            <td><span class="timer-badge">${formatElapsedTime(item.timestamp)}</span></td>
+            <td><button class="danger delete-pdm-btn" data-id="${item.id}">🗑️ Borrar</button></td>
+          `;
+        } else {
+          tr.innerHTML = `
+            <td><b>${item.number}</b></td>
+            <td>${item.module}</td>
+            <td><span class="pill pill-${item.status}">${item.status}</span></td>
+            <td>${item.location || 'Venus'}</td>
+            <td><span class="timer-badge">${formatElapsedTime(item.lastUpdatedTimestamp)}</span></td>
+          `;
+        }
+        tbody.appendChild(tr);
+      });
+
+      if (isPdm) {
+        document.querySelectorAll('.delete-pdm-btn').forEach(btn => {
+          btn.onclick = async function() {
+            const id = this.getAttribute('data-id');
+            await deleteDoc(doc(db, "pdm_boxes", id));
+            showToast('Caja PDM eliminada');
+          };
+        });
+      }
+    }
+
+    // REGISTRO INDEPENDIENTE DE CAJAS PDM (CORRECCIÓN 4)
+    document.getElementById('open-form').onclick = () => {
+      document.getElementById('entry-form').reset();
+      if (view === 'PDM') {
+        document.getElementById('module').value = 'PDM';
+        document.getElementById('module').disabled = true;
+      } else {
+        document.getElementById('module').disabled = false;
+      }
+      document.getElementById('form-modal').style.display = 'flex';
+    };
+
+    document.getElementById('close-modal').onclick = () => document.getElementById('form-modal').style.display = 'none';
+    document.getElementById('cancel-form').onclick = () => document.getElementById('form-modal').style.display = 'none';
+
+    document.getElementById('entry-form').onsubmit = async function(e) {
+      e.preventDefault();
+      const num = document.getElementById('box-number').value.trim().toUpperCase();
+      const mod = document.getElementById('module').value;
+      const comm = document.getElementById('comments').value.trim();
+      const st = document.getElementById('status').value;
+      const nowTs = Date.now();
+
+      if (mod === 'PDM' || view === 'PDM') {
+        const pdmDocId = `PDM_${num}_${nowTs}`;
+        await setDoc(doc(db, "pdm_boxes", pdmDocId), {
+          number: num,
+          comments: comm,
+          status: st,
+          timestamp: nowTs,
+          datetime: new Date().toLocaleString('es-MX'),
+          recordedBy: currentUser || 'Sistema'
+        });
+        showToast(`Caja PDM ${num} registrada exitosamente`);
+      } else {
+        const docId = `${mod}_${num}`;
+        await setDoc(doc(db, "boxes", docId), {
+          number: num,
+          module: mod,
+          location: document.getElementById('location').value,
+          comments: comm,
+          status: st,
+          lastUpdatedTimestamp: nowTs,
+          recordedBy: currentUser || 'Sistema'
+        }, { merge: true });
+        showToast(`Caja ${num} registrada en Módulo ${mod}`);
+      }
+
+      document.getElementById('form-modal').style.display = 'none';
+    };
+
+    document.getElementById('navigation').onclick = function(e) {
+      const btn = e.target.closest('button');
+      if (btn) {
+        view = btn.getAttribute('data-view');
+        render();
+      }
+    };
+
+    document.getElementById('search').oninput = renderTable;
+  </script>
 </body>
 </html>
