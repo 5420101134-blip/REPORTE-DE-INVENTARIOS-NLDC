@@ -17,6 +17,12 @@
     body { color:var(--ink); background:var(--bg); overflow-x:hidden; }
     button,input,select,textarea { font:inherit; }
 
+    /* MODO SOLO LECTURA */
+    body.readonly-mode .edit-only { display: none !important; }
+    body.readonly-mode .rampa-box { cursor: default; }
+    body.readonly-mode .rampa-box:hover { transform: none; box-shadow: none; }
+    body.readonly-mode .open-timer-btn { cursor: default; pointer-events: none; }
+
     /* PANTALLA DE LOGIN */
     .login-screen {
       position:fixed; inset:0; background:linear-gradient(135deg, #0033a0 0%, #005ac7 100%);
@@ -167,6 +173,7 @@
     @keyframes slideUp { from{ transform:translateY(30px); opacity:0; } to{ transform:translateY(0); opacity:1; } }
     
     .status-online { display:inline-flex; align-items:center; gap:0.4rem; font-size:0.75rem; font-weight:700; color:#08765e; background:#ddf6ef; padding:0.2rem 0.6rem; border-radius:99px; }
+    .readonly-badge { display:inline-flex; align-items:center; gap:0.35rem; font-size:0.72rem; font-weight:800; color:#92400e; background:#fef3c7; border:1px solid #fde68a; padding:0.2rem 0.6rem; border-radius:99px; margin-top:0.4rem; }
     .dot { width:8px; height:8px; background:#08765e; border-radius:50%; display:inline-block; animation:pulse 1.8s infinite; }
     @keyframes pulse { 0%,100%{ opacity:1; transform:scale(1); } 50%{ opacity:0.3; transform:scale(1.2); } }
 
@@ -280,31 +287,52 @@
     .qr-card p { font-size:0.75rem; font-weight:700; color:#475569; margin-bottom:0.5rem; }
     .qr-card .qr-img-box { margin:0.5rem 0; padding:0.5rem; background:#fff; border:1px solid #e2e8f0; border-radius:8px; }
 
-    /* NUEVO MÓDULO DE RAMPAS (ESQUEMA 26 AL 39) */
+    /* MÓDULO DE RAMPAS & ANDENES (ESQUEMA 26 AL 39) */
     .rampas-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(135px, 1fr)); gap: 1rem; margin-top: 1rem;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 1rem; margin-top: 1rem;
     }
     .rampa-box {
-      background: white; border: 2px solid #cbd5e1; border-radius: 14px; padding: 1rem 0.5rem;
+      background: white; border: 2px solid #cbd5e1; border-radius: 14px; padding: 0.85rem 0.4rem;
       text-align: center; cursor: pointer; transition: all 0.25s ease; position: relative;
-      display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 125px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 130px;
+      overflow: hidden;
     }
     .rampa-box:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0,0,0,0.08); }
-    .rampa-number { font-size: 0.85rem; font-weight: 800; color: #64748b; margin-bottom: 0.4rem; text-transform: uppercase; }
+    .rampa-number { 
+      font-size: 0.8rem; font-weight: 800; color: #64748b; margin-bottom: 0.3rem; text-transform: uppercase;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;
+    }
     
-    .rampa-status-dot { width: 14px; height: 14px; border-radius: 50%; position: absolute; top: 10px; right: 10px; }
+    .rampa-status-dot { width: 12px; height: 12px; border-radius: 50%; position: absolute; top: 8px; right: 8px; }
     .rampa-status-dot.verde { background: #10b981; box-shadow: 0 0 8px rgba(16,185,129,0.6); }
     .rampa-status-dot.rojo { background: #ef4444; box-shadow: 0 0 8px rgba(239,68,68,0.6); }
     .rampa-status-dot.amarillo { background: #f59e0b; box-shadow: 0 0 10px rgba(245,158,11,0.8); animation: pulseWarning 1.5s infinite; }
     @keyframes pulseWarning { 0%,100%{ opacity:1; transform:scale(1); } 50%{ opacity:0.4; transform:scale(1.2); } }
 
     .rampa-caja-badge {
-      font-size: 1.1rem; font-weight: 800; color: #00205b; background: #f1f5f9; padding: 0.3rem 0.6rem;
-      border-radius: 8px; border: 1px solid #cbd5e1; margin-top: 0.2rem; word-break: break-all;
+      font-size: 0.95rem; font-weight: 800; color: #00205b; background: #f1f5f9; padding: 0.25rem 0.4rem;
+      border-radius: 6px; border: 1px solid #cbd5e1; margin-top: 0.2rem; max-width: 98%;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block;
     }
+    .rampa-state-tag {
+      font-size: 0.68rem; font-weight: 800; text-transform: uppercase; margin-top: 0.3rem; padding: 0.1rem 0.4rem;
+      border-radius: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;
+    }
+    .rampa-state-tag.rojo { color: #dc2626; background: #fee2e2; }
+    .rampa-state-tag.amarillo { color: #b45309; background: #fef3c7; }
+
     .rampa-box.rojo { border-color: #fca5a5; background: #fff5f5; }
     .rampa-box.amarillo { border-color: #fde68a; background: #fffbeb; }
     .rampa-box.verde { border-color: #a7f3d0; background: #f0fdf4; }
+
+    /* Barra de Porcentaje de Ocupación */
+    .occupancy-bar-container {
+      background: #f1f5f9; border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1.25rem;
+      border: 1px solid #e2e8f0; display: flex; flex-direction: column; gap: 0.5rem;
+    }
+    .occupancy-header { display: flex; justify-content: space-between; font-weight: 800; font-size: 0.85rem; color: #1e293b; }
+    .occupancy-track { width: 100%; height: 12px; background: #cbd5e1; border-radius: 999px; overflow: hidden; }
+    .occupancy-fill { height: 100%; background: linear-gradient(90deg, #10b981 0%, #f59e0b 50%, #ef4444 100%); transition: width 0.5s ease; }
 
     @media print {
       body * { visibility: hidden; }
@@ -336,7 +364,8 @@
             <option value="Felipe H (sistemas)">Felipe H (sistemas)</option>
             <option value="Veronica P">Veronica P</option>
             <option value="Jgrimaldo">Jgrimaldo</option>
-            <option value="usuarioPDM">usuarioPDM</option>
+            <option value="PDM IE">PDM IE</option>
+            <option value="Martin Reyes">Martin Reyes</option>
           </select>
         </div>
         
@@ -374,10 +403,13 @@
         </div>
         <div style="margin-bottom:1.5rem;">
           <span class="status-online"><span class="dot"></span> Tiempo Real Activo</span>
+          <div id="readonly-sidebar-indicator" style="display:none;">
+            <span class="readonly-badge">👁️ Modo Solo Lectura</span>
+          </div>
         </div>
         <nav id="navigation">
           <button type="button" class="nav-button active" data-view="dashboard"><span>📊</span> Dashboard Resumen</button>
-          <button type="button" class="nav-button" data-view="rampas"><span>🚛</span> Rampas & Andenes</button>
+          <button type="button" class="nav-button" data-view="rampas"><span>🚛</span> Recibos NLDC</button>
           <button type="button" class="nav-button" data-view="recorrido"><span>📱</span> Recorrido diario</button>
           <button type="button" class="nav-button" data-view="MSM"><span>🏢</span> Módulo MSM</button>
           <button type="button" class="nav-button" data-view="NLDC"><span>🏭</span> Módulo NLDC</button>
@@ -393,7 +425,7 @@
           <div style="background:#005ac7; color:white; border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem;" id="user-avatar">U</div>
           <div>
             <div style="color:white; font-weight:700; font-size:0.8rem;" id="user-display-name">Usuario</div>
-            <div style="color:#94a3b8; font-size:0.7rem;">Usuario de Sesión</div>
+            <div style="color:#94a3b8; font-size:0.7rem;" id="user-role-label">Usuario de Sesión</div>
           </div>
         </div>
         <button type="button" id="logout-btn" title="Cerrar sesión" style="background:transparent; border:none; color:#94a3b8; cursor:pointer; font-size:1rem;">🚪</button>
@@ -406,7 +438,7 @@
           <div style="font-size:0.75rem; font-weight:800; color:#005ac7; text-transform:uppercase;">Medline Operations</div>
           <h1 id="view-title" style="font-size:1.75rem; font-weight:800;">Dashboard Resumen</h1>
         </div>
-        <button id="open-form" class="primary">+ Registrar caja</button>
+        <button id="open-form" class="primary edit-only">+ Registrar caja</button>
       </header>
 
       <main>
@@ -461,15 +493,26 @@
         <!-- Rampas & Andenes View -->
         <section id="rampas-view" style="display:none;">
           <div class="surface" style="margin-bottom:1.5rem;">
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:1rem;">
               <div>
-                <h2 style="font-size:1.2rem; font-weight:800; color:#00205b;">Esquema de Andenes de Carga / Descarga (26 al 39)</h2>
-                <p style="font-size:0.85rem; color:#64748b;">Selecciona un andén para gestionar, editar o liberar la caja ocupante</p>
+                <h2 style="font-size:1.2rem; font-weight:800; color:#00205b;">Andenes área de Recibos NLDC (26 al 39)</h2>
+                <p style="font-size:0.85rem; color:#64748b;">Monitoreo del estado de ocupación de rampas en tiempo real</p>
               </div>
               <div style="display:flex; gap:1rem; align-items:center; font-size:0.8rem; font-weight:700;">
-                <span>🟢 Libre (Sin datos)</span>
+                <span>🟢 Libre</span>
                 <span>🔴 Ocupado (&lt; 24h)</span>
                 <span>🟡 Alerta (&gt; 24h)</span>
+              </div>
+            </div>
+
+            <!-- PORCENTAJE DE OCUPACIÓN -->
+            <div class="occupancy-bar-container">
+              <div class="occupancy-header">
+                <span>Porcentaje de Ocupación General</span>
+                <span id="occupancy-text">0% (0 / 14 andenes)</span>
+              </div>
+              <div class="occupancy-track">
+                <div id="occupancy-fill" class="occupancy-fill" style="width: 0%;"></div>
               </div>
             </div>
             
@@ -498,12 +541,12 @@
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:1rem;">
             <input id="search" class="field" style="max-width:300px;" placeholder="Buscar caja, placas, estado...">
             <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-              <button id="scan-qr-button" class="btn-qr" style="display:none;">📷 Escanear QR</button>
+              <button id="scan-qr-button" class="btn-qr edit-only" style="display:none;">📷 Escanear QR</button>
               <button id="print-qr-button" class="btn-qr" style="display:none; background:#4f46e5;">🖨️ Generar Tarjetas QR</button>
-              <button id="reset-recorrido-button" class="btn-reset" style="display:none;">🔄 Reiniciar Estatus</button>
+              <button id="reset-recorrido-button" class="btn-reset edit-only" style="display:none;">🔄 Reiniciar Estatus</button>
               <button id="whatsapp-button" class="btn-whatsapp" style="display:none;">📲 Compartir por WhatsApp</button>
               <button id="export-button" class="primary" style="padding:0.5rem 1rem; font-size:0.85rem;">📥 Exportar Excel</button>
-              <button id="clear-button" class="danger" style="display:none;">Vaciar Tabla</button>
+              <button id="clear-button" class="danger edit-only" style="display:none;">Vaciar Tabla</button>
             </div>
           </div>
           <div class="table-wrap">
@@ -770,7 +813,7 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // USUARIOS Y CONTRASEÑAS AUTORIZADAS (CORRECCIÓN 2)
+    // USUARIOS Y CONTRASEÑAS AUTORIZADAS (PDM IE ACTUALIZADO)
     const AUTHORIZED_USERS = {
       "Erick M": "reportevenus",
       "Alejandro G": "medline2026",
@@ -779,8 +822,16 @@
       "Felipe H (sistemas)": "Sistemas2026",
       "Veronica P": "NLDCMSM26",
       "Jgrimaldo": "Aitana13",
-      "usuarioPDM": "MedlinePDM1"
+      "PDM IE": "MedlinePDM1",
+      "Martin Reyes": "casa123"
     };
+
+    // USUARIOS CON PERMISO EXCLUSIVO DE VISIBILIDAD (SOLO LECTURA)
+    const READONLY_USERS = ["PDM IE"];
+
+    function isReadOnlyUser() {
+      return Boolean(currentUser && READONLY_USERS.includes(currentUser));
+    }
 
     const catalogNLDC = [
       '529953','536393','538338','538351','538612','538638','539124','539199','539705','547006',
@@ -924,7 +975,6 @@
       return null;
     }
 
-    // CORRECCIÓN 1: CÁLCULO DE DÍAS TRANSCURRIDOS DE FORMA EXACTA
     function formatElapsedTime(timestampMillis) {
       if (!timestampMillis) return '0 días';
       const now = Date.now();
@@ -964,11 +1014,15 @@
 
           const welcomeOverlay = document.getElementById('welcome-overlay');
           document.getElementById('welcome-title').textContent = `¡Bienvenido, ${currentUser}!`;
+          document.getElementById('welcome-subtitle').textContent = isReadOnlyUser()
+            ? 'Accediendo en modo de visibilidad (Solo Lectura)...'
+            : 'Iniciando centro de operaciones...';
           welcomeOverlay.classList.add('active');
 
           setTimeout(() => {
             welcomeOverlay.classList.remove('active');
             showToast(`Sesión iniciada como ${currentUser}`);
+            render();
           }, 2200);
 
         } else {
@@ -981,6 +1035,7 @@
     document.getElementById('logout-btn').onclick = function() {
       localStorage.removeItem('medline_user');
       currentUser = null;
+      document.body.classList.remove('readonly-mode');
       document.getElementById('password-input').value = '';
       document.getElementById('login-screen').classList.remove('hidden');
     };
@@ -989,6 +1044,16 @@
       if (currentUser) {
         document.getElementById('user-display-name').textContent = currentUser;
         document.getElementById('user-avatar').textContent = currentUser.charAt(0).toUpperCase();
+        
+        if (isReadOnlyUser()) {
+          document.body.classList.add('readonly-mode');
+          document.getElementById('readonly-sidebar-indicator').style.display = 'block';
+          document.getElementById('user-role-label').textContent = 'Solo Lectura';
+        } else {
+          document.body.classList.remove('readonly-mode');
+          document.getElementById('readonly-sidebar-indicator').style.display = 'none';
+          document.getElementById('user-role-label').textContent = 'Usuario de Sesión';
+        }
       }
     }
 
@@ -1039,7 +1104,9 @@
       }
     });
 
-    async function updateGlobalStatusInFirebase(num, mod, newSt, commentsVal, locationVal) {
+    // BLINDAJE DE ESTATUS "STORAGE": Evita que recorridos o movimientos borren el estatus storage
+    async function updateGlobalStatusInFirebase(num, mod, newSt, commentsVal, locationVal, forceStorageOverride = false) {
+      if (isReadOnlyUser()) return;
       const batch = writeBatch(db);
       const nowStr = new Date().toLocaleString('es-MX');
       const nowTs = Date.now();
@@ -1048,6 +1115,19 @@
 
       if (matchingBoxes.length > 0) {
         matchingBoxes.forEach(b => {
+          const currentSt = (b.status || '').toLowerCase();
+          
+          // Si la caja está en STORAGE y no se solicitó explícitamente cambiarla desde el módulo directo, conservar STORAGE
+          if (currentSt === 'storage' && newSt !== 'storage' && !forceStorageOverride) {
+            const safeUpdate = {};
+            if (locationVal) safeUpdate.location = locationVal;
+            if (commentsVal && commentsVal !== 'Reportado desde sistema') safeUpdate.comments = commentsVal;
+            if (Object.keys(safeUpdate).length > 0) {
+              batch.update(doc(db, "boxes", b.id), safeUpdate);
+            }
+            return;
+          }
+
           const updateObj = { status: newSt, lastUpdatedTimestamp: nowTs };
           if (locationVal) updateObj.location = locationVal;
           if (newSt === 'mantenimiento') {
@@ -1086,6 +1166,7 @@
     }
 
     async function updateRecorridoInFirebase(cajaNum, estatusVal, comentariosVal) {
+      if (isReadOnlyUser()) return;
       const docId = `REC_${cajaNum}`;
       const payload = {
         caja: cajaNum,
@@ -1104,11 +1185,12 @@
 
       if (estatusVal === 'mantenimiento' || estatusVal === 'vacia' || estatusVal === 'cargada') {
         const targetMod = detectModuleByBoxNumber(cajaNum);
-        await updateGlobalStatusInFirebase(cajaNum, targetMod, estatusVal, comentariosVal);
+        await updateGlobalStatusInFirebase(cajaNum, targetMod, estatusVal, comentariosVal, null, false);
       }
     }
 
     async function createPdmBoxCopyFromMovement(movId) {
+      if (isReadOnlyUser()) return;
       const mov = movements.find(m => m.id === movId);
       if (!mov) return;
 
@@ -1161,7 +1243,7 @@
 
       document.getElementById('view-title').textContent = 
         view === 'dashboard' ? 'Dashboard Resumen' : 
-        view === 'rampas' ? 'Módulo de Rampas & Andenes' :
+        view === 'rampas' ? 'Andenes área de Recibos NLDC' :
         view === 'recorrido' ? 'Recorrido Diario (Móvil)' :
         view === 'movimientos' ? 'Movimientos Diarios' : 
         view === 'mantenimiento' ? 'Módulo de Mantenimiento' : 
@@ -1223,12 +1305,15 @@
       `;
     }
 
-    // CORRECCIÓN 3: ESQUEMA DE ANDENES DE RAMPAS (26 AL 39)
+    // ESQUEMA DE ANDENES DE RAMPAS (26 AL 39)
     function renderRampas() {
       const container = document.getElementById('rampas-container');
       container.innerHTML = '';
       const now = Date.now();
       const TWENTY_FOUR_HOURS_MS = 24 * 60 * 60 * 1000;
+
+      let ocupadosCount = 0;
+      const totalAndenes = 14;
 
       for (let i = 26; i <= 39; i++) {
         const rampaId = `RAMPA_${i}`;
@@ -1236,29 +1321,48 @@
         const tieneCaja = Boolean(data.caja && data.caja.trim() !== '');
         
         let colorEstado = 'verde';
+        let stateTagText = '';
+
         if (tieneCaja) {
+          ocupadosCount++;
           const timestamp = data.timestamp || now;
           if ((now - timestamp) > TWENTY_FOUR_HOURS_MS) {
-            colorEstado = 'amarillo'; // Pasó 24h
+            colorEstado = 'amarillo';
+            stateTagText = '🔴 Ocupado (&gt;24h)';
           } else {
-            colorEstado = 'rojo'; // Ocupado normal
+            colorEstado = 'rojo';
+            stateTagText = '🔴 Ocupado';
           }
         }
 
         const box = document.createElement('div');
         box.className = `rampa-box ${colorEstado}`;
-        box.onclick = () => openRampaModal(i, data);
+        box.onclick = () => {
+          if (isReadOnlyUser()) {
+            showToast('Modo Solo Lectura: no tienes permisos para editar andenes');
+            return;
+          }
+          openRampaModal(i, data);
+        };
 
         box.innerHTML = `
           <div class="rampa-status-dot ${colorEstado}"></div>
-          <div class="rampa-number">Andén ${i}</div>
-          ${tieneCaja ? `<div class="rampa-caja-badge">📦 ${data.caja}</div>` : '<span style="font-size:0.75rem; color:#94a3b8;">Libre</span>'}
+          <div class="rampa-number" title="Andén ${i}">Andén ${i}</div>
+          ${tieneCaja 
+            ? `<div class="rampa-caja-badge" title="Caja ${data.caja}">📦 ${data.caja}</div>
+               <div class="rampa-state-tag ${colorEstado}">${stateTagText}</div>`
+            : '<span style="font-size:0.75rem; font-weight:700; color:#94a3b8;">Libre</span>'}
         `;
         container.appendChild(box);
       }
+
+      const pct = Math.round((ocupadosCount / totalAndenes) * 100);
+      document.getElementById('occupancy-text').textContent = `${pct}% (${ocupadosCount} / ${totalAndenes} ocupados)`;
+      document.getElementById('occupancy-fill').style.width = `${pct}%`;
     }
 
     function openRampaModal(num, data) {
+      if (isReadOnlyUser()) return;
       document.getElementById('rampa-modal-title').textContent = `Andén ${num}`;
       document.getElementById('rampa-num-input').value = num;
       document.getElementById('rampa-caja-input').value = data.caja || '';
@@ -1273,6 +1377,7 @@
 
     document.getElementById('rampa-form').onsubmit = async function(e) {
       e.preventDefault();
+      if (isReadOnlyUser()) return;
       const num = document.getElementById('rampa-num-input').value;
       const caja = document.getElementById('rampa-caja-input').value.trim();
       const rampaId = `RAMPA_${num}`;
@@ -1295,6 +1400,7 @@
     };
 
     document.getElementById('clear-rampa-btn').onclick = async function() {
+      if (isReadOnlyUser()) return;
       const num = document.getElementById('rampa-num-input').value;
       await deleteDoc(doc(db, "rampas", `RAMPA_${num}`));
       document.getElementById('rampa-modal').style.display = 'none';
@@ -1467,6 +1573,7 @@
     }
 
     function renderTable() {
+      const readOnly = isReadOnlyUser();
       const isRecorrido = view === 'recorrido';
       const isMov = view === 'movimientos';
       const isMaint = view === 'mantenimiento';
@@ -1498,8 +1605,8 @@
           { key: 'comments', label: 'Comentarios' },
           { key: 'status', label: 'Estatus' },
           { key: 'datetime', label: 'Fecha y Hora de Registro' },
-          { key: 'timestamp', label: 'Antigüedad en Días (Clic p/ editar)' },
-          { key: null, label: 'Acciones' }
+          { key: 'timestamp', label: readOnly ? 'Antigüedad en Días' : 'Antigüedad en Días (Clic p/ editar)' },
+          ...(readOnly ? [] : [{ key: null, label: 'Acciones' }])
         ];
       } else if (isMov) {
         columns = [
@@ -1512,7 +1619,7 @@
           { key: 'requestedBy', label: 'Solicitud de' },
           { key: 'datetime', label: 'Fecha y Hora' },
           { key: 'status', label: 'Estatus' },
-          { key: null, label: 'Acciones' }
+          ...(readOnly ? [] : [{ key: null, label: 'Acciones' }])
         ];
       } else if (isMaint) {
         columns = [
@@ -1522,7 +1629,7 @@
           { key: 'comments', label: 'Comentarios' },
           { key: 'mantenimientoDate', label: 'Fecha de Registro' },
           { key: 'reportadoReparaciones', label: 'Reportado a Reparaciones' },
-          { key: null, label: 'Acciones' }
+          ...(readOnly ? [] : [{ key: null, label: 'Acciones' }])
         ];
       } else if (isPlacas) {
         columns = [
@@ -1540,8 +1647,8 @@
           { key: 'location', label: 'Ubicación' },
           { key: 'comments', label: 'Comentarios' },
           { key: 'placasInfo', label: 'Placas' },
-          { key: 'lastUpdatedTimestamp', label: 'Antigüedad en Días (Clic p/ editar)' },
-          { key: null, label: 'Acciones' }
+          { key: 'lastUpdatedTimestamp', label: readOnly ? 'Antigüedad en Días' : 'Antigüedad en Días (Clic p/ editar)' },
+          ...(readOnly ? [] : [{ key: null, label: 'Acciones' }])
         ];
       }
 
@@ -1556,10 +1663,10 @@
       thHTML += '</tr>';
       thead.innerHTML = thHTML;
 
-      clearBtn.style.display = isMov ? 'inline-block' : 'none';
+      clearBtn.style.display = (isMov && !readOnly) ? 'inline-block' : 'none';
       whatsappBtn.style.display = isRecorrido ? 'inline-flex' : 'none';
-      resetRecorridoBtn.style.display = isRecorrido ? 'inline-flex' : 'none';
-      scanQrBtn.style.display = isRecorrido ? 'inline-flex' : 'none';
+      resetRecorridoBtn.style.display = (isRecorrido && !readOnly) ? 'inline-flex' : 'none';
+      scanQrBtn.style.display = (isRecorrido && !readOnly) ? 'inline-flex' : 'none';
       printQrBtn.style.display = (isRecorrido || isPlacas) ? 'inline-flex' : 'none';
 
       if (isMov) {
@@ -1652,6 +1759,12 @@
           const isNoEsta = item.estatusRecorrido === 'noesta';
           const hasComment = Boolean(item.comentarios);
 
+          const statusPillReadonly = isVacia ? '<span class="pill pill-vacia">🟢 Vacía</span>'
+            : isCargada ? '<span class="pill pill-cargada">🟡 Cargada</span>'
+            : isMantenimiento ? '<span class="pill pill-mantenimiento">🛠️ Mantenimiento</span>'
+            : isNoEsta ? '<span class="pill" style="background:#e2e8f0; color:#475569;">⚪ No está</span>'
+            : '<span style="color:#94a3b8; font-size:0.8rem;">Sin marcar</span>';
+
           tr.innerHTML = `
             <td style="padding: 0;">
               <div class="recorrido-card-row">
@@ -1660,19 +1773,21 @@
                     <strong style="font-size:1.15rem; color:var(--navy);">📦 ${item.caja}</strong>
                     <span style="font-weight:700; color:#0e9f94; font-size:0.85rem; background:#f0fdf4; padding:0.2rem 0.5rem; border-radius:6px; border:1px solid #bbf7d0;">${item.placas} ${item.estadoPlaca}</span>
                     <span class="pill ${item.modulo==='MSM'?'pill-cargada':'pill-vacia'}">${item.modulo}</span>
+                    ${readOnly ? statusPillReadonly : ''}
                   </div>
                   <div>
                     ${hasComment ? `<div class="comment-preview-tag" title="${item.comentarios}">💬 ${item.comentarios}</div>` : '<span style="color:#cbd5e1; font-size:0.78rem;">Sin observaciones</span>'}
                   </div>
                 </div>
 
+                ${readOnly ? '' : `
                 <div class="touch-btn-group">
                   <button type="button" class="touch-btn touch-vacia ${isVacia ? 'sel-vacia' : ''}" data-caja="${item.caja}">🟢 Vacía</button>
                   <button type="button" class="touch-btn touch-cargada ${isCargada ? 'sel-cargada' : ''}" data-caja="${item.caja}">🟡 Cargada</button>
                   <button type="button" class="touch-btn touch-danos ${isMantenimiento ? 'sel-mantenimiento' : ''}" data-caja="${item.caja}">🛠️ Mantenimiento</button>
                   <button type="button" class="touch-btn touch-noesta ${isNoEsta ? 'sel-noesta' : ''}" data-caja="${item.caja}">⚪ No está</button>
                   <button type="button" class="touch-btn touch-comentarios ${hasComment ? 'btn-comments-active' : ''}" data-caja="${item.caja}">💬 Comentarios</button>
-                </div>
+                </div>`}
               </div>
             </td>
           `;
@@ -1690,14 +1805,15 @@
             <td>${item.comments || '—'}</td>
             <td><span class="pill pill-${item.status || 'vacia'}">${item.status || 'vacia'}</span></td>
             <td><span style="font-size:0.8rem; font-weight:700; color:#475569;">${item.datetime || '—'}</span></td>
-            <td><span class="timer-badge open-timer-btn" data-id="${item.id}" data-type="pdm" data-num="${item.number}">${elapsedTimeStr}</span></td>
+            <td><span class="timer-badge ${readOnly ? '' : 'open-timer-btn'}" data-id="${item.id}" data-type="pdm" data-num="${item.number}">${elapsedTimeStr}</span></td>
+            ${readOnly ? '' : `
             <td>
               <div style="display:flex; align-items:center; gap:0.4rem; flex-wrap:wrap;">
                 <button type="button" class="secondary edit-pdm-btn" data-id="${item.id}" style="padding:0.25rem 0.6rem; font-size:0.8rem;">✏️ Editar</button>
                 <button type="button" class="danger delete-pdm-btn" data-id="${item.id}" data-num="${item.number}" style="padding:0.25rem 0.6rem; font-size:0.8rem;">🗑️ Eliminar</button>
                 ${userTag}
               </div>
-            </td>
+            </td>`}
           `;
           tbody.appendChild(tr);
         });
@@ -1760,156 +1876,289 @@
             html += `<td><span style="font-size:0.8rem; font-weight:700; color:#627488;">${item.mantenimientoDate || 'No registrada'}</span></td>`;
             html += `<td>
                       <label class="check-label">
-                        <input type="checkbox" class="maint-checkbox" data-id="${item.id}" ${item.reportadoReparaciones ? 'checked' : ''}>
+                        <input type="checkbox" class="maint-checkbox" data-id="${item.id}" ${item.reportadoReparaciones ? 'checked' : ''} ${readOnly ? 'disabled' : ''}>
                         <span>${item.reportadoReparaciones ? ' Reportado' : 'Pendiente'}</span>
                       </label>
                     </td>`;
           } else {
             const isCargada = (item.status || '').toLowerCase() === 'cargada';
             const isWarning = isCargada && item.lastUpdatedTimestamp && (nowMs - item.lastUpdatedTimestamp) > THREE_DAYS_MS;
-            const timerBadgeClass = isWarning ? 'timer-badge timer-badge-warning open-timer-btn' : 'timer-badge open-timer-btn';
+            const timerBadgeClass = isWarning ? 'timer-badge timer-badge-warning' : 'timer-badge';
 
             html += `<td><span class="pill pill-${item.status}">${item.status}</span></td>`;
             html += `<td>${item.location || 'Venus'}</td>`;
             html += `<td>${item.comments || '—'}</td>`;
             html += `<td><span style="font-weight:700; color:#0e9f94;">${item.placasInfo}</span></td>`;
-            html += `<td><span class="${timerBadgeClass}" data-id="${item.id}" data-type="box" data-num="${item.number}">${formatElapsedTime(item.lastUpdatedTimestamp)}</span></td>`;
+            html += `<td><span class="${timerBadgeClass} ${readOnly ? '' : 'open-timer-btn'}" data-id="${item.id}" data-type="box" data-num="${item.number}">${formatElapsedTime(item.lastUpdatedTimestamp)}</span></td>`;
           }
           
-          const userTag = item.recordedBy ? `<span class="user-tag-subtle" title="Modificado por">👤 ${item.recordedBy}</span>` : '';
-          const showPdmBtn = isMov && (item.module === 'PDM');
+          if (!readOnly) {
+            const userTag = item.recordedBy ? `<span class="user-tag-subtle" title="Modificado por">👤 ${item.recordedBy}</span>` : '';
+            const showPdmBtn = isMov && (item.module === 'PDM');
 
-          html += `<td>
-                    <div style="display:flex; align-items:center; gap:0.4rem; flex-wrap:wrap;">
-                      ${isMov ? `<button type="button" class="action-btn finish-btn" data-id="${item.id}">🔚 Fin de tarea</button>` : ''}
-                      ${showPdmBtn ? `<button type="button" class="action-pdm-btn create-pdm-btn" data-id="${item.id}">📦 PDM Vacía</button>` : ''}
-                      <button type="button" class="secondary edit-btn" data-id="${item.id}" style="padding:0.25rem 0.6rem; font-size:0.8rem;">✏️ Editar</button>
-                      ${isMov ? `<button type="button" class="danger delete-btn" data-id="${item.id}" style="padding:0.25rem 0.6rem; font-size:0.8rem;">🗑️ Eliminar</button>` : ''}
-                      <select class="field st-select" data-id="${item.id}" style="padding:0.2rem; width:auto; font-size:0.8rem; margin-top:0;">
-                        <option value="vacia" ${item.status==='vacia'?'selected':''}>vacia</option>
-                        <option value="cargada" ${item.status==='cargada'?'selected':''}>cargada</option>
-                        <option value="mantenimiento" ${item.status==='mantenimiento'?'selected':''}>mantenimiento</option>
-                        <option value="storage" ${item.status==='storage'?'selected':''}>storage</option>
-                      </select>
-                      ${userTag}
-                    </div>
-                  </td>`;
+            html += `<td>
+                      <div style="display:flex; align-items:center; gap:0.4rem; flex-wrap:wrap;">
+                        ${isMov ? `<button type="button" class="action-btn finish-btn" data-id="${item.id}">🔚 Fin de tarea</button>` : ''}
+                        ${showPdmBtn ? `<button type="button" class="action-pdm-btn create-pdm-btn" data-id="${item.id}">📦 PDM Vacía</button>` : ''}
+                        <button type="button" class="secondary edit-btn" data-id="${item.id}" style="padding:0.25rem 0.6rem; font-size:0.8rem;">✏️ Editar</button>
+                        ${isMov ? `<button type="button" class="danger delete-btn" data-id="${item.id}" style="padding:0.25rem 0.6rem; font-size:0.8rem;">🗑️ Eliminar</button>` : ''}
+                        <select class="field st-select" data-id="${item.id}" style="padding:0.2rem; width:auto; font-size:0.8rem; margin-top:0;">
+                          <option value="vacia" ${item.status==='vacia'?'selected':''}>vacia</option>
+                          <option value="cargada" ${item.status==='cargada'?'selected':''}>cargada</option>
+                          <option value="mantenimiento" ${item.status==='mantenimiento'?'selected':''}>mantenimiento</option>
+                          <option value="storage" ${item.status==='storage'?'selected':''}>storage</option>
+                        </select>
+                        ${userTag}
+                      </div>
+                    </td>`;
+          }
           tr.innerHTML = html;
           tbody.appendChild(tr);
         });
       }
 
-      if (isRecorrido) {
-        document.querySelectorAll('.touch-vacia').forEach(b => {
-          b.onclick = async function() {
-            const cajaNum = this.getAttribute('data-caja');
-            await updateRecorridoInFirebase(cajaNum, 'vacia');
-            showToast(`Caja ${cajaNum} marcada como VACÍA`);
-          };
-        });
+      if (!readOnly) {
+        if (isRecorrido) {
+          document.querySelectorAll('.touch-vacia').forEach(b => {
+            b.onclick = async function() {
+              const cajaNum = this.getAttribute('data-caja');
+              await updateRecorridoInFirebase(cajaNum, 'vacia');
+              showToast(`Caja ${cajaNum} marcada como VACÍA`);
+            };
+          });
 
-        document.querySelectorAll('.touch-cargada').forEach(b => {
-          b.onclick = async function() {
-            const cajaNum = this.getAttribute('data-caja');
-            await updateRecorridoInFirebase(cajaNum, 'cargada');
-            showToast(`Caja ${cajaNum} marcada como CARGADA`);
-          };
-        });
+          document.querySelectorAll('.touch-cargada').forEach(b => {
+            b.onclick = async function() {
+              const cajaNum = this.getAttribute('data-caja');
+              await updateRecorridoInFirebase(cajaNum, 'cargada');
+              showToast(`Caja ${cajaNum} marcada como CARGADA`);
+            };
+          });
 
-        document.querySelectorAll('.touch-danos').forEach(b => {
-          b.onclick = function() {
-            const cajaNum = this.getAttribute('data-caja');
-            activeDamageCaja = cajaNum;
-            activeModalMode = 'mantenimiento';
-            const firebaseDoc = recorridoDataMap[`REC_${cajaNum}`];
+          document.querySelectorAll('.touch-danos').forEach(b => {
+            b.onclick = function() {
+              const cajaNum = this.getAttribute('data-caja');
+              activeDamageCaja = cajaNum;
+              activeModalMode = 'mantenimiento';
+              const firebaseDoc = recorridoDataMap[`REC_${cajaNum}`];
 
-            document.getElementById('comment-modal-title').textContent = '🛠️ Enviar a Mantenimiento';
-            document.getElementById('comment-modal-title').style.color = '#dc2626';
-            document.getElementById('damage-box-label').textContent = cajaNum;
-            document.getElementById('damage-text-input').value = firebaseDoc ? firebaseDoc.comentarios : '';
-            document.getElementById('save-damage-btn').style.background = '#dc2626';
-            document.getElementById('save-damage-btn').textContent = 'Enviar a Mantenimiento';
-            document.getElementById('damage-modal').style.display = 'flex';
-          };
-        });
+              document.getElementById('comment-modal-title').textContent = '🛠️ Enviar a Mantenimiento';
+              document.getElementById('comment-modal-title').style.color = '#dc2626';
+              document.getElementById('damage-box-label').textContent = cajaNum;
+              document.getElementById('damage-text-input').value = firebaseDoc ? firebaseDoc.comentarios : '';
+              document.getElementById('save-damage-btn').style.background = '#dc2626';
+              document.getElementById('save-damage-btn').textContent = 'Enviar a Mantenimiento';
+              document.getElementById('damage-modal').style.display = 'flex';
+            };
+          });
 
-        document.querySelectorAll('.touch-comentarios').forEach(b => {
-          b.onclick = function() {
-            const cajaNum = this.getAttribute('data-caja');
-            activeDamageCaja = cajaNum;
-            activeModalMode = 'comments';
-            const firebaseDoc = recorridoDataMap[`REC_${cajaNum}`];
+          document.querySelectorAll('.touch-comentarios').forEach(b => {
+            b.onclick = function() {
+              const cajaNum = this.getAttribute('data-caja');
+              activeDamageCaja = cajaNum;
+              activeModalMode = 'comments';
+              const firebaseDoc = recorridoDataMap[`REC_${cajaNum}`];
 
-            document.getElementById('comment-modal-title').textContent = '💬 Agregar / Editar Comentario';
-            document.getElementById('comment-modal-title').style.color = '#005ac7';
-            document.getElementById('damage-box-label').textContent = cajaNum;
-            document.getElementById('damage-text-input').value = firebaseDoc ? firebaseDoc.comentarios : '';
-            document.getElementById('save-damage-btn').style.background = '#005ac7';
-            document.getElementById('save-damage-btn').textContent = 'Guardar Nota';
-            document.getElementById('damage-modal').style.display = 'flex';
-          };
-        });
+              document.getElementById('comment-modal-title').textContent = '💬 Agregar / Editar Comentario';
+              document.getElementById('comment-modal-title').style.color = '#005ac7';
+              document.getElementById('damage-box-label').textContent = cajaNum;
+              document.getElementById('damage-text-input').value = firebaseDoc ? firebaseDoc.comentarios : '';
+              document.getElementById('save-damage-btn').style.background = '#005ac7';
+              document.getElementById('save-damage-btn').textContent = 'Guardar Nota';
+              document.getElementById('damage-modal').style.display = 'flex';
+            };
+          });
 
-        document.querySelectorAll('.touch-noesta').forEach(b => {
-          b.onclick = async function() {
-            const cajaNum = this.getAttribute('data-caja');
-            await updateRecorridoInFirebase(cajaNum, 'noesta');
-            showToast(`Caja ${cajaNum} marcada como NO ESTÁ`);
-          };
-        });
-      }
+          document.querySelectorAll('.touch-noesta').forEach(b => {
+            b.onclick = async function() {
+              const cajaNum = this.getAttribute('data-caja');
+              await updateRecorridoInFirebase(cajaNum, 'noesta');
+              showToast(`Caja ${cajaNum} marcada como NO ESTÁ`);
+            };
+          });
+        }
 
-      document.querySelectorAll('.open-timer-btn').forEach(btn => {
-        btn.onclick = function(e) {
-          const targetId = e.currentTarget.getAttribute('data-id');
-          const targetType = e.currentTarget.getAttribute('data-type');
-          const num = e.currentTarget.getAttribute('data-num');
-
-          activeTimerBox = { id: targetId, type: targetType, number: num };
-          document.getElementById('timer-box-num').textContent = num;
-          document.getElementById('custom-timer-input').value = '';
-          document.getElementById('timer-edit-modal').style.display = 'flex';
-        };
-      });
-
-      document.querySelectorAll('.create-pdm-btn').forEach(btn => {
-        btn.onclick = async function(e) {
-          const movId = e.target.getAttribute('data-id');
-          await createPdmBoxCopyFromMovement(movId);
-        };
-      });
-
-      if (isPdm) {
-        document.querySelectorAll('.edit-pdm-btn').forEach(btn => {
+        document.querySelectorAll('.open-timer-btn').forEach(btn => {
           btn.onclick = function(e) {
-            const pdmId = e.target.getAttribute('data-id');
-            const item = pdmBoxesList.find(x => x.id === pdmId);
+            const targetId = e.currentTarget.getAttribute('data-id');
+            const targetType = e.currentTarget.getAttribute('data-type');
+            const num = e.currentTarget.getAttribute('data-num');
+
+            activeTimerBox = { id: targetId, type: targetType, number: num };
+            document.getElementById('timer-box-num').textContent = num;
+            document.getElementById('custom-timer-input').value = '';
+            document.getElementById('timer-edit-modal').style.display = 'flex';
+          };
+        });
+
+        document.querySelectorAll('.create-pdm-btn').forEach(btn => {
+          btn.onclick = async function(e) {
+            const movId = e.target.getAttribute('data-id');
+            await createPdmBoxCopyFromMovement(movId);
+          };
+        });
+
+        if (isPdm) {
+          document.querySelectorAll('.edit-pdm-btn').forEach(btn => {
+            btn.onclick = function(e) {
+              const pdmId = e.target.getAttribute('data-id');
+              const item = pdmBoxesList.find(x => x.id === pdmId);
+              if (item) {
+                editingPdmDocId = pdmId;
+                editingDocId = null;
+                document.getElementById('modal-heading').textContent = 'Editar Caja PDM';
+                document.getElementById('box-number').value = item.number;
+                document.getElementById('box-number').disabled = true;
+                document.getElementById('module').value = 'PDM';
+                document.getElementById('module').disabled = true;
+                document.getElementById('location-field-group').style.display = 'none';
+                document.getElementById('comments').value = item.comments || '';
+                document.getElementById('status').value = item.status || 'vacia';
+                document.getElementById('movement-only').style.display = 'none';
+                document.getElementById('delete-box-section').style.display = 'none';
+                document.getElementById('form-modal').style.display = 'flex';
+              }
+            };
+          });
+
+          document.querySelectorAll('.delete-pdm-btn').forEach(b => {
+            b.onclick = async function() {
+              const docId = this.getAttribute('data-id');
+              const num = this.getAttribute('data-num');
+              if (confirm(`¿Deseas eliminar este registro de PDM para la caja ${num}?`)) {
+                await deleteDoc(doc(db, "pdm_boxes", docId));
+                showToast(`Registro PDM de caja ${num} eliminado`);
+              }
+            };
+          });
+        }
+
+        document.querySelectorAll('.delete-btn').forEach(btn => {
+          btn.onclick = async function(e) {
+            const docId = e.target.getAttribute('data-id');
+            const item = movements.find(m => m.id === docId);
+            if (item && confirm(`¿Deseas borrar permanentemente este registro de la caja ${item.number}?`)) {
+              await deleteDoc(doc(db, "movements", docId));
+              showToast(`Registro de caja ${item.number} eliminado`);
+            }
+          };
+        });
+
+        document.querySelectorAll('.finish-btn').forEach(btn => {
+          btn.onclick = async function(e) {
+            const docId = e.target.getAttribute('data-id');
+            const original = movements.find(m => m.id === docId);
+
+            if (original) {
+              const num = original.number;
+              const currentType = original.type || 'PATIO-RAMPA';
+              const newType = getInverseMovementType(currentType);
+
+              if (confirm(`¿Deseas terminar la tarea seleccionada para la caja ${num}?\n\nSe creará el registro inverso: ${newType}`)) {
+                const rowEl = document.getElementById(`row-${docId}`);
+                if (rowEl) rowEl.classList.add('row-finished');
+
+                const newDocId = `MOV_${original.module}_${num}_${Date.now()}`;
+                const nowStr = new Date().toLocaleString('es-MX');
+
+                await setDoc(doc(db, "movements", newDocId), {
+                  number: num,
+                  module: original.module,
+                  location: original.location || 'Venus',
+                  comments: original.comments ? `[Fin de tarea] ${original.comments}` : '[Fin de tarea]',
+                  status: original.status || 'vacia',
+                  type: newType,
+                  operator: original.operator || '—',
+                  requestedBy: original.requestedBy || '—',
+                  recordedBy: currentUser || 'Sistema',
+                  datetime: nowStr,
+                  timestamp: Date.now()
+                });
+
+                updateGlobalStatusInFirebase(num, original.module, original.status || 'vacia', null, null, false);
+                showToast(`Tarea de caja ${num} completada`);
+              }
+            }
+          };
+        });
+
+        document.querySelectorAll('.maint-checkbox').forEach(chk => {
+          chk.onchange = async function(e) {
+            const docId = e.target.getAttribute('data-id');
+            const isChecked = e.target.checked;
+            await setDoc(doc(db, "boxes", docId), { reportadoReparaciones: isChecked }, { merge: true });
+            showToast(isChecked ? 'Marcado como reportado' : 'Marcado como pendiente');
+          };
+        });
+
+        document.querySelectorAll('.edit-btn').forEach(btn => {
+          btn.onclick = function(e) {
+            const docId = e.target.getAttribute('data-id');
+            const isMovView = view === 'movimientos';
+            const item = (isMovView ? movements : boxes).find(x => x.id === docId);
+            
             if (item) {
-              editingPdmDocId = pdmId;
-              editingDocId = null;
-              document.getElementById('modal-heading').textContent = 'Editar Caja PDM';
-              document.getElementById('box-number').value = item.number;
-              document.getElementById('box-number').disabled = true;
-              document.getElementById('module').value = 'PDM';
-              document.getElementById('module').disabled = true;
-              document.getElementById('location-field-group').style.display = 'none';
+              editingDocId = docId;
+              editingPdmDocId = null;
+              document.getElementById('modal-heading').textContent = 'Editar Registro';
+              document.getElementById('box-number').value = item.number || '';
+              document.getElementById('box-number').disabled = false;
+              document.getElementById('location-field-group').style.display = 'block';
+              document.getElementById('module').value = item.module || 'MSM';
+              document.getElementById('location').value = item.location || 'Venus';
               document.getElementById('comments').value = item.comments || '';
               document.getElementById('status').value = item.status || 'vacia';
-              document.getElementById('movement-only').style.display = 'none';
-              document.getElementById('delete-box-section').style.display = 'none';
+              
+              checkAndAutoAssignModule(item.number || '');
+              toggleStorageAlert(item.status);
+
+              const deleteSection = document.getElementById('delete-box-section');
+              if (view === 'MSM' || view === 'NLDC' || view === 'mantenimiento') {
+                deleteSection.style.display = 'block';
+              } else {
+                deleteSection.style.display = 'none';
+              }
+
+              const movFields = document.getElementById('movement-only');
+              if (isMovView) {
+                movFields.style.display = 'block';
+                document.getElementById('movement-type').value = item.type || 'PATIO-RAMPA';
+                document.getElementById('movement-operator').value = item.operator || '';
+                document.getElementById('movement-requested-by').value = item.requestedBy || '';
+                document.getElementById('movement-datetime').value = item.datetime || new Date().toLocaleString('es-MX');
+              } else {
+                movFields.style.display = 'none';
+              }
+              
               document.getElementById('form-modal').style.display = 'flex';
             }
           };
         });
 
-        document.querySelectorAll('.delete-pdm-btn').forEach(b => {
-          b.onclick = async function() {
-            const docId = this.getAttribute('data-id');
-            const num = this.getAttribute('data-num');
-            if (confirm(`¿Deseas eliminar este registro de PDM para la caja ${num}?`)) {
-              await deleteDoc(doc(db, "pdm_boxes", docId));
-              showToast(`Registro PDM de caja ${num} eliminado`);
+        document.querySelectorAll('.st-select').forEach(s => {
+          s.onchange = async function(e) {
+            const docId = e.target.getAttribute('data-id');
+            const newSt = e.target.value;
+            const isMovView = view === 'movimientos';
+            
+            if (isMovView && newSt === 'storage') {
+              alert('⚠️ ATENCIÓN: Esta caja se ha marcado en estatus de STORAGE.');
             }
+
+            if (isMovView) {
+              await setDoc(doc(db, "movements", docId), { status: newSt, recordedBy: currentUser || 'Sistema' }, { merge: true });
+              const targetDoc = movements.find(x => x.id === docId);
+              if (targetDoc) {
+                updateGlobalStatusInFirebase(targetDoc.number, targetDoc.module, newSt, null, null, newSt === 'storage');
+              }
+            } else {
+              const targetDoc = boxes.find(x => x.id === docId);
+              if (targetDoc) {
+                await setDoc(doc(db, "boxes", docId), { status: newSt, recordedBy: currentUser || 'Sistema' }, { merge: true });
+                updateGlobalStatusInFirebase(targetDoc.number, targetDoc.module, newSt, targetDoc.comments, targetDoc.location, true);
+              }
+            }
+            showToast('Estatus actualizado');
           };
         });
       }
@@ -1926,138 +2175,10 @@
           renderTable();
         };
       });
-
-      document.querySelectorAll('.delete-btn').forEach(btn => {
-        btn.onclick = async function(e) {
-          const docId = e.target.getAttribute('data-id');
-          const item = movements.find(m => m.id === docId);
-          if (item && confirm(`¿Deseas borrar permanentemente este registro de la caja ${item.number}?`)) {
-            await deleteDoc(doc(db, "movements", docId));
-            showToast(`Registro de caja ${item.number} eliminado`);
-          }
-        };
-      });
-
-      document.querySelectorAll('.finish-btn').forEach(btn => {
-        btn.onclick = async function(e) {
-          const docId = e.target.getAttribute('data-id');
-          const original = movements.find(m => m.id === docId);
-
-          if (original) {
-            const num = original.number;
-            const currentType = original.type || 'PATIO-RAMPA';
-            const newType = getInverseMovementType(currentType);
-
-            if (confirm(`¿Deseas terminar la tarea seleccionada para la caja ${num}?\n\nSe creará el registro inverso: ${newType}`)) {
-              const rowEl = document.getElementById(`row-${docId}`);
-              if (rowEl) rowEl.classList.add('row-finished');
-
-              const newDocId = `MOV_${original.module}_${num}_${Date.now()}`;
-              const nowStr = new Date().toLocaleString('es-MX');
-
-              await setDoc(doc(db, "movements", newDocId), {
-                number: num,
-                module: original.module,
-                location: original.location || 'Venus',
-                comments: original.comments ? `[Fin de tarea] ${original.comments}` : '[Fin de tarea]',
-                status: original.status || 'vacia',
-                type: newType,
-                operator: original.operator || '—',
-                requestedBy: original.requestedBy || '—',
-                recordedBy: currentUser || 'Sistema',
-                datetime: nowStr,
-                timestamp: Date.now()
-              });
-
-              updateGlobalStatusInFirebase(num, original.module, original.status || 'vacia');
-              showToast(`Tarea de caja ${num} completada`);
-            }
-          }
-        };
-      });
-
-      document.querySelectorAll('.maint-checkbox').forEach(chk => {
-        chk.onchange = async function(e) {
-          const docId = e.target.getAttribute('data-id');
-          const isChecked = e.target.checked;
-          await setDoc(doc(db, "boxes", docId), { reportadoReparaciones: isChecked }, { merge: true });
-          showToast(isChecked ? 'Marcado como reportado' : 'Marcado como pendiente');
-        };
-      });
-
-      document.querySelectorAll('.edit-btn').forEach(btn => {
-        btn.onclick = function(e) {
-          const docId = e.target.getAttribute('data-id');
-          const isMovView = view === 'movimientos';
-          const item = (isMovView ? movements : boxes).find(x => x.id === docId);
-          
-          if (item) {
-            editingDocId = docId;
-            editingPdmDocId = null;
-            document.getElementById('modal-heading').textContent = 'Editar Registro';
-            document.getElementById('box-number').value = item.number || '';
-            document.getElementById('box-number').disabled = false;
-            document.getElementById('location-field-group').style.display = 'block';
-            document.getElementById('module').value = item.module || 'MSM';
-            document.getElementById('location').value = item.location || 'Venus';
-            document.getElementById('comments').value = item.comments || '';
-            document.getElementById('status').value = item.status || 'vacia';
-            
-            checkAndAutoAssignModule(item.number || '');
-            toggleStorageAlert(item.status);
-
-            const deleteSection = document.getElementById('delete-box-section');
-            if (view === 'MSM' || view === 'NLDC' || view === 'mantenimiento') {
-              deleteSection.style.display = 'block';
-            } else {
-              deleteSection.style.display = 'none';
-            }
-
-            const movFields = document.getElementById('movement-only');
-            if (isMovView) {
-              movFields.style.display = 'block';
-              document.getElementById('movement-type').value = item.type || 'PATIO-RAMPA';
-              document.getElementById('movement-operator').value = item.operator || '';
-              document.getElementById('movement-requested-by').value = item.requestedBy || '';
-              document.getElementById('movement-datetime').value = item.datetime || new Date().toLocaleString('es-MX');
-            } else {
-              movFields.style.display = 'none';
-            }
-            
-            document.getElementById('form-modal').style.display = 'flex';
-          }
-        };
-      });
-
-      document.querySelectorAll('.st-select').forEach(s => {
-        s.onchange = async function(e) {
-          const docId = e.target.getAttribute('data-id');
-          const newSt = e.target.value;
-          const isMovView = view === 'movimientos';
-          
-          if (isMovView && newSt === 'storage') {
-            alert('⚠️ ATENCIÓN: Esta caja se ha marcado en estatus de STORAGE.');
-          }
-
-          if (isMovView) {
-            await setDoc(doc(db, "movements", docId), { status: newSt, recordedBy: currentUser || 'Sistema' }, { merge: true });
-            const targetDoc = movements.find(x => x.id === docId);
-            if (targetDoc) {
-              updateGlobalStatusInFirebase(targetDoc.number, targetDoc.module, newSt);
-            }
-          } else {
-            const targetDoc = boxes.find(x => x.id === docId);
-            if (targetDoc) {
-              await setDoc(doc(db, "boxes", docId), { status: newSt, recordedBy: currentUser || 'Sistema' }, { merge: true });
-              updateGlobalStatusInFirebase(targetDoc.number, targetDoc.module, newSt, targetDoc.comments, targetDoc.location);
-            }
-          }
-          showToast('Estatus actualizado');
-        };
-      });
     }
 
     document.getElementById('save-timer-btn').onclick = async function() {
+      if (isReadOnlyUser()) return;
       const val = document.getElementById('custom-timer-input').value;
       if (!val) {
         alert('Por favor selecciona una fecha y hora válidas.');
@@ -2076,6 +2197,7 @@
     };
 
     document.getElementById('reset-timer-zero-btn').onclick = async function() {
+      if (isReadOnlyUser()) return;
       if (activeTimerBox) {
         const nowTs = Date.now();
         if (activeTimerBox.type === 'pdm') {
@@ -2092,6 +2214,7 @@
     document.getElementById('cancel-timer-btn').onclick = () => document.getElementById('timer-edit-modal').style.display = 'none';
 
     document.getElementById('delete-single-box-btn').onclick = async function() {
+      if (isReadOnlyUser()) return;
       if (editingDocId) {
         const boxNum = document.getElementById('box-number').value;
         if (confirm(`¿Estás seguro de que deseas ELIMINAR la caja ${boxNum} de la base de datos?`)) {
@@ -2139,6 +2262,7 @@
     };
 
     document.getElementById('scan-qr-button').onclick = function() {
+      if (isReadOnlyUser()) return;
       document.getElementById('camera-modal').style.display = 'flex';
 
       if (!html5QrCodeScanner) {
@@ -2183,6 +2307,7 @@
     document.getElementById('stop-camera-btn').onclick = () => { stopCamera(); document.getElementById('camera-modal').style.display = 'none'; };
 
     document.getElementById('reset-recorrido-button').onclick = function() {
+      if (isReadOnlyUser()) return;
       document.getElementById('reset-user-display').textContent = currentUser || 'Usuario';
       document.getElementById('reset-password-input').value = '';
       document.getElementById('reset-password-error').style.display = 'none';
@@ -2192,6 +2317,7 @@
     document.getElementById('cancel-reset-btn').onclick = () => { document.getElementById('password-reset-modal').style.display = 'none'; };
 
     document.getElementById('confirm-reset-btn').onclick = async function() {
+      if (isReadOnlyUser()) return;
       const pwdInput = document.getElementById('reset-password-input').value.trim();
       const errorEl = document.getElementById('reset-password-error');
 
@@ -2223,6 +2349,7 @@
     document.getElementById('cancel-damage-btn').onclick = () => document.getElementById('damage-modal').style.display = 'none';
 
     document.getElementById('save-damage-btn').onclick = async function() {
+      if (isReadOnlyUser()) return;
       if (activeDamageCaja) {
         const txt = document.getElementById('damage-text-input').value.trim();
 
@@ -2280,8 +2407,8 @@
       }
     };
 
-    // CORRECCIÓN 4: REGISTRO DIRECTO DESDE VISTA PDM
     document.getElementById('open-form').onclick = function() {
+      if (isReadOnlyUser()) return;
       editingDocId = null;
       editingPdmDocId = null;
       document.getElementById('modal-heading').textContent = 'Registrar caja';
@@ -2316,6 +2443,7 @@
 
     document.getElementById('entry-form').onsubmit = async function(e) {
       e.preventDefault();
+      if (isReadOnlyUser()) return;
 
       if (editingPdmDocId) {
         const comm = document.getElementById('comments').value.trim();
@@ -2333,13 +2461,13 @@
       }
 
       const num = document.getElementById('box-number').value.trim().toUpperCase();
-      const autoMod = detectModuleByBoxNumber(num);
-      const mod = (view === 'PDM') ? 'PDM' : (autoMod || document.getElementById('module').value);
+      const mod = document.getElementById('module').value;
       const loc = document.getElementById('location').value;
       const comm = document.getElementById('comments').value.trim();
       const st = document.getElementById('status').value;
+      const isMovView = view === 'movimientos';
 
-      if (mod === 'PDM' || view === 'PDM') {
+      if (view === 'PDM') {
         const pdmDocId = `PDM_${num}_${Date.now()}`;
         await setDoc(doc(db, "pdm_boxes", pdmDocId), {
           number: num,
@@ -2351,7 +2479,6 @@
         });
         showToast(`Caja ${num} agregada al inventario PDM`);
       } else {
-        const isMovView = view === 'movimientos';
         const collectionName = isMovView ? 'movements' : 'boxes';
         const docId = editingDocId || (isMovView ? `MOV_${mod}_${num}_${Date.now()}` : `${mod}_${num}`);
 
@@ -2377,7 +2504,9 @@
         }
 
         await setDoc(doc(db, collectionName, docId), payload, { merge: true });
-        updateGlobalStatusInFirebase(num, mod, st, comm, loc);
+        
+        // Si se guardó directamente en el inventario (no movimientos), permitir cambio libre de/hacia storage
+        updateGlobalStatusInFirebase(num, mod, st, comm, loc, !isMovView);
         showToast(`Registro guardado (${num} - Módulo: ${mod})`);
       }
 
@@ -2466,6 +2595,7 @@
     };
 
     document.getElementById('clear-button').onclick = async function() {
+      if (isReadOnlyUser()) return;
       if (confirm('¿Deseas eliminar TODOS los registros de Movimientos Diarios?')) {
         const querySnapshot = await getDocs(collection(db, 'movements'));
         const batch = writeBatch(db);
